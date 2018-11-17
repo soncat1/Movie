@@ -1,0 +1,202 @@
+﻿@model Movie.Presentation.Models.FilmViewModels
+@using Movie.Models;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<Film> films = ViewBag.Film;
+    List<Showtime> showtimes = ViewBag.Showtime;
+    List<Room> rooms = ViewBag.Room;
+    List<Seat> seats = ViewBag.Seat;
+    List<DateTime> dates = ViewBag.Date;
+
+
+}
+<style>
+    body {margin:2rem;}
+
+.modal-dialog {
+      max-width: 800px;
+      margin: 30px auto;
+  }
+
+
+
+.modal-body {
+  position:relative;
+  padding:0px;
+}
+.close {
+  position:absolute;
+  right:-30px;
+  top:0;
+  z-index:999;
+  font-size:2rem;
+  font-weight: normal;
+  color:#fff;
+  opacity:1;
+}
+</style>
+<!-- banner -->
+<div id="slidey" style="display:none;">
+    <ul>
+        <li><img src="~/Content/User/images/5.jpg" alt=""><p class='title'>Tarzan</p><p class='description'> Tarzan, having acclimated to life in London, is called back to his former home in the jungle to investigate the activities at a mining encampment.</p></li>
+        <li><img src="~/Content/User/images/2.jpg" alt=""><p class='title'>Maximum Ride</p><p class='description'>Six children, genetically cross-bred with avian DNA, take flight around the country to discover their origins. Along the way, their mysterious past is ...</p></li>
+        <li><img src="~/Content/User/images/3.jpg" alt=""><p class='title'>Independence</p><p class='description'>The fate of humanity hangs in the balance as the U.S. President and citizens decide if these aliens are to be trusted ...or feared.</p></li>
+        <li><img src="~/Content/User/images/4.jpg" alt=""><p class='title'>Central Intelligence</p><p class='description'>Bullied as a teen for being overweight, Bob Stone (Dwayne Johnson) shows up to his high school reunion looking fit and muscular. Claiming to be on a top-secret ...</p></li>
+        <li><img src="~/Content/User/images/6.jpg" alt=""><p class='title'>Ice Age</p><p class='description'>In the film's epilogue, Scrat keeps struggling to control the alien ship until it crashes on Mars, destroying all life on the planet.</p></li>
+        <li><img src="~/Content/User/images/7.jpg" alt=""><p class='title'>X - Man</p><p class='description'>In 1977, paranormal investigators Ed (Patrick Wilson) and Lorraine Warren come out of a self-imposed sabbatical to travel to Enfield, a borough in north ...</p></li>
+    </ul>
+</div>
+<div class="container">
+    <ul class="nav nav-pills "role="tablist" style="margin-bottom: 20px; margin-left: 1%; margin-right: 1%;">
+        @foreach (var date in dates)
+        {
+            <li class="nav-item">
+                <a href="#" id="@date.Date.ToString("d")" class="nav-link" data-toggle="tab" ><span class="font-smaller">@date.Date.ToString("d")</span>/@date.DayOfWeek</a>
+            </li>
+        }
+
+
+    </ul>
+    <div id="lstFilm" class="row">
+    @*    @foreach (var item in films)
+        {
+
+            <div class="col-md-12">
+                <div class="col-md-4" style="width:300px;height:400px;">
+                    <img class="img-responsive border-radius-20" alt="" src="@item.Image" width="300" height="400">
+                </div>
+                <div class="col-md-8">
+                    <h1><a href="#">@item.Name</a></h1>
+                    <ul class="blog-info" style="list-style-type:none;">
+                        <li><i class="fa fa-tags"></i>@item.Category.Name</li>
+                        <li><i class="fa fa-clock-o"></i>@item.Duration</li>
+                    </ul>
+                    <div class="row">
+
+
+                        @foreach (var showtime in showtimes.Where(r => r.FilmId == item.FilmId))
+                        {
+
+                            foreach (var room in rooms.Where(r => r.RoomId == showtime.RoomId))
+                            {
+                                <div class="col-lg-2 col-md-5 col-sm-5 col-xs-7 margin-xs-bottom-10 text-center">
+                                    <a style="width: 100%" href="#product-pop-up" class="btn btn-default show-in fancybox-fast-view">@showtime.Queue</a>
+                                    <div class="font-smaller padding-top-5">@room.SeatCount ghế</div>
+                                </div>
+
+                            }
+
+                        }
+
+                    </div>
+                </div>
+            </div>
+            
+        }
+        &nbsp;*@
+        
+    </div>
+</div>
+   <!-- Modal -->
+<div class="modal fade" id="trailerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <p></p>
+            </div>
+            <div class="modal-body">
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <!-- 16:9 aspect ratio -->
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe width="400" height="300" frameborder="0" allowfullscreen="" src=""></iframe>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<script src="~/Content/User/js/jquery.slidey.js"></script>
+<script src="~/Content/User/js/jquery.dotdotdot.min.js"></script>
+<script type="text/javascript">
+    $("#slidey").slidey({
+        interval: 8000,
+        listCount: 5,
+        autoplay: false,
+        showList: true
+    });
+    $(".slidey-list-description").dotdotdot();
+</script>
+<script>
+    $(document).ready(function () {
+        $('.nav-item').first().addClass('active');
+        var loadShowDateId =$('.nav-item a').first().attr("id");
+        $.ajax({
+            method: 'GET',
+            url: '/Home/GetFilmByShowDate',
+            data: { showDate: loadShowDateId },
+            success: function (data) {
+                $('#lstFilm').html(data);
+            }
+
+        });
+        $(".nav-link").click(function () {
+            var showDateId = $(this).attr("id");
+            $.ajax({
+                method: 'GET',
+                url: '/Home/GetFilmByShowDate',
+                data: { showDate: showDateId },
+                success: function(data)
+                {
+                    $('#lstFilm').html(data);
+                }
+               
+            });
+        });
+        
+    });
+</script>
+ <!--Script for modal-->
+<script>
+    var videoSrc;
+    var videoName;
+    function Trailer(url,name) {
+        //if (url.includes('watch?v='))
+        //{
+        //   videoSrc=url.replace('watch?v=', 'embed/');
+        //}
+        videoSrc = url;
+        videoName = name;
+        $('p').html('Trailer - ' + name);
+        $("#trailerModal iframe").attr('src', videoSrc + "?rel=0&amp;showinfo=0&amp;modestbranding=1&amp;autoplay=1");
+    };
+
+        // Gets the video src from the data-src on each button
+        //var videoSrc;
+        //$(".playWrapper").click(function () {
+        //    videoSrc = $(this).val();
+
+        //});
+
+
+        //when the modal is opened autoplay it
+        //$('#myModal1').on('shown.bs.modal', function () {
+
+        //     set the video src to autoplay and not to show related video. Youtube related video is like a box of chocolates... you never know what you're gonna get
+        //    $("#myModal1 iframe").attr('src', videoSrc + "?rel=0&amp;showinfo=0&amp;modestbranding=1&amp;autoplay=1");
+        //});
+
+
+        // stop playing the youtube video when I close the modal
+    $('#trailerModal').on('hide.bs.modal', function () {
+            // a poor man's stop video
+        $("#trailerModal iframe").attr('src', videoSrc);
+        });
+        
+</script>

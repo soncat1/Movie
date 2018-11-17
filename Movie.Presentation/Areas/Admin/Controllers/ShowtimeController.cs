@@ -1,0 +1,146 @@
+﻿using Movie.Models;
+using Movie.Service;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace Movie.Presentation.Areas.Admin.Controllers
+{
+    public class ShowtimeController : Controller
+    {
+        private ShowtimeService showtimeService;
+        private FilmService filmService;
+        private RoomService roomService;
+        List<int> listQueue = new List<int> { 1, 2, 3, 4 };
+
+        public ShowtimeController()
+        {
+            filmService = new FilmService();
+            showtimeService = new ShowtimeService();
+            roomService = new RoomService();
+        }
+        // GET: Admin/Showtime
+        public ActionResult Index()
+        {
+            return View(showtimeService.GetAll());
+        }
+        public ActionResult Details(int id)
+        {
+            Showtime showtime = showtimeService.GetShowtime(id);
+            if (showtime == null)
+            {
+                return HttpNotFound();
+            }
+            return View(showtime);
+        }
+        public ActionResult Create()
+
+        {
+            ViewBag.Film = filmService.GetAll();
+            ViewBag.Room = roomService.GetAll();
+            ViewBag.Queue = listQueue;
+
+
+            return View();
+        }
+
+        public JsonResult CheckCreate(DateTime? showDate, int? roomId)
+
+        {       
+            ViewBag.Film = filmService.GetAll();
+            ViewBag.Room = roomService.GetAll();
+
+            List<int> listQueueFromDb = (from c in showtimeService.GetAll()
+                                        where c.RoomId.Equals(roomId) && c.ShowDate.Equals(showDate)
+                                        select c.Queue).ToList();
+
+            foreach (var item in listQueueFromDb)
+            {
+                if (listQueue.Contains(item))
+                {
+                    listQueue.Remove(item);
+                }
+            }
+            ViewBag.Queue = listQueue;
+
+
+            return Json(listQueue, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public ActionResult Create(Showtime showtime)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                   
+                    showtimeService.Add(showtime);
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (DataException)
+            {
+
+                ModelState.AddModelError("", "Không thể tạo lịch chiếu!");
+            }
+            return View(showtime);
+
+        }
+        public ActionResult Edit(int id)
+        {
+            ViewBag.Queue = listQueue;
+            
+            Showtime showtime = showtimeService.GetShowtime(id);
+            TempData["Queue"] = showtime.Queue;
+            ViewBag.Film = filmService.GetAll();
+            ViewBag.Room = roomService.GetAll();
+            return View(showtime);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(Showtime showtime)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    showtimeService.Update(showtime);
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (DataException)
+            {
+                ModelState.AddModelError("", "Không thể thay đổi thông tin lịch chiếu!");
+            }
+            return View(showtime);
+        }
+
+        public ActionResult Delete(int id)
+        {
+            Showtime showtime = showtimeService.GetShowtime(id);
+            return View(showtime);
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int id, Showtime showtime)
+        {
+            try
+            {
+                showtime = showtimeService.GetShowtime(id);
+                showtimeService.Delete(id);
+                return RedirectToAction("Index");
+
+            }
+            catch (DataException)
+            {
+
+                ModelState.AddModelError("", "Không thể xóa lịch chiếu");
+            }
+            return View(showtime);
+        }
+
+    }
+}
