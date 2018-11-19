@@ -16,7 +16,8 @@
     <!-- Page-Level Plugin CSS - Blank -->
     <!-- SB Admin CSS - Include with every page -->
     <link href="~/Areas/Admin/Content/css/sb-admin.css" rel="stylesheet" />
-    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    @*<script src="~/Scripts/jquery-1.10.2.min.js"></script>*@
+    <script src="~/Scripts/jquery-3.0.0.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/tinymce/4.5.1/tinymce.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
 </head>
@@ -269,19 +270,47 @@
                             <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Danh mục sách</a>
+                            <a href="~/Admin/Category/Index"><i class="fa fa-bar-chart-o fa-fw"></i> Quản lý thể loại phim</a>
                         </li>
                         <li>
-                            <a href="tables.html"><i class="fa fa-table fa-fw"></i> Quản lý nhà xuất bản</a>
+                            <a href="~/Admin/Cinema/Index"><i class="fa fa-table fa-fw"></i> Quản lý rạp phim</a>
                         </li>
                         <li>
-                            <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Quản lý tác giả</a>
+                            <a href="~/Admin/Customer/Index"><i class="fa fa-edit fa-fw"></i> Quản lý khách hàng</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-wrench fa-fw"></i> Quản lý sách</a>
+                            <a href="~/Admin/Department/Index"><i class="fa fa-wrench fa-fw"></i> Quản lý phòng ban</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-sitemap fa-fw"></i> Quản lý người dùng</a>
+                            <a href="~/Admin/Employee/Index"><i class="fa fa-sitemap fa-fw"></i> Quản lý nhân viên</a>
+
+                        </li>
+                        <li>
+                            <a href="~/Admin/Film/Index"><i class="fa fa-sitemap fa-fw"></i> Quản lý phim</a>
+
+                        </li>
+                        <li>
+                            <a href="~/Admin/Room/Index"><i class="fa fa-sitemap fa-fw"></i> Quản lý phòng chiếu</a>
+
+                        </li>
+                        <li>
+                            <a href="~/Admin/RoomType/Index"><i class="fa fa-sitemap fa-fw"></i> Quản lý loại phòng chiếu</a>
+
+                        </li>
+                        <li>
+                            <a href="~/Admin/Seat/Index"><i class="fa fa-sitemap fa-fw"></i> Quản lý ghế</a>
+
+                        </li>
+                        <li>
+                            <a href="~/Admin/SeatType/Index"><i class="fa fa-sitemap fa-fw"></i> Quản lý loại ghế</a>
+
+                        </li>
+                        <li>
+                            <a href="~/Admin/Showtime/Index"><i class="fa fa-sitemap fa-fw"></i> Quản lý lịch chiếu</a>
+
+                        </li>
+                        <li>
+                            <a href="~/Admin/Ticket/Index"><i class="fa fa-sitemap fa-fw"></i> Quản lý vé</a>
 
                         </li>
                     </ul>
