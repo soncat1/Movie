@@ -28,6 +28,7 @@
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
     <TypeScriptToolsVersion>3.1</TypeScriptToolsVersion>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -207,7 +208,9 @@
     <Compile Include="Areas\Admin\Controllers\SeatController.cs" />
     <Compile Include="Areas\Admin\Controllers\SeatTypeController.cs" />
     <Compile Include="Areas\Admin\Controllers\ShowtimeController.cs" />
+    <Compile Include="Controllers\ChiTietPhimController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LichChieuController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -263,6 +266,7 @@
     <Content Include="Content\User\css\ImageTrailer.css" />
     <Content Include="Content\User\css\jquery.seat-charts.css" />
     <Content Include="Content\User\css\jquery.slidey.min.css" />
+    <Content Include="Content\User\css\layoutMenu.css" />
     <Content Include="Content\User\css\medile.css" />
     <Content Include="Content\User\css\news.css" />
     <Content Include="Content\User\css\owl.carousel.css" />
@@ -359,6 +363,7 @@
     <Content Include="Content\User\js\jquery.seat-charts.js" />
     <Content Include="Content\User\js\jquery.seat-charts.min.js" />
     <Content Include="Content\User\js\jquery.slidey.js" />
+    <Content Include="Content\User\js\layoutMenu.js" />
     <Content Include="Content\User\js\move-top.js" />
     <Content Include="Content\User\js\owl.carousel.js" />
     <Content Include="Content\User\js\scripts.js" />
@@ -551,7 +556,7 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Home\pv_GetFilmByShowDate.cshtml" />
+    <Content Include="Views\Home\_GetFilmByShowDate.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
     <Content Include="Scripts\umd\popper-utils.min.js.map" />
@@ -561,11 +566,16 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\Shared\_Navigation.cshtml" />
+    <Content Include="Views\LichChieu\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Content\Images\" />
+    <Folder Include="Views\Base\" />
+    <Folder Include="Views\ChiTietPhim\" />
+    <Folder Include="Views\UI\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -615,7 +625,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>62890</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:62890/</IISUrl>
+          <IISUrl>http://localhost:8000</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

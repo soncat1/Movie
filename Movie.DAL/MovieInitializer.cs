@@ -70,7 +70,7 @@ namespace Movie.DAL
 
             List<Film> films = new List<Film>()
             {
-                new Film() {Name="Naruto Shippuden",Director="Masashi Kishimoto",Actor="Naruto,Sasuke,Sakura",Year=2018,Summary="",Description="",CategoryId=1,TrailerUrl="",Duration=120,Rating=4.5 }
+                new Film() {Name="Naruto Shippuden",Director="Masashi Kishimoto",Actor="Naruto,Sasuke,Sakura",Year=2018,Summary="",Description="",CategoryId=1,TrailerUrl="https://www.youtube.com/embed/Jfrjeg26Cwk",Duration=120,Rating=4.5 }
             };
             context.Films.AddRange(films);
             context.SaveChanges();

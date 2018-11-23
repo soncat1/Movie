@@ -46,6 +46,7 @@
         <li><img src="~/Content/User/images/7.jpg" alt=""><p class='title'>X - Man</p><p class='description'>In 1977, paranormal investigators Ed (Patrick Wilson) and Lorraine Warren come out of a self-imposed sabbatical to travel to Enfield, a borough in north ...</p></li>
     </ul>
 </div>
+<hr />
 <div class="container">
     <ul class="nav nav-pills "role="tablist" style="margin-bottom: 20px; margin-left: 1%; margin-right: 1%;">
         @foreach (var date in dates)
@@ -57,7 +58,45 @@
 
 
     </ul>
-    <div id="lstFilm" class="row">      
+    <hr />
+    <div id="lstFilm" class="row">
+    @*    @foreach (var item in films)
+        {
+
+            <div class="col-md-12">
+                <div class="col-md-4" style="width:300px;height:400px;">
+                    <img class="img-responsive border-radius-20" alt="" src="@item.Image" width="300" height="400">
+                </div>
+                <div class="col-md-8">
+                    <h1><a href="#">@item.Name</a></h1>
+                    <ul class="blog-info" style="list-style-type:none;">
+                        <li><i class="fa fa-tags"></i>@item.Category.Name</li>
+                        <li><i class="fa fa-clock-o"></i>@item.Duration</li>
+                    </ul>
+                    <div class="row">
+
+
+                        @foreach (var showtime in showtimes.Where(r => r.FilmId == item.FilmId))
+                        {
+
+                            foreach (var room in rooms.Where(r => r.RoomId == showtime.RoomId))
+                            {
+                                <div class="col-lg-2 col-md-5 col-sm-5 col-xs-7 margin-xs-bottom-10 text-center">
+                                    <a style="width: 100%" href="#product-pop-up" class="btn btn-default show-in fancybox-fast-view">@showtime.Queue</a>
+                                    <div class="font-smaller padding-top-5">@room.SeatCount ghế</div>
+                                </div>
+
+                            }
+
+                        }
+
+                    </div>
+                </div>
+            </div>
+            
+        }
+        &nbsp;*@
+        
     </div>
 </div>
    <!-- Modal -->
