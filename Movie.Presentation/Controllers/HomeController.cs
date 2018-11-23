@@ -17,6 +17,7 @@ namespace Movie.Presentation.Controllers
         private ShowtimeService showtimeService;
         private RoomService roomService;
         private SeatService seatService;
+        private CinemaService cinemaService;
         public HomeController()
         {
             filmService = new FilmService();
@@ -60,6 +61,12 @@ namespace Movie.Presentation.Controllers
             }
             ViewBag.Film = film;
             return PartialView("pv_GetFilmByShowDate",listShowtimes);
+        }
+        public JsonResult FilmDetail(int filmId,int roomId)
+        {
+            var cinemaName = cinemaService.GetAll().Select(n => n.Name).FirstOrDefault();
+            var showtimeName = showtimeService.GetAll().Where(n => n.FilmId == filmId && n.RoomId == roomId).Select(n => n.ShowDate).FirstOrDefault();
+            return Json(new { response = true, CinemaName = cinemaName, ShowtimeName = showtimeName });
         }
     }
 }

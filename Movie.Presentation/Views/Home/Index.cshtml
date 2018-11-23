@@ -8,9 +8,8 @@
     List<Room> rooms = ViewBag.Room;
     List<Seat> seats = ViewBag.Seat;
     List<DateTime> dates = ViewBag.Date;
-
-
 }
+
 <style>
     body {margin:2rem;}
 
@@ -58,44 +57,7 @@
 
 
     </ul>
-    <div id="lstFilm" class="row">
-    @*    @foreach (var item in films)
-        {
-
-            <div class="col-md-12">
-                <div class="col-md-4" style="width:300px;height:400px;">
-                    <img class="img-responsive border-radius-20" alt="" src="@item.Image" width="300" height="400">
-                </div>
-                <div class="col-md-8">
-                    <h1><a href="#">@item.Name</a></h1>
-                    <ul class="blog-info" style="list-style-type:none;">
-                        <li><i class="fa fa-tags"></i>@item.Category.Name</li>
-                        <li><i class="fa fa-clock-o"></i>@item.Duration</li>
-                    </ul>
-                    <div class="row">
-
-
-                        @foreach (var showtime in showtimes.Where(r => r.FilmId == item.FilmId))
-                        {
-
-                            foreach (var room in rooms.Where(r => r.RoomId == showtime.RoomId))
-                            {
-                                <div class="col-lg-2 col-md-5 col-sm-5 col-xs-7 margin-xs-bottom-10 text-center">
-                                    <a style="width: 100%" href="#product-pop-up" class="btn btn-default show-in fancybox-fast-view">@showtime.Queue</a>
-                                    <div class="font-smaller padding-top-5">@room.SeatCount ghế</div>
-                                </div>
-
-                            }
-
-                        }
-
-                    </div>
-                </div>
-            </div>
-            
-        }
-        &nbsp;*@
-        
+    <div id="lstFilm" class="row">      
     </div>
 </div>
    <!-- Modal -->
@@ -132,8 +94,7 @@
         showList: true
     });
     $(".slidey-list-description").dotdotdot();
-</script>
-<script>
+
     $(document).ready(function () {
         $('.nav-item').first().addClass('active');
         var loadShowDateId =$('.nav-item a').first().attr("id");
@@ -161,42 +122,36 @@
         });
         
     });
-</script>
- <!--Script for modal-->
-<script>
+
     var videoSrc;
     var videoName;
     function Trailer(url,name) {
-        //if (url.includes('watch?v='))
-        //{
-        //   videoSrc=url.replace('watch?v=', 'embed/');
-        //}
         videoSrc = url;
         videoName = name;
         $('p').html('Trailer - ' + name);
         $("#trailerModal iframe").attr('src', videoSrc + "?rel=0&amp;showinfo=0&amp;modestbranding=1&amp;autoplay=1");
     };
-
-        // Gets the video src from the data-src on each button
-        //var videoSrc;
-        //$(".playWrapper").click(function () {
-        //    videoSrc = $(this).val();
-
-        //});
-
-
-        //when the modal is opened autoplay it
-        //$('#myModal1').on('shown.bs.modal', function () {
-
-        //     set the video src to autoplay and not to show related video. Youtube related video is like a box of chocolates... you never know what you're gonna get
-        //    $("#myModal1 iframe").attr('src', videoSrc + "?rel=0&amp;showinfo=0&amp;modestbranding=1&amp;autoplay=1");
-        //});
-
-
         // stop playing the youtube video when I close the modal
     $('#trailerModal').on('hide.bs.modal', function () {
             // a poor man's stop video
         $("#trailerModal iframe").attr('src', videoSrc);
         });
-        
+
+    function bookSeat(filmId, filmName, queue,roomId) {
+        $.ajax({
+            method: 'GET',
+            url: 'Home/FilmDetail',
+            data: {
+                filmId: filmId,
+                roomId: roomId
+            },
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                if (result.response) {
+                    alert('Success');
+                }
+            }
+        });
+    }
 </script>

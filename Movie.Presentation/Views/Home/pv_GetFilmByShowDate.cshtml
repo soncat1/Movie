@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<Movie.Models.Showtime>
-    @using Movie.Models;
-    @{ 
-        List<Film> film = ViewBag.Film;
-    }
+@using Movie.Models;
+@{
+    List<Film> film = ViewBag.Film;
+}
 <link href="~/Content/User/css/ImageTrailer.css" rel="stylesheet" />
-<div id="lstFilm" class="row">
+<div id="FilmContent" class="row">
     @foreach (var item in film)
     {
 
@@ -14,10 +14,10 @@
                 <ul class="thumb">
                     <li>
                         <div class="overlay">
-                            <button class="playWrapper" role="button" data-toggle="modal" data-target="#trailerModal" onclick="Trailer('@item.TrailerUrl','@item.Name')"></button> 
-                            <img class="thumbnail" src="@item.Image" width="300" height="400" alt="" >
-                            
-                             
+                            <button class="playWrapper" role="button" data-toggle="modal" data-target="#trailerModal" onclick="Trailer('@item.TrailerUrl','@item.Name')"></button>
+                            <img class="thumbnail" src="@item.Image" width="300" height="400" alt="">
+
+
                         </div>
                     </li>
                 </ul>
@@ -34,13 +34,15 @@
                         if (item.FilmId == item1.FilmId)
                         {
                             <div class="col-lg-2 col-md-5 col-sm-5 col-xs-7 margin-xs-bottom-10 text-center">
-                                <a style="width: 100%" href="#product-pop-up" class="btn btn-default show-in fancybox-fast-view">@item1.Queue</a>
+                                <a style="width: 100%" id="info-film" class="btn btn-default show-in fancybox-fast-view" 
+                                   film-id="@item1.FilmId" film-name ="@item.Name" film-queue ="@item1.Queue"
+                                   data-toggle="modal" data-target="#myModalInfo" onclick="bookSeat(@item.FilmId,@item.Name,@item1.Queue,@item1.RoomId)">@item1.Queue</a>
                                 <div class="font-smaller padding-top-5">@item1.Room.SeatCount</div>
                             </div>
                         }
 
                     }
-                            
+
 
                 </div>
             </div>
@@ -48,7 +50,42 @@
 
     }
     &nbsp;
-
 </div>
+<div class="modal fade" id="myModalInfo" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Bạn Đang Đặt Vé Xem Phim</h4>
+            </div>
+            <div class="modal-body">
+                <label>Naruto</label>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Rạp chiếu</th>
+                            <th>Ngày chiếu</th>
+                            <th>Giờ chiếu</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td id="cinema-name">2</td>
+                            <td id="datetime-name">3</td>
+                            <td id="showtime-name">4</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Đồng ý</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
 
 
