@@ -1,0 +1,376 @@
+﻿@model IEnumerable<Movie.Models.Film>
+@using Movie.Models
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<Film> lstNotShowFilm = ViewBag.NotShowFilm;
+    List<Showtime> showtimes = ViewBag.Showtime;
+    List<Room> rooms = ViewBag.Room;
+    List<Seat> seats = ViewBag.Seat;
+    List<DateTime> dates = ViewBag.Date;
+}
+<style>
+    .modal-dialog {
+        max-width: 800px;
+        margin: 30px auto;
+    }
+
+
+
+    .modal-body {
+        position: relative;
+        padding: 0px;
+    }
+
+    .close {
+        position: absolute;
+        right: -30px;
+        top: 0;
+        z-index: 999;
+        font-size: 2rem;
+        font-weight: normal;
+        color: #fff;
+        opacity: 1;
+    }
+
+    .tab-films {
+        display: inline-block;
+        margin-bottom: 30px;
+    }
+
+        .tab-films > li.active {
+            border-bottom: 4px solid;
+            border-image: linear-gradient(to right, rgb(57,173,240) 0%,rgb(7,95,163) 100%);
+            border-image-slice: 1;
+            border-width: 0px 0px 4px 0px;
+        }
+
+    .text-center {
+        margin-top: 20px;
+    }
+
+    .thumb {
+        display: flex;
+        flex-wrap: wrap;
+        list-style: none;
+    }
+
+        .thumb li {
+            width: 193px;
+        }
+
+            .thumb li ~ li {
+                margin-left: 20px;
+            }
+
+        .thumb .thumbCaption {
+            padding: 10px 0;
+        }
+
+    .overlay {
+        position: relative;
+    }
+
+        .overlay .thumbnail {
+            display: block;
+        }
+
+        .overlay .time {
+            position: absolute;
+            z-index: 2;
+            right: 3px;
+            bottom: 3px;
+            padding: 2px 5px;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+        }
+
+        .overlay .playWrapper {
+            opacity: 0;
+            position: absolute;
+            z-index: 1;
+            top: 0;
+            width: 227px;
+            height: 360px;
+            background: rgba(0,0,0,0.6) url("http://wptf.com/wp-content/uploads/2014/05/play-button.png") no-repeat scroll center center / 50px 50px;
+        }
+
+
+    .thumb .overlay:hover .playWrapper {
+        opacity: 1;
+    }
+</style>
+<div class="container" style="margin-bottom:35px;">
+    <div class="menu col-md-12">
+        <div class="text-center">
+            <ul class="nav nav-tabs tab-films">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#dangchieu" data-toggle="tab" ">
+                        <h1>PHIM ĐANG CHIẾU</h1>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#sapchieu" data-toggle="tab" ">
+                        <h1>PHIM SẮP CHIẾU</h1>
+                    </a>
+                </li>
+            </ul>
+            <hr />
+        </div>
+    </div>
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div id="dangchieu" class="container tab-pane active">
+            <div class="row">
+                @foreach (var item in Model)
+                {
+                    <div class="col-md-3">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <ul class="thumb">
+                                    <li>
+                                        <div class="overlay">
+                                            <button class="playWrapper" role="button" data-toggle="modal" data-target="#trailerModal" onclick="Trailer('@item.TrailerUrl', '@item.Name')"></button>
+                                            <img class="thumbnail" src="@item.Image" width="227" height="360" alt="">
+
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="film-info">
+                                    <h3><a href="/ChiTietPhim/Index/@item.FilmId">@item.Name</a></h3>
+                                    <ul class="list-unstyled font-lg font-family-san font-sm-15 font-xs-14">
+                                        <li>
+                                            <span class="bold">
+                                                Đạo diễn:
+                                            </span> @item.Director
+                                        </li>
+                                        <li style="max-height: 50px;">
+                                            <span class="bold">
+                                                Thể loại:
+                                            </span> @item.Category.Name
+                                        </li>
+                                        <li>
+                                            <span class="bold">
+                                                Thời lượng:
+                                            </span> @item.Duration
+                                            phút
+                                        </li>
+                                    </ul>
+                                    <br />
+                                    <div style="min-height: 85px;width:227px">
+                                        <button role="button" data-toggle="modal" class="btn btn-success" style="width:100%" data-target="#showtimeModal" id="@item.FilmId">
+                                            <span><i class="fa fa-ticket mr3"></i></span>
+                                            MUA VÉ
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+        <div id="sapchieu" class="container tab-pane fade">
+            <div class="row">
+                @foreach (var item in lstNotShowFilm)
+                {
+                    <div class="col-md-3">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <ul class="thumb">
+                                    <li>
+                                        <div class="overlay">
+                                            <button class="playWrapper" role="button" data-toggle="modal" data-target="#trailerModal" onclick="Trailer('@item.TrailerUrl', '@item.Name')"></button>
+                                            <img class="thumbnail" src="@item.Image" width="227" height="360" alt="">
+
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="film-info">
+                                    <h3><a href="/ChiTietPhim/Index/@item.FilmId">@item.Name</a></h3>
+                                    <ul class="list-unstyled font-lg font-family-san font-sm-15 font-xs-14">
+                                        <li>
+                                            <span class="bold">
+                                                Đạo diễn:
+                                            </span> @item.Director
+                                        </li>
+                                        <li style="max-height: 50px;">
+                                            <span class="bold">
+                                                Thể loại:
+                                            </span> @item.Category.Name
+                                        </li>
+                                        <li>
+                                            <span class="bold">
+                                                Thời lượng:
+                                            </span> @item.Duration
+                                            phút
+                                        </li>
+                                    </ul>
+                                    <br />
+                                    <div style="min-height: 85px;width:227px">
+                                        <button role="button" data-toggle="modal" class="btn btn-success" style="width:100%" data-target="#showtimeModal" id="@item.FilmId">
+                                            <span><i class="fa fa-ticket mr3"></i></span>
+                                            MUA VÉ
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="trailerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <p></p>
+            </div>
+            <div class="modal-body">
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <!-- 16:9 aspect ratio -->
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe width="400" height="300" frameborder="0" allowfullscreen="" src=""></iframe>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!--Showtime Modal-->
+<div class="modal fade" id="showtimeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document" style="width:1000px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <p></p>
+            </div>
+            <div class="modal-body">
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <div id="rapchieu">
+                    <span style="font-family:sans-serif;padding-left:30px;padding-right:30px;">Chọn rạp</span>
+                    <select class="dropdown-toggle btn btn-default">
+                        <option class="dropdown-item">Beta Đan phượng</option>
+                    </select>
+                    <br />
+                    <h1 class="text-center">Rạp <span id="tenrap">Beta Đan phượng</span></h1>
+                </div>
+                <hr />
+                <div class="container">
+                    <ul class="nav nav-pills " role="tablist" style="margin-bottom: 20px; margin-left: 1%; margin-right: 1%;">
+                        @foreach (var date in dates)
+                        {
+                            <li class="nav-item showdate">
+                                <a href="#" id="@date.Date.ToString("d")" class="nav-link" data-toggle="tab"><span class="font-smaller">@date.Date.ToString("d")</span>/@date.DayOfWeek</a>
+                            </li>
+                        }
+
+
+                    </ul>
+                    <hr />
+                    <div class="row" id="giochieu">
+
+
+                    </div>
+
+                </div>
+
+
+
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<!--Script for modal-->
+<script>
+    var videoSrc;
+    var videoName;
+    function Trailer(url, name) {
+        //if (url.includes('watch?v='))
+        //{
+        //   videoSrc=url.replace('watch?v=', 'embed/');
+        //}
+        videoSrc = url;
+        videoName = name;
+        $('p').html('Trailer - ' + name);
+        $("#trailerModal iframe").attr('src', videoSrc + "?rel=0&amp;showinfo=0&amp;modestbranding=1&amp;autoplay=1");
+    };
+
+    // Gets the video src from the data-src on each button
+    //var videoSrc;
+    //$(".playWrapper").click(function () {
+    //    videoSrc = $(this).val();
+
+    //});
+
+
+    //when the modal is opened autoplay it
+    //$('#myModal1').on('shown.bs.modal', function () {
+
+    //     set the video src to autoplay and not to show related video. Youtube related video is like a box of chocolates... you never know what you're gonna get
+    //    $("#myModal1 iframe").attr('src', videoSrc + "?rel=0&amp;showinfo=0&amp;modestbranding=1&amp;autoplay=1");
+    //});
+
+
+    // stop playing the youtube video when I close the modal
+    $('#trailerModal').on('hide.bs.modal', function () {
+        // a poor man's stop video
+        $("#trailerModal iframe").attr('src', videoSrc);
+    });
+
+</script>
+<script>
+    $('#showtimeModal').on('shown.bs.modal', function () {
+        $('.showdate').first().addClass('active');
+        var loadShowDateId = $('.showdate a').first().attr("id");
+        var filmId = $('.film-info button').attr("id");
+        $.ajax({
+            method: 'GET',
+            url: '/Phim/GetShowtimeByShowDate',
+            data: { showDate: loadShowDateId, id: filmId },
+            success: function (data) {
+                $('#giochieu').html(data);
+            }
+
+        });
+        $(".showdate .nav-link").click(function () {
+            var showDateId = $(this).attr("id");
+            $.ajax({
+                method: 'GET',
+                url: '/Phim/GetShowtimeByShowDate',
+                data: { showDate: showDateId, id: filmId },
+                success: function (data) {
+                    $('#giochieu').html(data);
+                }
+
+            });
+        });
+
+    });
+        
+
+</script>
+
+

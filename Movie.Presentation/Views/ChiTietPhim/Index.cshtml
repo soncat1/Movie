@@ -1,0 +1,93 @@
+﻿@using Movie.Models
+@model Movie.Models.Film
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container" style="background-color:#eaeaea;margin-bottom:20px;">
+    <div class="Content" style="margin-top:20px;">
+        <h3>Trang chủ ><span style="color:#337ab7">Naruto</span></h3>
+        <div class="row" id="film" style="margin-top:10px;">
+            <div class="col-md-12">
+                <div class="col-md-4" style="width:300px;height:400px;">
+                    <img class="img-responsive border-radius-20" alt="" src="@Model.Image" width="300" height="400">
+                </div>
+                <div class="col-md-8">
+                    <h1 class="font-weight-bold" style="font-family:Oswald; font-weight:700">@Model.Name</h1>
+                    <br />
+                    <p class="font-weight-light" style="font-family:sans-serif;text-justify:distribute-all-lines; font-size:18px">
+                        @Model.Summary
+                    </p>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-4">
+                            <span class="font-weight-bold" style="text-transform:uppercase;font-weight:700;line-height:inherit;font-size:18px;">Đạo diễn:</span>                                      
+                        </div>
+                        <div class="col-md-8">
+                            <span class="font-weight-bold" style="font-size:18px;">@Model.Director</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <span class="font-weight-bold" style="text-transform:uppercase;font-weight:700;line-height:inherit;font-size:18px;">Diễn viên:</span>
+                        </div>
+                        <div class="col-md-8">
+                            <span class="font-weight-bold" style="font-size:18px;">@Model.Actor</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <span class="font-weight-bold" style="text-transform:uppercase;font-weight:700;line-height:inherit;font-size:18px;">Năm sản xuất:</span>
+                        </div>
+                        <div class="col-md-8">
+                            <span class="font-weight-bold" style="font-size:18px;">@Model.Year</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <span class="font-weight-bold" style="text-transform:uppercase;font-weight:700;line-height:inherit;font-size:18px;">Thể loại:</span>
+                        </div>
+                        <div class="col-md-8">
+                            <span class="font-weight-bold" style="font-size:18px;">@Model.Category.Name</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <span class="font-weight-bold" style="text-transform:uppercase;font-weight:700;line-height:inherit;font-size:18px;">Mô tả:</span>
+                        </div>
+                        <div class="col-md-8">
+                            <span class="font-weight-bold" style="font-size:18px;">@Model.Description</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <span class="font-weight-bold" style="text-transform:uppercase;font-weight:700;line-height:inherit;font-size:18px;">Thời lượng:</span>
+                        </div>
+                        <div class="col-md-8">
+                            <span class="font-weight-bold" style="font-size:18px;">@Model.Duration</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <span class="font-weight-bold" style="text-transform:uppercase;font-weight:700;line-height:inherit;font-size:18px;">Đánh giá:</span>
+                        </div>
+                        <div class="col-md-8">
+                            <span class="font-weight-bold" style="font-size:18px;">@Model.Rating/5</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="Content-Trailer" style="background-color:#333333;margin-top:20px">
+        <h1 style="color:#fff;text-align:center;padding-top:20px;font-weight:700;font-family:Oswald;font-size:33px">TRAILER</h1>
+        <hr />
+        <div class="row video-Trailer">
+            <div class="col-md-12">
+                <iframe width="100%" height="500" src="@Model.TrailerUrl" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            
+        </div>
+    </div>
+</div>
+

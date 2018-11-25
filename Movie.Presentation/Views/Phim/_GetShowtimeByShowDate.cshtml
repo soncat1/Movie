@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Showtime> 
+@using Movie.Models
+@{ 
+    List<Showtime> lstShowtime = ViewBag.FilmShowtime;
+}
+
+<div class="row" id="giochieu">
+    @foreach (var item in Model)
+    {
+
+        <div class="text-center pull-left">
+
+            @{
+                if (item.Queue == 1)
+                {
+                    <a style="width: 50%" href="#product-pop-up" class="btn btn-default show-in fancybox-fast-view"><span style="font-weight:bold">09:00</span></a>
+                }
+                else if (item.Queue == 2)
+                {
+                    <a style="width: 50%" href="#product-pop-up" class="btn btn-default show-in fancybox-fast-view"><span style="font-weight:bold">12:30</span></a>
+                }
+                else if (item.Queue == 3)
+                {
+                    <a style="width: 50%" href="#product-pop-up" class="btn btn-default show-in fancybox-fast-view"><span style="font-weight:bold">16:00</span></a>
+                }
+                else if (item.Queue == 4)
+                {
+                    <a style="width: 50%" href="#product-pop-up" class="btn btn-default show-in fancybox-fast-view"><span style="font-weight:bold">19:30</span></a>
+                }
+            }
+
+            <div class="font-smaller padding-top-5">@item.Room.SeatCount</div>
+        </div>
+
+
+                }
+
+
+</div>
+
