@@ -527,6 +527,15 @@
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Views\UI\css\jquery.seat-charts.css" />
+    <Content Include="Views\UI\css\style.css" />
+    <Content Include="Views\UI\images\banner2.jpg" />
+    <Content Include="Views\UI\index.html" />
+    <Content Include="Views\UI\js\jquery-1.11.0.min.js" />
+    <Content Include="Views\UI\js\jquery.nicescroll.js" />
+    <Content Include="Views\UI\js\jquery.seat-charts.js" />
+    <Content Include="Views\UI\js\jquery.seat-charts.min.js" />
+    <Content Include="Views\UI\js\scripts.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -576,13 +585,13 @@
     <Content Include="Views\ChiTietPhim\Index.cshtml" />
     <Content Include="Views\Phim\Index.cshtml" />
     <Content Include="Views\Phim\_GetShowtimeByShowDate.cshtml" />
+    <Content Include="Views\Booking\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Content\Images\" />
     <Folder Include="Views\Base\" />
-    <Folder Include="Views\UI\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
