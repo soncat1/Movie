@@ -1,0 +1,13 @@
+﻿@{
+                ViewBag.Title = "Index";
+                Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model Movie.Presentation.Models.SeatViewModel
+
+<div class="col-md-12 booking-seat">
+    @foreach(var item in Model.SeatModel.ToList())
+    {
+        <div style="color:red" id="film-lable">@item.Label</div>
+    }
+</div>
+
