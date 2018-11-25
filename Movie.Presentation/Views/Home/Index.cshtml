@@ -8,34 +8,8 @@
     List<Room> rooms = ViewBag.Room;
     List<Seat> seats = ViewBag.Seat;
     List<DateTime> dates = ViewBag.Date;
-
-
 }
-<style>
-    body {margin:2rem;}
-
-.modal-dialog {
-      max-width: 800px;
-      margin: 30px auto;
-  }
-
-
-
-.modal-body {
-  position:relative;
-  padding:0px;
-}
-.close {
-  position:absolute;
-  right:-30px;
-  top:0;
-  z-index:999;
-  font-size:2rem;
-  font-weight: normal;
-  color:#fff;
-  opacity:1;
-}
-</style>
+<link href="~/Content/app/film-detail.css" rel="stylesheet" />
 <!-- banner -->
 <div id="slidey" style="display:none;">
     <ul>
@@ -49,11 +23,11 @@
 </div>
 <hr />
 <div class="container">
-    <ul class="nav nav-pills "role="tablist" style="margin-bottom: 20px; margin-left: 1%; margin-right: 1%;">
+    <ul class="nav nav-pills " role="tablist" style="margin-bottom: 20px; margin-left: 1%; margin-right: 1%;">
         @foreach (var date in dates)
         {
             <li class="nav-item">
-                <a href="#" id="@date.Date.ToString("d")" class="nav-link" data-toggle="tab" ><span class="font-smaller">@date.Date.ToString("d")</span>/@date.DayOfWeek</a>
+                <a href="#" id="@date.Date.ToString("d")" class="nav-link" data-toggle="tab"><span class="font-smaller">@date.Date.ToString("d")</span>/@date.DayOfWeek</a>
             </li>
         }
 
@@ -61,46 +35,46 @@
     </ul>
     <hr />
     <div id="lstFilm" class="row">
-    @*    @foreach (var item in films)
-        {
+        @*    @foreach (var item in films)
+            {
 
-            <div class="col-md-12">
-                <div class="col-md-4" style="width:300px;height:400px;">
-                    <img class="img-responsive border-radius-20" alt="" src="@item.Image" width="300" height="400">
-                </div>
-                <div class="col-md-8">
-                    <h1><a href="#">@item.Name</a></h1>
-                    <ul class="blog-info" style="list-style-type:none;">
-                        <li><i class="fa fa-tags"></i>@item.Category.Name</li>
-                        <li><i class="fa fa-clock-o"></i>@item.Duration</li>
-                    </ul>
-                    <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-4" style="width:300px;height:400px;">
+                        <img class="img-responsive border-radius-20" alt="" src="@item.Image" width="300" height="400">
+                    </div>
+                    <div class="col-md-8">
+                        <h1><a href="#">@item.Name</a></h1>
+                        <ul class="blog-info" style="list-style-type:none;">
+                            <li><i class="fa fa-tags"></i>@item.Category.Name</li>
+                            <li><i class="fa fa-clock-o"></i>@item.Duration</li>
+                        </ul>
+                        <div class="row">
 
 
-                        @foreach (var showtime in showtimes.Where(r => r.FilmId == item.FilmId))
-                        {
-
-                            foreach (var room in rooms.Where(r => r.RoomId == showtime.RoomId))
+                            @foreach (var showtime in showtimes.Where(r => r.FilmId == item.FilmId))
                             {
-                                <div class="col-lg-2 col-md-5 col-sm-5 col-xs-7 margin-xs-bottom-10 text-center">
-                                    <a style="width: 100%" href="#product-pop-up" class="btn btn-default show-in fancybox-fast-view">@showtime.Queue</a>
-                                    <div class="font-smaller padding-top-5">@room.SeatCount ghế</div>
-                                </div>
+
+                                foreach (var room in rooms.Where(r => r.RoomId == showtime.RoomId))
+                                {
+                                    <div class="col-lg-2 col-md-5 col-sm-5 col-xs-7 margin-xs-bottom-10 text-center">
+                                        <a style="width: 100%" href="#product-pop-up" class="btn btn-default show-in fancybox-fast-view">@showtime.Queue</a>
+                                        <div class="font-smaller padding-top-5">@room.SeatCount ghế</div>
+                                    </div>
+
+                                }
 
                             }
 
-                        }
-
+                        </div>
                     </div>
                 </div>
-            </div>
-            
-        }
-        &nbsp;*@
-        
+
+            }
+            &nbsp;*@
+
     </div>
 </div>
-   <!-- Modal -->
+<!-- Modal -->
 <div class="modal fade" id="trailerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -126,6 +100,7 @@
 </div>
 <script src="~/Content/User/js/jquery.slidey.js"></script>
 <script src="~/Content/User/js/jquery.dotdotdot.min.js"></script>
+<script src="~/Scripts/plugin/moment.js"></script>
 <script type="text/javascript">
     $("#slidey").slidey({
         interval: 8000,
@@ -134,11 +109,10 @@
         showList: true
     });
     $(".slidey-list-description").dotdotdot();
-</script>
-<script>
+
     $(document).ready(function () {
         $('.nav-item').first().addClass('active');
-        var loadShowDateId =$('.nav-item a').first().attr("id");
+        var loadShowDateId = $('.nav-item a').first().attr("id");
         $.ajax({
             method: 'GET',
             url: '/Home/GetFilmByShowDate',
@@ -154,51 +128,48 @@
                 method: 'GET',
                 url: '/Home/GetFilmByShowDate',
                 data: { showDate: showDateId },
-                success: function(data)
-                {
+                success: function (data) {
                     $('#lstFilm').html(data);
                 }
-               
+
             });
         });
-        
+
     });
-</script>
- <!--Script for modal-->
-<script>
+
     var videoSrc;
     var videoName;
-    function Trailer(url,name) {
-        //if (url.includes('watch?v='))
-        //{
-        //   videoSrc=url.replace('watch?v=', 'embed/');
-        //}
+    function Trailer(url, name) {
         videoSrc = url;
         videoName = name;
         $('p').html('Trailer - ' + name);
         $("#trailerModal iframe").attr('src', videoSrc + "?rel=0&amp;showinfo=0&amp;modestbranding=1&amp;autoplay=1");
     };
-
-        // Gets the video src from the data-src on each button
-        //var videoSrc;
-        //$(".playWrapper").click(function () {
-        //    videoSrc = $(this).val();
-
-        //});
-
-
-        //when the modal is opened autoplay it
-        //$('#myModal1').on('shown.bs.modal', function () {
-
-        //     set the video src to autoplay and not to show related video. Youtube related video is like a box of chocolates... you never know what you're gonna get
-        //    $("#myModal1 iframe").attr('src', videoSrc + "?rel=0&amp;showinfo=0&amp;modestbranding=1&amp;autoplay=1");
-        //});
-
-
-        // stop playing the youtube video when I close the modal
+    // stop playing the youtube video when I close the modal
     $('#trailerModal').on('hide.bs.modal', function () {
-            // a poor man's stop video
+        // a poor man's stop video
         $("#trailerModal iframe").attr('src', videoSrc);
+    });
+
+    function bookSeat(filmId, filmName, queue, roomId) {
+        $.ajax({
+            method: 'GET',
+            url: 'Home/FilmDetail',
+            data: {
+                filmId: filmId,
+                roomId: roomId,
+                queue: queue
+            },
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                if (result.response) {
+                    $('#film-name').text(filmName);
+                    $('#cinema-des').text(result.CinemaName);
+                    $('#showtime-des').text(moment(result.ShowtimeName).format("DD-MM-YYYY"));
+                    $('#queue-des').text(queue);
+                }
+            }
         });
-        
+    }
 </script>
