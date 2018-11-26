@@ -88,5 +88,11 @@ namespace Movie.Presentation.Controllers
             return PartialView("_GetShowtimeByShowDate", listShowtimes);
 
         }
+        public JsonResult FilmDetail(int filmId, int roomId, int queue)
+        {
+            var cinemaName = cinemaService.GetAll().Select(n => n.Name).FirstOrDefault();
+            var showtimeName = showtimeService.GetAll().Where(n => n.FilmId == filmId && n.RoomId == roomId && n.Queue == queue).Select(n => n.ShowDate).FirstOrDefault();
+            return Json(new { response = true, CinemaName = cinemaName, ShowtimeName = showtimeName }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

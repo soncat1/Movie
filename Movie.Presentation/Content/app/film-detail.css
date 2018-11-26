@@ -31,3 +31,70 @@ body {
     color: #fff;
     opacity: 1;
 }
+
+.tab-films {
+        display: inline-block;
+        margin-bottom: 30px;
+    }
+
+        .tab-films > li.active {
+            border-bottom: 4px solid;
+            border-image: linear-gradient(to right, rgb(57,173,240) 0%,rgb(7,95,163) 100%);
+            border-image-slice: 1;
+            border-width: 0px 0px 4px 0px;
+        }
+
+    .text-center {
+        margin-top: 20px;
+    }
+
+    .thumb {
+        display: flex;
+        flex-wrap: wrap;
+        list-style: none;
+    }
+
+        .thumb li {
+            width: 193px;
+        }
+
+            .thumb li ~ li {
+                margin-left: 20px;
+            }
+
+        .thumb .thumbCaption {
+            padding: 10px 0;
+        }
+
+    .overlay {
+        position: relative;
+    }
+
+        .overlay .thumbnail {
+            display: block;
+        }
+
+        .overlay .time {
+            position: absolute;
+            z-index: 2;
+            right: 3px;
+            bottom: 3px;
+            padding: 2px 5px;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+        }
+
+        .overlay .playWrapper {
+            opacity: 0;
+            position: absolute;
+            z-index: 1;
+            top: 0;
+            width: 227px;
+            height: 360px;
+            background: rgba(0,0,0,0.6) url("http://wptf.com/wp-content/uploads/2014/05/play-button.png") no-repeat scroll center center / 50px 50px;
+        }
+
+
+    .thumb .overlay:hover .playWrapper {
+        opacity: 1;
+    }

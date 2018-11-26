@@ -9,97 +9,7 @@
     List<Seat> seats = ViewBag.Seat;
     List<DateTime> dates = ViewBag.Date;
 }
-<style>
-    .modal-dialog {
-        max-width: 800px;
-        margin: 30px auto;
-    }
-
-
-
-    .modal-body {
-        position: relative;
-        padding: 0px;
-    }
-
-    .close {
-        position: absolute;
-        right: -30px;
-        top: 0;
-        z-index: 999;
-        font-size: 2rem;
-        font-weight: normal;
-        color: #fff;
-        opacity: 1;
-    }
-
-    .tab-films {
-        display: inline-block;
-        margin-bottom: 30px;
-    }
-
-        .tab-films > li.active {
-            border-bottom: 4px solid;
-            border-image: linear-gradient(to right, rgb(57,173,240) 0%,rgb(7,95,163) 100%);
-            border-image-slice: 1;
-            border-width: 0px 0px 4px 0px;
-        }
-
-    .text-center {
-        margin-top: 20px;
-    }
-
-    .thumb {
-        display: flex;
-        flex-wrap: wrap;
-        list-style: none;
-    }
-
-        .thumb li {
-            width: 193px;
-        }
-
-            .thumb li ~ li {
-                margin-left: 20px;
-            }
-
-        .thumb .thumbCaption {
-            padding: 10px 0;
-        }
-
-    .overlay {
-        position: relative;
-    }
-
-        .overlay .thumbnail {
-            display: block;
-        }
-
-        .overlay .time {
-            position: absolute;
-            z-index: 2;
-            right: 3px;
-            bottom: 3px;
-            padding: 2px 5px;
-            background-color: rgba(0, 0, 0, 0.6);
-            color: white;
-        }
-
-        .overlay .playWrapper {
-            opacity: 0;
-            position: absolute;
-            z-index: 1;
-            top: 0;
-            width: 227px;
-            height: 360px;
-            background: rgba(0,0,0,0.6) url("http://wptf.com/wp-content/uploads/2014/05/play-button.png") no-repeat scroll center center / 50px 50px;
-        }
-
-
-    .thumb .overlay:hover .playWrapper {
-        opacity: 1;
-    }
-</style>
+<link href="~/Content/app/film-detail.css" rel="stylesheet" />
 <div class="container" style="margin-bottom:35px;">
     <div class="menu col-md-12">
         <div class="text-center">
@@ -160,7 +70,7 @@
                                     </ul>
                                     <br />
                                     <div style="min-height: 85px;width:227px">
-                                        <button role="button" data-toggle="modal" class="btn btn-success" style="width:100%" data-target="#showtimeModal" id="@item.FilmId">
+                                        <button role="button" data-toggle="modal" class="btn btn-success" style="width:100%" data-target="#showtimeModal" id="@item.FilmId" onclick="Showtime('@item.Name')">
                                             <span><i class="fa fa-ticket mr3"></i></span>
                                             MUA VÉ
                                         </button>
@@ -213,7 +123,7 @@
                                     </ul>
                                     <br />
                                     <div style="min-height: 85px;width:227px">
-                                        <button role="button" data-toggle="modal" class="btn btn-success" style="width:100%" data-target="#showtimeModal" id="@item.FilmId">
+                                        <button role="button" data-toggle="modal" class="btn btn-success" style="width:100%" data-target="#showtimeModal" id="@item.FilmId" onclick="Showtime('@item.Name')">
                                             <span><i class="fa fa-ticket mr3"></i></span>
                                             MUA VÉ
                                         </button>
@@ -229,7 +139,7 @@
     </div>
 </div>
 <!-- Modal -->
-<div class="modal fade" id="trailerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal fade" id="trailerModal" tabindex="-1"  aria-labelledby="exampleModalLabel" 
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -254,7 +164,7 @@
 </div>
 
 <!--Showtime Modal-->
-<div class="modal fade" id="showtimeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal fade" id="showtimeModal" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
     <div class="modal-dialog" role="document" style="width:1000px;">
         <div class="modal-content">
@@ -275,7 +185,8 @@
                     <h1 class="text-center">Rạp <span id="tenrap">Beta Đan phượng</span></h1>
                 </div>
                 <hr />
-                <div class="container">
+                
+                <div class="container-fluid">
                     <ul class="nav nav-pills " role="tablist" style="margin-bottom: 20px; margin-left: 1%; margin-right: 1%;">
                         @foreach (var date in dates)
                         {
@@ -293,16 +204,12 @@
                     </div>
 
                 </div>
-
-
-
-
-
             </div>
 
         </div>
     </div>
 </div>
+<script src="~/Scripts/plugin/moment.js"></script>
 <!--Script for modal-->
 <script>
     var videoSrc;
@@ -314,7 +221,7 @@
         //}
         videoSrc = url;
         videoName = name;
-        $('p').html('Trailer - ' + name);
+        $('#trailerModal p').html('Trailer - ' + name);
         $("#trailerModal iframe").attr('src', videoSrc + "?rel=0&amp;showinfo=0&amp;modestbranding=1&amp;autoplay=1");
     };
 
@@ -340,36 +247,61 @@
         $("#trailerModal iframe").attr('src', videoSrc);
     });
 
-</script>
-<script>
-    $('#showtimeModal').on('shown.bs.modal', function () {
-        $('.showdate').first().addClass('active');
-        var loadShowDateId = $('.showdate a').first().attr("id");
-        var filmId = $('.film-info button').attr("id");
+    function bookSeat(filmId, filmName, queue, roomId) {
+       
         $.ajax({
             method: 'GET',
-            url: '/Phim/GetShowtimeByShowDate',
-            data: { showDate: loadShowDateId, id: filmId },
-            success: function (data) {
-                $('#giochieu').html(data);
+            url: '/Phim/FilmDetail',
+            data: {
+                filmId: filmId,
+                roomId: roomId,
+                queue: queue
+            },
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                if (result.response) {
+                    $('#film-name').text(filmName);
+                    $('#cinema-des').text(result.CinemaName);
+                    $('#showtime-des').text(moment(result.ShowtimeName).format("DD-MM-YYYY"));
+                    $('#queue-des').text(queue);
+                }
             }
-
         });
-        $(".showdate .nav-link").click(function () {
-            var showDateId = $(this).attr("id");
+    }
+</script>
+<script>
+    function Showtime(filmName)
+    {
+            $('#showtimeModal p').html('Bạn đang đặt vé cho phim <span style="color:#337ab7">'+filmName+'</span>');
+            var loadShowDateId = $('.showdate a').first().attr("id");
+            var filmId = $('.film-info button').attr("id");
             $.ajax({
                 method: 'GET',
                 url: '/Phim/GetShowtimeByShowDate',
-                data: { showDate: showDateId, id: filmId },
+                data: { showDate: loadShowDateId, id: filmId },
                 success: function (data) {
                     $('#giochieu').html(data);
                 }
 
             });
-        });
+            $(".showdate .nav-link").click(function () {
+                var showDateId = $(this).attr("id");
+                $.ajax({
+                    method: 'GET',
+                    url: '/Phim/GetShowtimeByShowDate',
+                    data: { showDate: showDateId, id: filmId },
+                    success: function (data) {
+                        $('#giochieu').html(data);
+                    }
 
-    });
-        
+                });
+            });
+            $('#showtimeModal').on('hidden.bs.modal', function () {
+                $('#modalFilm').modal('hide');
+            });
+    }
+    
 
 </script>
 
