@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace Movie.Presentation.Areas.Admin.Controllers
 {
-    public class SeatController : Controller
+    public class SeatController : BaseController
     {
         private SeatService seatService;
         private RoomService roomService;
@@ -23,24 +23,49 @@ namespace Movie.Presentation.Areas.Admin.Controllers
         // GET: Admin/Seat
         public ActionResult Index()
         {
-            return View(seatService.GetAll());
+            var result = Authenticate();
+            if(result==1)
+            {
+                return View(seatService.GetAll());
+            }
+            else
+            {
+                return View("Error404");
+            }
         }
         public ActionResult Details(int id)
         {
-            Seat seat = seatService.GetSeat(id);
-            if (seat == null)
+            var result = Authenticate();
+            if(result==1)
             {
-                return HttpNotFound();
+                Seat seat = seatService.GetSeat(id);
+                if (seat == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(seat);
             }
-            return View(seat);
+            else
+            {
+                return View("Error404");
+            }
         }
         public ActionResult Create()
         {
-            ViewBag.Room = roomService.GetAll();
-            ViewBag.SeatType = seatTypeService.GetAll();
-            return View();
+            var result = Authenticate();
+            if (result==1)
+            {
+                ViewBag.Room = roomService.GetAll();
+                ViewBag.SeatType = seatTypeService.GetAll();
+                return View();
+            }
+            else
+            {
+                return View("Error404");
+            }
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(Seat seat)
         {
             try
@@ -61,13 +86,23 @@ namespace Movie.Presentation.Areas.Admin.Controllers
         }
         public ActionResult Edit(int id)
         {
-            ViewBag.Room = roomService.GetAll();
-            ViewBag.SeatType = seatTypeService.GetAll();
-            Seat seat = seatService.GetSeat(id);
-            return View(seat);
+            var result = Authenticate();
+            if(result==1)
+            {
+                ViewBag.Room = roomService.GetAll();
+                ViewBag.SeatType = seatTypeService.GetAll();
+                Seat seat = seatService.GetSeat(id);
+                return View(seat);
+            }
+            else
+            {
+                return View("Error404");
+            }
+            
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(Seat seat)
         {
             try
@@ -87,11 +122,20 @@ namespace Movie.Presentation.Areas.Admin.Controllers
 
         public ActionResult Delete(int id)
         {
-            Seat seat = seatService.GetSeat(id);
-            return View(seat);
+            var result = Authenticate();
+            if(result==1)
+            {
+                Seat seat = seatService.GetSeat(id);
+                return View(seat);
+            }
+            else
+            {
+                return View("Error404");
+            }
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, Seat seat)
         {
             try
@@ -107,6 +151,18 @@ namespace Movie.Presentation.Areas.Admin.Controllers
                 ModelState.AddModelError("", "Không thể xóa ghế");
             }
             return View(seat);
+        }
+        public int Authenticate()
+        {
+            var employee = (Employee)Session["Employee"];
+            if (employee.Department.Name == "Nhân viên quản lý ghế" || employee.Department.Name == "Tổng giám đốc")
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
         }
     }
 }

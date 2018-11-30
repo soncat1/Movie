@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace Movie.Presentation.Areas.Admin.Controllers
 {
-    public class DepartmentController : Controller
+    public class DepartmentController : BaseController
     {
         private DepartmentService departmentService;
         private CinemaService cinemaService;
@@ -21,23 +21,44 @@ namespace Movie.Presentation.Areas.Admin.Controllers
         // GET: Admin/Department
         public ActionResult Index()
         {
-            return View(departmentService.GetAll());
+            var result = Authenticate();
+            if (result == 1)
+            {
+                return View(departmentService.GetAll());
+            }
+            else
+                return View("Error404");
         }
         public ActionResult Details(int id)
         {
-            Department department = departmentService.GetDepartment(id);
-            if (department == null)
+            var result = Authenticate();
+            if (result == 1)
             {
-                return HttpNotFound();
+                Department department = departmentService.GetDepartment(id);
+                if (department == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(department);
             }
-            return View(department);
+            else
+                return View("Error404");
+          
         }
         public ActionResult Create()
         {
-            ViewBag.Cinema = cinemaService.GetAll();
-            return View();
+            var result = Authenticate();
+            if (result == 1)
+            {
+                ViewBag.Cinema = cinemaService.GetAll();
+                return View();
+            }
+            else
+                return View("Error404");
+            
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(Department department)
         {
             try
@@ -59,12 +80,20 @@ namespace Movie.Presentation.Areas.Admin.Controllers
         }
         public ActionResult Edit(int id)
         {
-            ViewBag.Cinema = cinemaService.GetAll();
-            Department department = departmentService.GetDepartment(id);
-            return View(department);
+            var result = Authenticate();
+            if (result == 1)
+            {
+                ViewBag.Cinema = cinemaService.GetAll();
+                Department department = departmentService.GetDepartment(id);
+                return View(department);
+            }
+            else
+                return View("Error404");
+            
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(Department department)
         {
             try
@@ -84,11 +113,19 @@ namespace Movie.Presentation.Areas.Admin.Controllers
 
         public ActionResult Delete(int id)
         {
-            Department department = departmentService.GetDepartment(id);
-            return View(department);
+            var result = Authenticate();
+            if (result == 1)
+            {
+                Department department = departmentService.GetDepartment(id);
+                return View(department);
+            }
+            else
+                return View("Error404");
+            
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, Department department)
         {
             try
@@ -104,6 +141,18 @@ namespace Movie.Presentation.Areas.Admin.Controllers
                 ModelState.AddModelError("", "Không thể xóa chức vụ");
             }
             return View(department);
+        }
+        public int Authenticate()
+        {
+            var employee = (Employee)Session["Employee"];
+            if (employee.Department.Name == "Nhân viên quản lý phòng ban" || employee.Department.Name == "Tổng giám đốc")
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
         }
     }
 }

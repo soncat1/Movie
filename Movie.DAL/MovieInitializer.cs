@@ -35,14 +35,21 @@ namespace Movie.DAL
 
             List<Department> departments = new List<Department>()
         {
-            new Department () {Name="Nhân viên bán vé",CinemaId=1 }
+            new Department() {Name="Nhân viên quản lý vé",CinemaId=1 },
+            new Department() {Name="Nhân viên quản lý phim",CinemaId=1 },
+            new Department() {Name="Nhân viên quản lý khách hàng",CinemaId=1 },
+            new Department() {Name="Nhân viên quản lý phòng ban",CinemaId=1 },
+            new Department() {Name="Nhân viên quản lý phòng chiếu",CinemaId=1 },
+            new Department() {Name="Nhân viên quản lý ghế",CinemaId=1 },
+            new Department() {Name="Nhân viên quản lý lịch chiếu",CinemaId=1 },
+            new Department() {Name="Tổng giám đốc",CinemaId=1 }
         };
             context.Departments.AddRange(departments);
             context.SaveChanges();
 
             List<Employee> employees = new List<Employee>()
             {
-                new Employee() {Name="Đỗ Hồng Sơn",DateOfBirth=DateTime.Parse("11/27/1996"),DepartmentId=1,Address="Hà Nội",CMT=123321123,UserName="son1996",Password="1" }
+                new Employee() {Name="Đỗ Hồng Sơn",DateOfBirth=DateTime.Parse("11/27/1996"),DepartmentId=8,Address="Hà Nội",CMT=123321123,UserName="son1996",Password="1" }
             };
             context.Employees.AddRange(employees);
             context.SaveChanges();
@@ -109,7 +116,7 @@ namespace Movie.DAL
 
             List<Customer> customers = new List<Customer>()
             {
-                new Customer() {Name="Rui",DateOfBirth=DateTime.Parse("8/8/1996"), UserName="rui",Password="1",Address="Hà Nội",Type=1 }
+                new Customer() {Name="Rui",DateOfBirth=DateTime.Parse("8/8/1996"),Password="1",Address="Hà Nội",Type=1,Email="rui@gmail.com" }
             };
             context.Customers.AddRange(customers);
             context.SaveChanges();

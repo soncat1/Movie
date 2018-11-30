@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace Movie.Presentation.Areas.Admin.Controllers
 {
-    public class RoomController : Controller
+    public class RoomController : BaseController
     {
         private RoomService roomService;
         private CinemaService cinemaService;
@@ -23,24 +23,52 @@ namespace Movie.Presentation.Areas.Admin.Controllers
         // GET: Admin/Room
         public ActionResult Index()
         {
-            return View(roomService.GetAll());
+            var result = Authenticate();
+            if(result==1)
+            {
+                return View(roomService.GetAll());
+            }
+            else
+            {
+                return View("Error404");
+            }
+            
         }
         public ActionResult Details(int id)
         {
-            Room room = roomService.GetRoom(id);
-            if (room == null)
+            var result = Authenticate();
+            if(result==1)
             {
-                return HttpNotFound();
+                Room room = roomService.GetRoom(id);
+                if (room == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(room);
             }
-            return View(room);
+            else
+            {
+                return View("Error404");
+            }
+            
         }
         public ActionResult Create()
         {
-            ViewBag.Cinema = cinemaService.GetAll();
-            ViewBag.RoomType = roomTypeService.GetAll();
-            return View();
+            var result = Authenticate();
+            if (result==1)
+            {
+                ViewBag.Cinema = cinemaService.GetAll();
+                ViewBag.RoomType = roomTypeService.GetAll();
+                return View();
+            }
+            else
+            {
+                return View("Error404");
+            }
+           
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(Room room)
         {
             try
@@ -61,13 +89,23 @@ namespace Movie.Presentation.Areas.Admin.Controllers
         }
         public ActionResult Edit(int id)
         {
-            ViewBag.Cinema = cinemaService.GetAll();
-            ViewBag.RoomType = roomTypeService.GetAll();
-            Room room = roomService.GetRoom(id);
-            return View(room);
+            var result = Authenticate();
+            if(result==1)
+            {
+                ViewBag.Cinema = cinemaService.GetAll();
+                ViewBag.RoomType = roomTypeService.GetAll();
+                Room room = roomService.GetRoom(id);
+                return View(room);
+            }
+            else
+            {
+                return View("Error404");
+            }
+           
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(Room room)
         {
             try
@@ -87,11 +125,20 @@ namespace Movie.Presentation.Areas.Admin.Controllers
 
         public ActionResult Delete(int id)
         {
-            Room room = roomService.GetRoom(id);
-            return View(room);
+            var result = Authenticate();
+            if(result==1)
+            {
+                Room room = roomService.GetRoom(id);
+                return View(room);
+            }
+            else
+            {
+                return View("Error404");
+            }
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, Room room)
         {
             try
@@ -107,6 +154,18 @@ namespace Movie.Presentation.Areas.Admin.Controllers
                 ModelState.AddModelError("", "Không thể xóa phòng chiếu");
             }
             return View(room);
+        }
+        public int Authenticate()
+        {
+            var employee = (Employee)Session["Employee"];
+            if (employee.Department.Name == "Nhân viên quản lý phòng chiếu" || employee.Department.Name == "Tổng giám đốc")
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
         }
     }
 }

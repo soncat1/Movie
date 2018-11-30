@@ -9,33 +9,56 @@ using System.Web.Mvc;
 
 namespace Movie.Presentation.Areas.Admin.Controllers
 {
-    public class CategoryController : Controller
+    public class CategoryController : BaseController
     {
 
         private CategoryService categoryService;
+        private EmployeeService employeeService;
         public CategoryController()
         {
+
             categoryService = new CategoryService();
+            employeeService = new EmployeeService();
         }
         // GET: Admin/Category
         public ActionResult Index()
         {
-            return View(categoryService.GetAll());
+            var result = Authenticate();
+            if (result == 1)
+                return View(categoryService.GetAll());
+            else
+                return View("Error404");
         }
         public ActionResult Details(int id)
         {
-            Category category = categoryService.GetCategory(id);
-            if (category == null)
+            var result = Authenticate();
+            if (result == 1)
             {
-                return HttpNotFound();
+                Category category = categoryService.GetCategory(id);
+                if (category == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(category);
             }
-            return View(category);
+            else
+                return View("Error404");
+
         }
         public ActionResult Create()
         {
-            return View();
+            var result = Authenticate();
+            if (result == 1)
+            {
+                return View();
+            }
+            else
+            {
+                return View("Error404");
+            }
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(Category category)
         {
             try
@@ -56,11 +79,21 @@ namespace Movie.Presentation.Areas.Admin.Controllers
         }
         public ActionResult Edit(int id)
         {
-            Category category = categoryService.GetCategory(id);
-            return View(category);
+            var result = Authenticate();
+            if (result == 1)
+            {
+                Category category = categoryService.GetCategory(id);
+                return View(category);
+            }
+            else
+            {
+                return View("Error404");
+            }
+
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(Category category)
         {
             try
@@ -80,11 +113,21 @@ namespace Movie.Presentation.Areas.Admin.Controllers
 
         public ActionResult Delete(int id)
         {
-            Category category = categoryService.GetCategory(id);
-            return View(category);
+            var result = Authenticate();
+            if (result == 1)
+            {
+                Category category = categoryService.GetCategory(id);
+                return View(category);
+            }
+            else
+            {
+                return View("Error404");
+            }
+
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, Category category)
         {
             try
@@ -100,6 +143,18 @@ namespace Movie.Presentation.Areas.Admin.Controllers
                 ModelState.AddModelError("", "Không thể xóa danh mục");
             }
             return View(category);
+        }
+        public int Authenticate()
+        {
+            var employee = (Employee)Session["Employee"];
+            if (employee.Department.Name == "Nhân viên quản lý phim" || employee.Department.Name == "Tổng giám đốc")
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
         }
     }
 }

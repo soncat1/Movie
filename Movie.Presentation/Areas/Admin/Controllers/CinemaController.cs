@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace Movie.Presentation.Areas.Admin.Controllers
 {
-    public class CinemaController : Controller
+    public class CinemaController : BaseController
     {
 
         private CinemaService cinemaService;
@@ -20,22 +20,46 @@ namespace Movie.Presentation.Areas.Admin.Controllers
         // GET: Admin/Cinema
         public ActionResult Index()
         {
-            return View(cinemaService.GetAll());
+            var result = Authenticate();
+            if (result==1)
+            {
+                return View(cinemaService.GetAll());
+            }
+            else
+            {
+                return View("Error404");
+            }
+            
         }
         public ActionResult Details(int id)
         {
-            Cinema cinema = cinemaService.GetCinema(id);
-            if (cinema == null)
+            var result = Authenticate();
+            if(result==1)
             {
-                return HttpNotFound();
+                Cinema cinema = cinemaService.GetCinema(id);
+                if (cinema == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(cinema);
             }
-            return View(cinema);
+            else
+            {
+                return View("Error404");
+            }
+            
         }
         public ActionResult Create()
         {
-            return View();
+            var result = Authenticate();
+            if(result==1)
+            {
+                return View();
+            }
+            return View("Error404");
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(Cinema cinema)
         {
             try
@@ -56,11 +80,21 @@ namespace Movie.Presentation.Areas.Admin.Controllers
         }
         public ActionResult Edit(int id)
         {
-            Cinema cinema = cinemaService.GetCinema(id);
-            return View(cinema);
+            var result = Authenticate();
+            if(result==1)
+            {
+                Cinema cinema = cinemaService.GetCinema(id);
+                return View(cinema);
+            }
+            else
+            {
+                return View("Error404");
+            }
+            
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(Cinema cinema)
         {
             try
@@ -80,11 +114,21 @@ namespace Movie.Presentation.Areas.Admin.Controllers
 
         public ActionResult Delete(int id)
         {
-            Cinema cinema = cinemaService.GetCinema(id);
-            return View(cinema);
+            var result = Authenticate();
+            if (result==1)
+            {
+                Cinema cinema = cinemaService.GetCinema(id);
+                return View(cinema);
+            }
+            else
+            {
+                return View("Error404");
+            }
+            
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, Cinema cinema)
         {
             try
@@ -100,6 +144,18 @@ namespace Movie.Presentation.Areas.Admin.Controllers
                 ModelState.AddModelError("", "Không thể xóa rạp chiếu");
             }
             return View(cinema);
+        }
+        public int Authenticate()
+        {
+            var employee = (Employee)Session["Employee"];
+            if (employee.Department.Name == "Tổng giám đốc")
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
         }
     }
 }

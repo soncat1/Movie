@@ -1,0 +1,118 @@
+﻿@model Movie.Presentation.Models.LoginModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="modal-content">
+    <div class="modal-header">
+        Đăng nhập và Đăng ký
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    </div>
+    <section>
+        <div class="modal-body">
+            <div class="w3_login_module">
+                <div class="module form-module">
+                    <div class="toggle">
+                        <i class="fa fa-times fa-pencil"></i>
+                        <div class="tooltip">Đăng ký</div>
+                    </div>
+                    <div class="form" id="loginForm">
+                        <h3>Đăng nhập vào tài khoản</h3>
+                        <form action="/Login/Login" method="post">
+                            <input type="text" name="UserName" placeholder="Tên đăng nhập" required>
+                            <input type="password" name="Password" placeholder="Mật khẩu" required>
+                            <input type="submit" value="Đăng nhập">
+                        </form>
+                    </div>
+                    <div class="form" id="registerForm">
+                        <h3>Create an account</h3>
+                        <form action="/Login/Register" method="post" onsubmit="return Submit()">
+                            <span id="notice" style="color:red"></span>
+                            <input id="regEmail" type="email" name="Email" placeholder="Địa chỉ Email" required>  
+                            <input type="password" name="Password" placeholder="Mật khẩu" required>
+                            <input type="password" name="Password" placeholder="Nhập lại mật khẩu" required />
+                            <input type="text" name="Name" placeholder="Họ tên" required>
+                            <input type="text" class="datepicker" name="DateOfBirth" placeholder="Ngày sinh" required>                          
+                            <input type="text" name="Address" placeholder="Địa chỉ" required>
+                            <input type="submit" value="Đăng ký">
+                        </form>
+                    </div>
+                    <div class="cta"><a href="#">Forgot your password?</a></div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<script>
+    $('.toggle').click(function () {
+        // Switches the Icon
+        $(this).children('i').toggleClass('fa-pencil');
+        // Switches the forms
+        $('.form').animate({
+            height: "toggle",
+            'padding-top': 'toggle',
+            'padding-bottom': 'toggle',
+            opacity: "toggle"
+        }, "slow");
+    });
+
+    //Return Email Notice
+    $('#regEmail').change(function () {
+        var strEmail = $('#regEmail').val();
+        if (strEmail != "") {
+            $.ajax({
+                method: 'GET',
+                url: '/Login/CheckEmail',
+                data: { email: strEmail },
+                success: function (data) {
+                    if (data == false) {
+                        $('#notice').css("color", "red");
+                        
+                        $('#notice').html("Email này đã được đăng ký");
+                        $('#notice').attr("data-valid", "0");
+                    }
+                    else {
+                        $('#notice').css("color", "green");
+                        $('#notice').html("Email này có thể sử dụng");
+                        $('#notice').attr("data-valid", "1");
+                    }
+                }
+            })
+        }
+        else {
+            $('#notice').html("");
+        }
+
+
+    });
+
+    function Submit() {
+        var ktEmail = $('#notice').attr("data-valid");
+        var ktPassword= $('#registerForm input:nth-child(3)').val()==$('#registerForm input:nth-child(4)').val()?true:false;
+        if(ktEmail=='1')
+        {
+            if (ktPassword == true)
+            {
+                alert("Đăng ký thành công");
+                return true;
+            }
+            else
+            {
+                alert("Mật khẩu không trùng khớp!");
+                $('#registerForm input:nth-child(3)').val("");
+                $('#registerForm input:nth-child(4)').val("");
+                return false;
+            }
+            
+        }
+        else
+        {
+            alert("Thông tin nhập vào không đúng");
+            $('#registerForm input:nth-child(3)').val("");
+            $('#registerForm input:nth-child(4)').val("");
+            return false;
+        }
+    }
+</script>

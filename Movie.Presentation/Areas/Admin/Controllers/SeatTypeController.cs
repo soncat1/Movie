@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace Movie.Presentation.Areas.Admin.Controllers
 {
-    public class SeatTypeController : Controller
+    public class SeatTypeController : BaseController
     {
         private SeatTypeService seatTypeService;
         public SeatTypeController()
@@ -19,22 +19,50 @@ namespace Movie.Presentation.Areas.Admin.Controllers
         // GET: Admin/SeatType
         public ActionResult Index()
         {
-            return View(seatTypeService.GetAll());
+            var result = Authenticate();
+            if (result==1)
+            {
+                return View(seatTypeService.GetAll());
+            }
+            else
+            {
+                return View("Error404");
+            }
+            
         }
         public ActionResult Details(int id)
         {
-            SeatType seatType = seatTypeService.GetSeatType(id);
-            if (seatType == null)
+            var result = Authenticate();
+            if(result==1)
             {
-                return HttpNotFound();
+                SeatType seatType = seatTypeService.GetSeatType(id);
+                if (seatType == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(seatType);
             }
-            return View(seatType);
+            else
+            {
+                return View("Error404");
+            }
+            
         }
         public ActionResult Create()
         {
-            return View();
+            var result = Authenticate();
+            if(result==1)
+            {
+                return View();
+            }
+            else
+            {
+                return View("Error404");
+            }
+            
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(SeatType seatType)
         {
             try
@@ -55,11 +83,21 @@ namespace Movie.Presentation.Areas.Admin.Controllers
         }
         public ActionResult Edit(int id)
         {
-            SeatType seatType = seatTypeService.GetSeatType(id);
-            return View(seatType);
+            var result = Authenticate();
+            if(result==1)
+            {
+                SeatType seatType = seatTypeService.GetSeatType(id);
+                return View(seatType);
+            }
+            else
+            {
+                return View("Error404");
+            }
+           
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(SeatType seatType)
         {
             try
@@ -79,11 +117,21 @@ namespace Movie.Presentation.Areas.Admin.Controllers
 
         public ActionResult Delete(int id)
         {
-            SeatType seatType = seatTypeService.GetSeatType(id);
-            return View(seatType);
+            var result = Authenticate();
+            if(result==1)
+            {
+                SeatType seatType = seatTypeService.GetSeatType(id);
+                return View(seatType);
+            }
+            else
+            {
+                return View("Error404");
+            }
+            
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, SeatType seatType)
         {
             try
@@ -99,6 +147,18 @@ namespace Movie.Presentation.Areas.Admin.Controllers
                 ModelState.AddModelError("", "Không thể xóa loại ghế");
             }
             return View(seatType);
+        }
+        public int Authenticate()
+        {
+            var employee = (Employee)Session["Employee"];
+            if (employee.Department.Name == "Nhân viên quản lý ghế" || employee.Department.Name == "Tổng giám đốc")
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
         }
     }
 }

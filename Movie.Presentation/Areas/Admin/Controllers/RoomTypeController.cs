@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace Movie.Presentation.Areas.Admin.Controllers
 {
-    public class RoomTypeController : Controller
+    public class RoomTypeController : BaseController
     {
         private RoomTypeService roomTypeService;
         public RoomTypeController()
@@ -19,22 +19,48 @@ namespace Movie.Presentation.Areas.Admin.Controllers
         // GET: Admin/RoomType
         public ActionResult Index()
         {
-            return View(roomTypeService.GetAll());
+            var result = Authenticate();
+            if(result==1)
+            {
+                return View(roomTypeService.GetAll());
+            }
+            else
+            {
+                return View("Error404");
+            }
         }
         public ActionResult Details(int id)
         {
-            RoomType roomType = roomTypeService.GetRoomType(id);
-            if (roomType == null)
+            var result = Authenticate();
+            if(result==1)
             {
-                return HttpNotFound();
+                RoomType roomType = roomTypeService.GetRoomType(id);
+                if (roomType == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(roomType);
             }
-            return View(roomType);
+            else
+            {
+                return View("Error404");
+            }
         }
         public ActionResult Create()
         {
-            return View();
+            var result = Authenticate();
+            if (result == 1)
+            {
+                return View();
+            }
+            else
+            {
+                return View("Error404");
+            }
+            
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(RoomType roomType)
         {
             try
@@ -55,11 +81,20 @@ namespace Movie.Presentation.Areas.Admin.Controllers
         }
         public ActionResult Edit(int id)
         {
-            RoomType roomType = roomTypeService.GetRoomType(id);
-            return View(roomType);
+            var result = Authenticate();
+            if (result==1)
+            {
+                RoomType roomType = roomTypeService.GetRoomType(id);
+                return View(roomType);
+            }
+            else
+            {
+                return View("Error404");
+            }
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(RoomType roomType)
         {
             try
@@ -79,11 +114,20 @@ namespace Movie.Presentation.Areas.Admin.Controllers
 
         public ActionResult Delete(int id)
         {
-            RoomType roomType = roomTypeService.GetRoomType(id);
-            return View(roomType);
+            var result = Authenticate();
+            if (result==1)
+            {
+                RoomType roomType = roomTypeService.GetRoomType(id);
+                return View(roomType);
+            }
+            else
+            {
+                return View("Error404");
+            }
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, RoomType roomType)
         {
             try
@@ -99,6 +143,18 @@ namespace Movie.Presentation.Areas.Admin.Controllers
                 ModelState.AddModelError("", "Không thể xóa loại phòng chiếu");
             }
             return View(roomType);
+        }
+        public int Authenticate()
+        {
+            var employee = (Employee)Session["Employee"];
+            if (employee.Department.Name == "Nhân viên quản lý phòng chiếu" || employee.Department.Name == "Tổng giám đốc")
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
         }
     }
 }

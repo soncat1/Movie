@@ -197,31 +197,31 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\BaseController.cs" />
     <Compile Include="Areas\Admin\Controllers\CategoryController.cs" />
     <Compile Include="Areas\Admin\Controllers\CinemaController.cs" />
     <Compile Include="Areas\Admin\Controllers\CustomerController.cs" />
     <Compile Include="Areas\Admin\Controllers\DepartmentController.cs" />
     <Compile Include="Areas\Admin\Controllers\EmployeeController.cs" />
     <Compile Include="Areas\Admin\Controllers\FilmController.cs" />
+    <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
     <Compile Include="Areas\Admin\Controllers\RoomController.cs" />
     <Compile Include="Areas\Admin\Controllers\RoomTypeController.cs" />
     <Compile Include="Areas\Admin\Controllers\SeatController.cs" />
     <Compile Include="Areas\Admin\Controllers\SeatTypeController.cs" />
     <Compile Include="Areas\Admin\Controllers\ShowtimeController.cs" />
+    <Compile Include="Areas\Admin\Models\LoginModel.cs" />
     <Compile Include="Controllers\BookingController.cs" />
     <Compile Include="Controllers\ChiTietPhimController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LichChieuController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\PhimController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201810270920204_InitialCreate.cs" />
-    <Compile Include="Migrations\201810270920204_InitialCreate.Designer.cs">
-      <DependentUpon>201810270920204_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\FilmViewModels.cs" />
+    <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\SeatViewModel.cs" />
     <Compile Include="Movie\DAL\MovieContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -255,6 +255,34 @@
     <Content Include="Areas\Admin\Content\js\plugins\morris\morris.js" />
     <Content Include="Areas\Admin\Content\js\plugins\morris\raphael-2.1.0.min.js" />
     <Content Include="Areas\Admin\Content\js\sb-admin.js" />
+    <Content Include="Content\Admin\css\bootstrap.css" />
+    <Content Include="Content\Admin\css\bootstrap.min.css" />
+    <Content Include="Content\Admin\css\plugins\dataTables\dataTables.bootstrap.css" />
+    <Content Include="Content\Admin\css\plugins\morris\morris-0.4.3.min.css" />
+    <Content Include="Content\Admin\css\plugins\social-buttons\social-buttons.css" />
+    <Content Include="Content\Admin\css\plugins\timeline\timeline.css" />
+    <Content Include="Content\Admin\css\sb-admin.css" />
+    <Content Include="Content\Admin\font-awesome\css\font-awesome.css" />
+    <Content Include="Content\Admin\font-awesome\css\font-awesome.min.css" />
+    <Content Include="Content\Admin\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\Admin\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\Admin\js\bootstrap.js" />
+    <Content Include="Content\Admin\js\bootstrap.min.js" />
+    <Content Include="Content\Admin\js\demo\dashboard-demo.js" />
+    <Content Include="Content\Admin\js\demo\flot-demo.js" />
+    <Content Include="Content\Admin\js\demo\morris-demo.js" />
+    <Content Include="Content\Admin\js\jquery-1.10.2.js" />
+    <Content Include="Content\Admin\js\plugins\dataTables\dataTables.bootstrap.js" />
+    <Content Include="Content\Admin\js\plugins\dataTables\jquery.dataTables.js" />
+    <Content Include="Content\Admin\js\plugins\flot\excanvas.min.js" />
+    <Content Include="Content\Admin\js\plugins\flot\jquery.flot.js" />
+    <Content Include="Content\Admin\js\plugins\flot\jquery.flot.pie.js" />
+    <Content Include="Content\Admin\js\plugins\flot\jquery.flot.resize.js" />
+    <Content Include="Content\Admin\js\plugins\flot\jquery.flot.tooltip.min.js" />
+    <Content Include="Content\Admin\js\plugins\metisMenu\jquery.metisMenu.js" />
+    <Content Include="Content\Admin\js\plugins\morris\morris.js" />
+    <Content Include="Content\Admin\js\plugins\morris\raphael-2.1.0.min.js" />
+    <Content Include="Content\Admin\js\sb-admin.js" />
     <Content Include="Content\app\film-detail.css" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
@@ -501,6 +529,41 @@
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
+    <Content Include="Areas\Admin\Views\Login\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\Error404.cshtml" />
+    <Content Include="Content\Admin\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\Admin\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\Admin\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\Admin\font-awesome\fonts\FontAwesome.otf" />
+    <Content Include="Content\Admin\font-awesome\less\bordered-pulled.less" />
+    <Content Include="Content\Admin\font-awesome\less\core.less" />
+    <Content Include="Content\Admin\font-awesome\less\fixed-width.less" />
+    <Content Include="Content\Admin\font-awesome\less\font-awesome.less" />
+    <Content Include="Content\Admin\font-awesome\less\icons.less" />
+    <Content Include="Content\Admin\font-awesome\less\larger.less" />
+    <Content Include="Content\Admin\font-awesome\less\list.less" />
+    <Content Include="Content\Admin\font-awesome\less\mixins.less" />
+    <Content Include="Content\Admin\font-awesome\less\path.less" />
+    <Content Include="Content\Admin\font-awesome\less\rotated-flipped.less" />
+    <Content Include="Content\Admin\font-awesome\less\spinning.less" />
+    <Content Include="Content\Admin\font-awesome\less\stacked.less" />
+    <Content Include="Content\Admin\font-awesome\less\variables.less" />
+    <Content Include="Content\Admin\font-awesome\scss\font-awesome.scss" />
+    <Content Include="Content\Admin\font-awesome\scss\_bordered-pulled.scss" />
+    <Content Include="Content\Admin\font-awesome\scss\_core.scss" />
+    <Content Include="Content\Admin\font-awesome\scss\_fixed-width.scss" />
+    <Content Include="Content\Admin\font-awesome\scss\_icons.scss" />
+    <Content Include="Content\Admin\font-awesome\scss\_larger.scss" />
+    <Content Include="Content\Admin\font-awesome\scss\_list.scss" />
+    <Content Include="Content\Admin\font-awesome\scss\_mixins.scss" />
+    <Content Include="Content\Admin\font-awesome\scss\_path.scss" />
+    <Content Include="Content\Admin\font-awesome\scss\_rotated-flipped.scss" />
+    <Content Include="Content\Admin\font-awesome\scss\_spinning.scss" />
+    <Content Include="Content\Admin\font-awesome\scss\_stacked.scss" />
+    <Content Include="Content\Admin\font-awesome\scss\_variables.scss" />
+    <Content Include="Content\Admin\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\Admin\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\Admin\fonts\glyphicons-halflings-regular.woff" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\jquery-3.0.0.js" />
@@ -586,10 +649,11 @@
     <Content Include="Views\Phim\Index.cshtml" />
     <Content Include="Views\Phim\_GetShowtimeByShowDate.cshtml" />
     <Content Include="Views\Booking\Index.cshtml" />
+    <Content Include="Views\Login\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Areas\Admin\Views\Base\" />
     <Folder Include="Content\Images\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>
@@ -610,11 +674,6 @@
       <Project>{9606692e-4d56-41b2-abbf-e230ecf75f04}</Project>
       <Name>Movie.Service</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201810270920204_InitialCreate.resx">
-      <DependentUpon>201810270920204_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />

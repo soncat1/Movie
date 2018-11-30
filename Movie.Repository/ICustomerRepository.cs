@@ -9,5 +9,7 @@ namespace Movie.Repository
 {
     public interface ICustomerRepository:IRepository<Customer>
     {
+        int Login(string userName, string passWord);
+        Customer GetCustomerLogin(string userName);
     }
 }

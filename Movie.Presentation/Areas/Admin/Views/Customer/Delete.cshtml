@@ -29,14 +29,6 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.UserName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UserName)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.Password)
         </dt>
 
@@ -51,6 +43,13 @@
         <dd>
             @Html.DisplayFor(model => model.Address)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
 
         <dt>
             @Html.DisplayNameFor(model => model.Type)
@@ -62,7 +61,8 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">

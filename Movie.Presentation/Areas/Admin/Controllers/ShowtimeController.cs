@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace Movie.Presentation.Areas.Admin.Controllers
 {
-    public class ShowtimeController : Controller
+    public class ShowtimeController : BaseController
     {
         private ShowtimeService showtimeService;
         private FilmService filmService;
@@ -25,26 +25,50 @@ namespace Movie.Presentation.Areas.Admin.Controllers
         // GET: Admin/Showtime
         public ActionResult Index()
         {
-            return View(showtimeService.GetAll());
+            var result = Authenticate();
+            if(result==1)
+            {
+                return View(showtimeService.GetAll());
+            }
+            else
+            {
+                return View("Error404");
+            }
+            
         }
         public ActionResult Details(int id)
         {
-            Showtime showtime = showtimeService.GetShowtime(id);
-            if (showtime == null)
+            var result = Authenticate();
+            if(result==1)
             {
-                return HttpNotFound();
+                Showtime showtime = showtimeService.GetShowtime(id);
+                if (showtime == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(showtime);
             }
-            return View(showtime);
+            else
+            {
+                return View("Error404");
+            }
+            
         }
         public ActionResult Create()
-
         {
-            ViewBag.Film = filmService.GetAll();
-            ViewBag.Room = roomService.GetAll();
-            ViewBag.Queue = listQueue;
-
-
-            return View();
+            var result = Authenticate();
+            if(result==1)
+            {
+                ViewBag.Film = filmService.GetAll();
+                ViewBag.Room = roomService.GetAll();
+                ViewBag.Queue = listQueue;
+                return View();
+            }
+            else
+            {
+                return View("Error404");
+            }
+          
         }
 
         public JsonResult CheckCreate(DateTime? showDate, int? roomId)
@@ -70,6 +94,7 @@ namespace Movie.Presentation.Areas.Admin.Controllers
             return Json(listQueue, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(Showtime showtime)
         {
             try
@@ -91,16 +116,26 @@ namespace Movie.Presentation.Areas.Admin.Controllers
         }
         public ActionResult Edit(int id)
         {
-            ViewBag.Queue = listQueue;
+            var result = Authenticate();
+            if(result==1)
+            {
+                ViewBag.Queue = listQueue;
+
+                Showtime showtime = showtimeService.GetShowtime(id);
+                TempData["Queue"] = showtime.Queue;
+                ViewBag.Film = filmService.GetAll();
+                ViewBag.Room = roomService.GetAll();
+                return View(showtime);
+            }
+            else
+            {
+                return View("Error404");
+            }
             
-            Showtime showtime = showtimeService.GetShowtime(id);
-            TempData["Queue"] = showtime.Queue;
-            ViewBag.Film = filmService.GetAll();
-            ViewBag.Room = roomService.GetAll();
-            return View(showtime);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(Showtime showtime)
         {
             try
@@ -120,11 +155,21 @@ namespace Movie.Presentation.Areas.Admin.Controllers
 
         public ActionResult Delete(int id)
         {
-            Showtime showtime = showtimeService.GetShowtime(id);
-            return View(showtime);
+            var result = Authenticate();
+            if(result==1)
+            {
+                Showtime showtime = showtimeService.GetShowtime(id);
+                return View(showtime);
+            }
+            else
+            {
+                return View("Error404");
+            }
+            
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, Showtime showtime)
         {
             try
@@ -140,6 +185,18 @@ namespace Movie.Presentation.Areas.Admin.Controllers
                 ModelState.AddModelError("", "Không thể xóa lịch chiếu");
             }
             return View(showtime);
+        }
+        public int Authenticate()
+        {
+            var employee = (Employee)Session["Employee"];
+            if (employee.Department.Name == "Nhân viên quản lý lịch chiếu" || employee.Department.Name == "Tổng giám đốc")
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
         }
 
     }

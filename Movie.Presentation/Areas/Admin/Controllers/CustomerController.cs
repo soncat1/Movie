@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace Movie.Presentation.Areas.Admin.Controllers
 {
-    public class CustomerController : Controller
+    public class CustomerController : BaseController
     {
         private CustomerService customerService;
         public CustomerController()
@@ -19,22 +19,39 @@ namespace Movie.Presentation.Areas.Admin.Controllers
         // GET: Admin/Customer
         public ActionResult Index()
         {
-            return View(customerService.GetAll());
+            var result = Authenticate();
+            if (result == 1)
+                return View(customerService.GetAll());
+            else
+                return View("Error404");
         }
         public ActionResult Details(int id)
         {
-            Customer customer = customerService.GetCustomer(id);
-            if (customer == null)
+            var result = Authenticate();
+            if (result == 1)
             {
-                return HttpNotFound();
+                Customer customer = customerService.GetCustomer(id);
+                if (customer == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(customer);
             }
-            return View(customer);
+            else
+                return View("Error404");
+           
         }
         public ActionResult Create()
         {
-            return View();
+            var result = Authenticate();
+            if (result == 1)
+                return View();
+            else
+                return View("Error404");
+           
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(Customer customer)
         {
             try
@@ -55,11 +72,19 @@ namespace Movie.Presentation.Areas.Admin.Controllers
         }
         public ActionResult Edit(int id)
         {
-            Customer customer = customerService.GetCustomer(id);
-            return View(customer);
+            var result = Authenticate();
+            if (result == 1)
+            {
+                Customer customer = customerService.GetCustomer(id);
+                return View(customer);
+            } 
+            else
+                return View("Error404");
+            
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(Customer customer)
         {
             try
@@ -79,11 +104,18 @@ namespace Movie.Presentation.Areas.Admin.Controllers
 
         public ActionResult Delete(int id)
         {
-            Customer customer = customerService.GetCustomer(id);
-            return View(customer);
+            var result = Authenticate();
+            if (result == 1)
+            {
+                Customer customer = customerService.GetCustomer(id);
+                return View(customer);
+            }
+            else
+                return View("Error404");
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, Customer customer)
         {
             try
@@ -99,6 +131,18 @@ namespace Movie.Presentation.Areas.Admin.Controllers
                 ModelState.AddModelError("", "Không thể xóa khách hàng");
             }
             return View(customer);
+        }
+        public int Authenticate()
+        {
+            var employee = (Employee)Session["Employee"];
+            if (employee.Department.Name == "Nhân viên quản lý khách hàng" || employee.Department.Name == "Tổng giám đốc")
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
         }
     }
 }

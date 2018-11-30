@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace Movie.Presentation.Areas.Admin.Controllers
 {
-    public class EmployeeController : Controller
+    public class EmployeeController : BaseController
     {
         
         private EmployeeService employeeService;
@@ -22,23 +22,51 @@ namespace Movie.Presentation.Areas.Admin.Controllers
         // GET: Admin/Employee
         public ActionResult Index()
         {
-            return View(employeeService.GetAll());
+            var result = Authenticate();
+            if(result==1)
+            {
+                return View(employeeService.GetAll());
+            }
+            else
+            {
+                return View("Error404");
+            }
+            
         }
         public ActionResult Details(int id)
         {
-            Employee employee = employeeService.GetEmployee(id);
-            if (employee == null)
+            var result = Authenticate();
+            if(result==1)
             {
-                return HttpNotFound();
+                Employee employee = employeeService.GetEmployee(id);
+                if (employee == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(employee);
             }
-            return View(employee);
+            else
+            {
+                return View("Error404");
+            }
+            
         }
         public ActionResult Create()
         {
-            ViewBag.Department = departmentService.GetAll();
-            return View();
+            var result = Authenticate();
+            if (result==1)
+            {
+                ViewBag.Department = departmentService.GetAll();
+                return View();
+            }
+            else
+            {
+                return View("Error404");
+            }
+            
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(Employee employee)
         {
             try
@@ -59,12 +87,21 @@ namespace Movie.Presentation.Areas.Admin.Controllers
         }
         public ActionResult Edit(int id)
         {
-            ViewBag.Department = departmentService.GetAll();
-            Employee employee = employeeService.GetEmployee(id);
-            return View(employee);
+            var result = Authenticate();
+            if(result==1)
+            {
+                ViewBag.Department = departmentService.GetAll();
+                Employee employee = employeeService.GetEmployee(id);
+                return View(employee);
+            }
+            else
+            {
+                return View("Error404");
+            }
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(Employee employee)
         {
             try
@@ -84,11 +121,21 @@ namespace Movie.Presentation.Areas.Admin.Controllers
 
         public ActionResult Delete(int id)
         {
-            Employee employee = employeeService.GetEmployee(id);
-            return View(employee);
+            var result = Authenticate();
+            if (result==1)
+            {
+                Employee employee = employeeService.GetEmployee(id);
+                return View(employee);
+            }
+            else
+            {
+                return View("Error404");
+            }
+           
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, Employee employee)
         {
             try
@@ -104,6 +151,18 @@ namespace Movie.Presentation.Areas.Admin.Controllers
                 ModelState.AddModelError("", "Không thể xóa nhân viên");
             }
             return View(employee);
+        }
+        public int Authenticate()
+        {
+            var employee = (Employee)Session["Employee"];
+            if (employee.Department.Name == "Tổng giám đốc")
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
         }
     }
 }

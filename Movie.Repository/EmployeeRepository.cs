@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Movie.Repository
 {
-    public class EmployeeRepository:IEmployeeRepository
+    public class EmployeeRepository : IEmployeeRepository
     {
         private MovieContext db;
         public EmployeeRepository(MovieContext db)
@@ -66,6 +66,24 @@ namespace Movie.Repository
         public void Update(Employee item)
         {
             db.Entry(item).State = EntityState.Modified;
+        }
+
+        public int Login(string userName, string passWord)
+        {
+            var result = db.Employees.SingleOrDefault(a => a.UserName == userName);
+            if (result == null)
+            {
+                return 0;
+            }
+            else
+            {
+                return 1;
+            }
+        }
+
+        public Employee GetEmployeeLogin(string userName)
+        {
+            return db.Employees.FirstOrDefault(r => r.UserName == userName);
         }
     }
 }

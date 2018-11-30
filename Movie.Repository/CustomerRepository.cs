@@ -67,5 +67,23 @@ namespace Movie.Repository
         {
             db.Entry(item).State = EntityState.Modified;
         }
+
+        public int Login(string email, string passWord)
+        {
+            var result = db.Customers.SingleOrDefault(a => a.Email == email);
+            if (result == null)
+            {
+                return 0;
+            }
+            else
+            {
+                return 1;
+            }
+        }
+
+        public Customer GetCustomerLogin(string email)
+        {
+            return db.Customers.FirstOrDefault(r => r.Email == email);
+        }
     }
 }

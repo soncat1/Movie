@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace Movie.Presentation.Areas.Admin.Controllers
 {
-    public class FilmController : Controller
+    public class FilmController : BaseController
     {
         private FilmService filmService;
         private CategoryService categoryService;
@@ -22,23 +22,50 @@ namespace Movie.Presentation.Areas.Admin.Controllers
         // GET: Admin/Film
         public ActionResult Index()
         {
-            return View(filmService.GetAll());
+            var result = Authenticate();
+            if(result==1)
+            {
+                return View(filmService.GetAll());
+            }
+            else
+            {
+                return View("Error404");
+            }
         }
         public ActionResult Details(int id)
         {
-            Film film = filmService.GetFilm(id);
-            if (film == null)
+            var result = Authenticate();
+            if (result==1)
             {
-                return HttpNotFound();
+                Film film = filmService.GetFilm(id);
+                if (film == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(film);
             }
-            return View(film);
+            else
+            {
+                return View("Error404");
+            }
+            
         }
         public ActionResult Create()
         {
-            ViewBag.Category = categoryService.GetAll();
-            return View();
+            var result = Authenticate();
+            if(result==1)
+            {
+                ViewBag.Category = categoryService.GetAll();
+                return View();
+            }
+            else
+            {
+                return View("Error404");
+            }
+            
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(Film film,HttpPostedFileBase file)
         {
             var path = "";
@@ -79,12 +106,22 @@ namespace Movie.Presentation.Areas.Admin.Controllers
         }
         public ActionResult Edit(int id)
         {
-            ViewBag.Category = categoryService.GetAll();
-            Film film = filmService.GetFilm(id);
-            return View(film);
+            var result = Authenticate();
+            if(result==1)
+            {
+                ViewBag.Category = categoryService.GetAll();
+                Film film = filmService.GetFilm(id);
+                return View(film);
+            }
+            else
+            {
+                return View("Error404");
+            }
+            
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(Film film, HttpPostedFileBase file)
         {
             var path = "";
@@ -124,11 +161,21 @@ namespace Movie.Presentation.Areas.Admin.Controllers
 
         public ActionResult Delete(int id)
         {
-            Film film = filmService.GetFilm(id);
-            return View(film);
+            var result = Authenticate();
+            if(result==1)
+            {
+                Film film = filmService.GetFilm(id);
+                return View(film);
+            }
+            else
+            {
+                return View("Error404");
+            }
+            
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, Film film)
         {
             try
@@ -144,6 +191,18 @@ namespace Movie.Presentation.Areas.Admin.Controllers
                 ModelState.AddModelError("", "Không thể xóa phim");
             }
             return View(film);
+        }
+        public int Authenticate()
+        {
+            var employee = (Employee)Session["Employee"];
+            if (employee.Department.Name == "Nhân viên quản lý phim" || employee.Department.Name == "Tổng giám đốc")
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
         }
     }
 }

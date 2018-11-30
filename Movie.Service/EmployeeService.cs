@@ -39,5 +39,14 @@ namespace Movie.Service
             repository.Delete(employeeId);
             repository.Save();
         }
+        public int Login(string userName, string password)
+        {
+            return repository.Login(userName, password);
+
+        }
+        public Employee GetEmployeeLogin(string userName)
+        {
+            return repository.GetEmployeeLogin(userName);
+        }
     }
 }

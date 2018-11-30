@@ -50,11 +50,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\201811171903336_InitialCreate.cs" />
-    <Compile Include="Migrations\201811171903336_InitialCreate.Designer.cs">
-      <DependentUpon>201811171903336_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="MovieContext.cs" />
     <Compile Include="MovieInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -68,11 +63,6 @@
       <Project>{1ce6538a-bcad-4323-a88f-17f01a391a4a}</Project>
       <Name>Movie.Models</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201811171903336_InitialCreate.resx">
-      <DependentUpon>201811171903336_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

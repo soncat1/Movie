@@ -9,5 +9,7 @@ namespace Movie.Repository
 {
     public interface IEmployeeRepository:IRepository<Employee>
     {
+        int Login(string userName, string passWord);
+        Employee GetEmployeeLogin(string userName);
     }
 }
