@@ -283,6 +283,7 @@
     <Content Include="Content\Admin\js\plugins\morris\morris.js" />
     <Content Include="Content\Admin\js\plugins\morris\raphael-2.1.0.min.js" />
     <Content Include="Content\Admin\js\sb-admin.js" />
+    <Content Include="Content\app\booking-seat.css" />
     <Content Include="Content\app\film-detail.css" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />

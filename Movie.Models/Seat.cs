@@ -1,17 +1,13 @@
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity.Spatial;
 
 namespace Movie.Models
 {
-   
+
 
     public class Seat
     {
-
-
         public int SeatId { get; set; }
 
         public int RoomId { get; set; }
@@ -27,7 +23,9 @@ namespace Movie.Models
         public double? Top { get; set; }
 
         public double? Left { get; set; }
+        public string ColumnSeat { get; set; }
 
+        public string RowSeat { get; set; }
         public virtual Room Room { get; set; }
 
         public virtual SeatType SeatType { get; set; }

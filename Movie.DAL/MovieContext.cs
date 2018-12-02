@@ -1,5 +1,6 @@
 using Movie.Models;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Data.Entity.ModelConfiguration.Conventions;
 namespace Movie.DAL
 {
@@ -36,8 +37,7 @@ namespace Movie.DAL
             //    .WithRequiredDependent()
             //    .WillCascadeOnDelete(false);
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
-
-
+            Database.SetInitializer<MovieContext>(null);
         }
     }
 }

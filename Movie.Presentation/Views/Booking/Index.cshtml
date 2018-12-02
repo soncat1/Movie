@@ -1,13 +1,54 @@
 ﻿@{
-                ViewBag.Title = "Index";
-                Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @model Movie.Presentation.Models.SeatViewModel
 
+<link href="~/Content/app/booking-seat.css" rel="stylesheet" />
 <div class="col-md-12 booking-seat">
-    @foreach(var item in Model.SeatModel.ToList())
-    {
-        <div style="color:red" id="film-lable">@item.Label</div>
-    }
+    <label>MÀN HÌNH</label>
+    <br />
+    <div class="list-seat" style="display:inline-block">
+        @*@foreach (var item in Model.SeatModel.ToList())
+            {
+                <a style="color:red;" id="film-lable">@item.Label</a>
+            }*@
+        <div class="seatStructure txt-center" style="overflow-x:auto;">
+            <p id="notification"></p>
+            <table id="seatsBlock">
+                <thead>
+                    <tr>
+                        <td></td>
+                        @foreach (var seatRow in Model.SeatModel.Select(n => n.RowSeat).Distinct().ToList())
+                        {
+                            <td>@seatRow</td>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var seatColumn in Model.SeatModel.Select(n => n.ColumnSeat).Distinct().ToList())
+                    {
+                        <tr>
+                            <td>@seatColumn</td>
+                            @foreach (var item in Model.SeatModel.Select(n => n.Label).Distinct().ToList())
+                            {
+                                if (item.Substring(0, 1) == seatColumn)
+                                {
+                                    <td>
+                                        <input type="checkbox" class="seats" value="@item">
+                                    </td>
+                                }
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <div class="screen">
+                <h2 class="wthree">Screen this way</h2>
+            </div>
+            <button onclick="updateTextArea()">Confirm Selection</button>
+        </div>
+    </div>
 </div>
 
