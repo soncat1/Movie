@@ -30,30 +30,18 @@ namespace Movie.Presentation.Controllers
             }
             
         }
+      
         [HttpPost]
-        public ActionResult Index(Customer customer,string newPassword)
+        public ActionResult Index(Customer customer)
         {
             try
             {
-                if (ModelState.IsValid)
+                if(ModelState.IsValid)
                 {
                     customer.CustomerId = (Session["Customer"] as Customer).CustomerId;
-                    if(String.IsNullOrEmpty(newPassword))
-                    {
-                        customer.Password = (Session["Customer"] as Customer).Password;
-                    }
-                    else
-                    {
-                        customer.Name= (Session["Customer"] as Customer).Name;
-                        customer.Address = (Session["Customer"] as Customer).Address;
-                        customer.DateOfBirth= (Session["Customer"] as Customer).DateOfBirth;
-                        customer.Email= (Session["Customer"] as Customer).Email;
-                        customer.Type= (Session["Customer"] as Customer).Type;
-                        customer.Password = newPassword;
-                    }
+                    customer.Password = (Session["Customer"] as Customer).Password;
                     customerService.Update(customer);
-                    Session["Customer"] = customer;
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index","KhachHang");
                 }
             }
             catch (DataException)
@@ -63,12 +51,32 @@ namespace Movie.Presentation.Controllers
             return View(customer);
         }
 
-        public JsonResult CheckPassword(string password)
+        [HttpPost]
+        public ActionResult ChangePassword(string oldPassword,string newPassword)
         {
-            var result = password == (Session["Customer"] as Customer).Password ? true : false;
-            return Json(result, JsonRequestBehavior.AllowGet);
+            Customer customer = new Customer();
+            var customerId = (Session["Customer"] as Customer).CustomerId;
+            customer = customerService.GetCustomer(customerId);
+            var result = oldPassword == customer.Password ? true : false;
+            if(result==true)
+            {
+                try
+                {
+                    customer.Password = newPassword;
+                    customerService.Update(customer);
+                    return Content("Đổi mật khẩu thành công!");
+                }
+                catch (DataException ex)
+                {
 
-
+                    throw ex;
+                }
+                
+            }
+            else
+            {
+                return Content("Mật khẩu cũ không đúng!");
+            }
         }
 
     }

@@ -133,7 +133,7 @@
     <div class="modal-dialog">
         <!-- Modal content-->
         <div class="modal-content">
-            <form  onsubmit="ChangePass()">
+            <form>
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Đổi mật khẩu</h4>
@@ -171,7 +171,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <input type="submit" value="Cập nhật"/>
+                    <input type="submit" value="Cập nhật" onclick="ChangePass()"/>
                 </div>
             </form>
         </div>
@@ -184,39 +184,23 @@
         var newPassword = $('#newPassword').val();
         var reNewPassword = $('#reNewPassword').val();
         var ktPassword = $('#newPassword').val() == $('#reNewPassword').val() ? true : false;
-        var ktOldPassword=$.ajax({
-            method: 'GET',
-            url: '/KhachHang/CheckPassword',
-            data: { password: oldPassword },
-            success: function (data) {
-                if (data == true) {
-                    if(ktPassword==true)
-                    {
-                        $.ajax({
-                            method: 'POST',
-                            url: '/KhachHang/Index',
-                            data: { newPassword: newPassword },
-                            success: function () {
-                                alert("Đổi mật khẩu thành công!");
-                            }
-                        })
-                        return true;
-                    }
-                    else {
-                        alert("Mật khẩu không trùng khớp, vui lòng nhập lại!");
-                        $('#newPassword').val("");
-                        $('#reNewPassword').val("");
-                        return false;
-                    }
+        if (ktPassword == true)
+        {
+            $.ajax({
+                method: "POST",
+                url: '/KhachHang/ChangePassword',
+                data: { oldPassword: oldPassword, newPassword: newPassword },
+                success: function (data) {
+                    alert(data);
                 }
-                else {
-                    alert("Mật khẩu cũ không đúng, vui lòng nhập lại!");
-                    $('#oldPassword').val("");
-                    return false;
-                }
-            }
-        });
-          
+            })
+        }
+        else
+        {
+            alert("Mật khẩu không trùng khớp, vui lòng nhập lại!");
+            $('#newPassword').val("");
+            $('#reNewPassword').val("");
+        } 
     }
 </script>
 

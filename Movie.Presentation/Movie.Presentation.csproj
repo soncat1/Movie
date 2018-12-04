@@ -226,6 +226,7 @@
     <Compile Include="Models\SeatViewModel.cs" />
     <Compile Include="Movie\DAL\MovieContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility\IdentityExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Admin\Content\css\bootstrap.css" />
