@@ -213,6 +213,7 @@
     <Compile Include="Areas\Admin\Models\LoginModel.cs" />
     <Compile Include="Controllers\BookingController.cs" />
     <Compile Include="Controllers\ChiTietPhimController.cs" />
+    <Compile Include="Controllers\KhachHangController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LichChieuController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -651,6 +652,7 @@
     <Content Include="Views\Phim\_GetShowtimeByShowDate.cshtml" />
     <Content Include="Views\Booking\Index.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
+    <Content Include="Views\KhachHang\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

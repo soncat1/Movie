@@ -20,9 +20,6 @@ namespace Movie.Models
         [ForeignKey("SeatType")]
         public short TypeId { get; set; }
 
-        public double? Top { get; set; }
-
-        public double? Left { get; set; }
         public string ColumnSeat { get; set; }
 
         public string RowSeat { get; set; }

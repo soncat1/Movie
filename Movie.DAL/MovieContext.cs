@@ -37,7 +37,6 @@ namespace Movie.DAL
             //    .WithRequiredDependent()
             //    .WillCascadeOnDelete(false);
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
-            Database.SetInitializer<MovieContext>(null);
         }
     }
 }

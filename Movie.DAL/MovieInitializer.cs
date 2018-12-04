@@ -85,7 +85,7 @@ namespace Movie.DAL
             try
             {
                 List<Showtime> showtimes = new List<Showtime>()
-            { new Showtime() {FilmId=1,RoomId=1,ShowDate=DateTime.Parse("10/21/2018"),Queue=1 }};
+            { new Showtime() {FilmId=1,RoomId=1,ShowDate=DateTime.Now,Queue=1 }};
                 context.Showtimes.AddRange(showtimes);
                 context.SaveChanges();
             }
@@ -109,7 +109,7 @@ namespace Movie.DAL
 
             List<Seat> seats = new List<Seat>()
             {
-                new Seat() {RoomId=1,Label="A1",Status=1,TypeId=1,Top=100,Left=50 }
+                new Seat() {RoomId=1,Label="A1",Status=1,TypeId=1,ColumnSeat="1",RowSeat="A" }
             };
             context.Seats.AddRange(seats);
             context.SaveChanges();

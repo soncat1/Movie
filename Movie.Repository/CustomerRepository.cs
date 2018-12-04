@@ -70,7 +70,7 @@ namespace Movie.Repository
 
         public int Login(string email, string passWord)
         {
-            var result = db.Customers.SingleOrDefault(a => a.Email == email);
+            var result = db.Customers.SingleOrDefault(a => a.Email == email && a.Password==passWord);
             if (result == null)
             {
                 return 0;

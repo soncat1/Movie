@@ -1,31 +1,44 @@
 ﻿@using Movie.Models
-    @{ 
-        List<Cinema> cinemas = ViewBag.Cinema;
-    }
+@{
+    List<Cinema> cinemas = ViewBag.Cinema;
 
-    <div class="header">
-        <div class="container">
-            <div class="w3layouts_logo">
-                <a href="index.html"><h1>One<span>Movies</span></h1></a>
-            </div>
-            <div class="w3_search">
-                <div class="row">
-                    <select class="form-control">
-                        @foreach (var item in cinemas)
-                        {
-                            <option>@item.Name @item.Address</option>
-                        }
-                       
-                    </select>
-                </div>
+}
 
-            </div>
-            <div class="w3l_sign_in_register">
-                <ul>
-                    <li><i class="fa fa-phone" aria-hidden="true"></i> (+000) 123 345 653</li>
-                    <li><a href="/Login/Index">Login</a></li>
-                </ul>
-            </div>
-            <div class="clearfix"> </div>
+<div class="header">
+    <div class="container">
+        <div class="w3layouts_logo">
+            <a href="index.html"><h1>One<span>Movies</span></h1></a>
         </div>
+        <div class="w3_search">
+            <div class="row">
+                <select class="form-control">
+                    @foreach (var item in cinemas)
+                    {
+                        <option>@item.Name @item.Address</option>
+                    }
+
+                </select>
+            </div>
+
+        </div>
+        <div class="w3l_sign_in_register">
+            <ul>
+                <li style="display:none"><i class="fa fa-phone" aria-hidden="true"></i> (+000) 123 345 653</li>
+                @if (Session["UserName"] == null)
+                {
+                    <li><a href="/Login/Index">Login</a></li>
+                }
+                else
+                {
+                    <li>Xin chào <span style="text-decoration:underline; color:gray">@Session["UserName"].ToString()</span> <a href="/login/logout" class="glyphicon glyphicon-log-out"></a></li>
+                }
+
+            </ul>
+        </div>
+        <div class="clearfix"> </div>
     </div>
+</div>
+
+<script>
+
+</script>

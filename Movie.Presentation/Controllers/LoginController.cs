@@ -33,6 +33,7 @@ namespace Movie.Presentation.Controllers
 
                     var customer = customerService.GetCustomerLogin(model.Email);
                     Session["Customer"] = customer;
+                    Session["UserName"] = customer.Name;
                     return RedirectToAction("Index", "Home");
 
                 }
@@ -46,8 +47,7 @@ namespace Movie.Presentation.Controllers
         [HttpGet]
         public ActionResult Logout()
         {
-
-            Session.Remove("Customer");
+            Session.Abandon();
             return RedirectToAction("Index", "Login");
         }
         [HttpPost]
@@ -57,6 +57,8 @@ namespace Movie.Presentation.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    /*new member will take level 1 type*/
+                    customer.Type = 1;
                     customerService.Add(customer);
                     return RedirectToAction("Index", "Home");
                 }
@@ -75,5 +77,6 @@ namespace Movie.Presentation.Controllers
 
             
         }
+        
     }
 }

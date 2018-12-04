@@ -25,10 +25,10 @@
             @Html.DisplayNameFor(model => model.TypeId)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Top)
+            @Html.DisplayNameFor(model => model.ColumnSeat)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Left)
+            @Html.DisplayNameFor(model => model.RowSeat)
         </th>
         <th></th>
     </tr>
@@ -48,10 +48,10 @@
             @Html.DisplayFor(modelItem => item.TypeId)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Top)
+            @Html.DisplayFor(modelItem => item.ColumnSeat)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Left)
+            @Html.DisplayFor(modelItem => item.RowSeat)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.SeatId },new { @class = "btn btn-primary" }) |
