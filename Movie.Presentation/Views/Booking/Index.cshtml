@@ -1,54 +1,220 @@
-﻿@{
+﻿@model Movie.Presentation.Models.SeatViewModel
+@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@model Movie.Presentation.Models.SeatViewModel
 
-<link href="~/Content/app/booking-seat.css" rel="stylesheet" />
-<div class="col-md-12 booking-seat">
-    <label>MÀN HÌNH</label>
-    <br />
-    <div class="list-seat" style="display:inline-block">
-        @*@foreach (var item in Model.SeatModel.ToList())
-            {
-                <a style="color:red;" id="film-lable">@item.Label</a>
-            }*@
-        <div class="seatStructure txt-center" style="overflow-x:auto;">
-            <p id="notification"></p>
-            <table id="seatsBlock">
-                <thead>
-                    <tr>
-                        <td></td>
-                        @foreach (var seatRow in Model.SeatModel.Select(n => n.RowSeat).Distinct().ToList())
-                        {
-                            <td>@seatRow</td>
-                        }
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var seatColumn in Model.SeatModel.Select(n => n.ColumnSeat).Distinct().ToList())
-                    {
-                        <tr>
-                            <td>@seatColumn</td>
-                            @foreach (var item in Model.SeatModel.Select(n => n.Label).Distinct().ToList())
+<link href="~/Content/User/css/RoomSeat.css" rel="stylesheet" />
+<hr />
+<div class="container">
+    <div class="booking-progress">
+        <div class="page-title">
+            <h1>Booking Online</h1>
+        </div>
+
+        <div class="top-content">
+            <ol class="products-list" id="products-list">
+                <li class="item">
+                    <div class="product-shop">
+                        <div class="f-fix">
+                            <div class="product-primary">
+                                <p>CGV Crescent Mall | Cinema 4 | Số ghế (<em>123</em>/123)</p>
+                                <p>04/12/2018 22:45 ~ 05/12/2018 00:57</p>
+                            </div>
+
+                            <div class="product-secondary">
+                                <div class="countexpire">
+                                    <h3>Countdown Clock</h3>
+                                    <div id="countdown"></div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </li>
+            </ol>
+        </div>
+
+        <div class="main-content">
+            <ul class="progress" style="position:relative;height:600px">
+                <li class="booking-step cycle-slide cycle-slide-active" style="position: absolute; top: 0px; left: 0px; z-index: 100; opacity: 1; display: block; visibility: visible;">
+                    <label class="h1">Người / Ghế</label>
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                        <div class="ticketbox">
+                            <div class="screen"><span class="text-screen">Phòng chiếu</span></div>
+                            @for (int i = 1; i <= 9; i++)
                             {
-                                if (item.Substring(0, 1) == seatColumn)
+                                <br />
+                                for (int j = 1; j <= 14; j++)
                                 {
-                                    <td>
-                                        <input type="checkbox" class="seats" value="@item">
-                                    </td>
+                                    switch (i)
+                                    {
+                                        case 1:
+                                            <div class="seat seat-standard active" price="45000"><span>A</span>@j</div>
+                                            break;
+                                        case 2:
+                                            <div class="seat seat-standard active" price="45000"><span>B</span>@j</div>
+                                            break;
+                                        case 3:
+                                            <div class="seat seat-standard active" price="45000"><span>C</span>@j</div>
+                                            break;
+                                        case 4:
+                                            <div class="seat seat-standard active" price="45000"><span>D</span>@j</div>
+                                            break;
+                                        case 5:
+                                            <div class="seat seat-vipprime active" price="60000"><span>E</span>@j</div>
+                                            break;
+                                        case 6:
+                                            <div class="seat seat-vipprime active" price="60000"><span>F</span>@j</div>
+                                            break;
+                                        case 7:
+                                            <div class="seat seat-vipprime active" price="60000"><span>G</span>@j</div>
+                                            break;
+                                        case 8:
+                                            <div class="seat seat-vipprime active" price="60000"><span>H</span>@j</div>
+                                            break;
+                                        case 9:
+                                            <div class="seat seat-sw active" price="90000"><span>I</span>@j</div>
+                                            break;
+                                        default:
+                                            <div class="seat empty"></div>
+                                            break;
+                                    }
+
                                 }
                             }
-                        </tr>
-                    }
-                </tbody>
-            </table>
 
-            <div class="screen">
-                <h2 class="wthree">Screen this way</h2>
-            </div>
-            <button onclick="updateTextArea()">Confirm Selection</button>
+                        </div>
+                        <hr />
+
+                        <div class="ticketbox-notice">
+                            <div class="col-md-2"></div>
+                            <div class="iconlist col-md-4">
+                                <div class="icon checked">Checked</div>
+                                <div class="icon occupied">Đã chọn</div>
+                                <div class="icon unavailable">Không thể chọn</div>
+                            </div>
+
+                            <div class="iconlist col-md-4">
+                                <div class="icon zone-standard" title="Standard">
+                                    Thường
+                                </div>
+                                <div class="icon zone-vipprime" title="VIP(Prime)">
+                                    VIP(Prime)
+                                </div>
+                                <div class="icon zone-sw" title="Deluxe">
+                                    Sweet Box
+                                </div>
+                            </div>
+                            <div class="col-md-2"></div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="totalMoney">
+                                
+                                <h4 class="font-italic" style="float:right"><span style="font-weight:bold;font-family:sans-serif;font-size:16px;color:orangered">Thành tiền:</span><span id="priceMoney">120000</span><span>&nbsp;đ</span></h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 nopadding" style="background-color:white;height:600px;">
+                        <div class="row">
+                            <div class="col-md-6 nopadding">
+                                <img src="https://files.betacorp.vn/files/media/images/2018/11/15/robin-162000-151118-78.jpg" width="100" />
+                            </div>
+                            <div class="col-md-6 nopadding">
+                                <h3 class="font-weight-bold" style="margin-top:20px;"><span style="color:dodgerblue;font-family:'Harlow Solid'">Robin Hood</span></h3>
+                                <h3 style="margin-top:20px"><span style="font-family:sans-serif;font-weight:bold">2D</span></h3>
+                            </div>
+                            
+                            <div class="col-md-12 nopadding">
+                                <ul class="list-unstyled">
+                                    <li>
+                                        <div class="row" style="padding-top:30px">
+                                            <div class="col-md-6">                                              
+                                                <h4 class="font-italic" style="color:dodgerblue"><span class="glyphicon glyphicon-tag"></span> Thể loại</h4>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h4 class="font-weight-bold">Hành động</h4>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="row" style="padding-top:30px">
+                                            <div class="col-md-6">
+                                                <h4 class="font-italic" style="color:dodgerblue"><span class="glyphicon glyphicon-time"></span> Thời lượng</h4>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h4 class="font-weight-bold">120 phút</h4>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <hr style="border-bottom:1px dashed"/>
+                        <div class="row" style="margin-top:20px;">
+                            <div class="col-md-6">
+                                <h4 class="font-italic" style="color:dodgerblue"><span class="glyphicon glyphicon-home"></span> Rạp chiếu</h4>
+                            </div>
+                            <div class="col-md-6">
+                                <h4 class="font-weight-bold">Beta thanh xuân</h4>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top:20px;">
+                            <div class="col-md-6">
+                                <h4 class="font-italic" style="color:dodgerblue"><span class="fa fa-calendar"></span> Ngày chiếu</h4>
+                            </div>
+                            <div class="col-md-6">
+                                <h4 class="font-weight-bold">5/12/2018</h4>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top:20px;">
+                            <div class="col-md-6">
+                                <h4 class="font-italic" style="color:dodgerblue"><span class="glyphicon glyphicon-time"></span> Giờ chiếu</h4>
+                            </div>
+                            <div class="col-md-6">
+                                <h4 class="font-weight-bold">09:00</h4>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top:20px;">
+                            <div class="col-md-6">
+                                <h4 class="font-italic" style="color:dodgerblue"><span class="fa fa-desktop"></span> Phòng chiếu</h4>
+                            </div>
+                            <div class="col-md-6">
+                                <h4 class="font-weight-bold">P6</h4>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top:20px">
+                                <div class="col-md-6">
+                                    <h4 class="font-italic" style="color:dodgerblue"><span class="glyphicon glyphicon-bed"></span> Ghế ngồi</h4>
+                                </div>
+                                <div class="col-md-6" style="height:50px">                                   
+                                    <textarea style="font-size:14px;border:none;outline:none" readonly>A1,A2,A3,A4,A5,A6,A7,A8,A9</textarea>
+                                </div>
+                        </div>
+                        <div class="row" style="text-align:center">
+                            <input class="btn btn-info" type="button" value="Tiếp tục"/>
+                        </div>
+
+
+                    </div>
+
+                </li>
+
+            </ul>
         </div>
-    </div>
-</div>
 
+    </div>
+
+</div>
+<style>
+    .nopadding{
+        padding:0 !important;
+        margin:0 !important;
+        
+    }
+    .nopadding h4{
+       font-size:14px; 
+    }
+</style>

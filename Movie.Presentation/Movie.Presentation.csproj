@@ -306,6 +306,7 @@
     <Content Include="Content\User\css\news.css" />
     <Content Include="Content\User\css\owl.carousel.css" />
     <Content Include="Content\User\css\popuo-box.css" />
+    <Content Include="Content\User\css\RoomSeat.css" />
     <Content Include="Content\User\css\single.css" />
     <Content Include="Content\User\css\style.css" />
     <Content Include="Content\User\fonts\fontawesome-webfont.svg" />
@@ -593,15 +594,6 @@
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Views\UI\css\jquery.seat-charts.css" />
-    <Content Include="Views\UI\css\style.css" />
-    <Content Include="Views\UI\images\banner2.jpg" />
-    <Content Include="Views\UI\index.html" />
-    <Content Include="Views\UI\js\jquery-1.11.0.min.js" />
-    <Content Include="Views\UI\js\jquery.nicescroll.js" />
-    <Content Include="Views\UI\js\jquery.seat-charts.js" />
-    <Content Include="Views\UI\js\jquery.seat-charts.min.js" />
-    <Content Include="Views\UI\js\scripts.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
