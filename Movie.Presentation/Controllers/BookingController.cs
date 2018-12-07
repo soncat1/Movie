@@ -23,6 +23,7 @@ namespace Movie.Presentation.Controllers
             {
                 SeatModel = seatService.GetAll().ToList()
             };
+            ViewBag.MaxColumn = seatService.GetAll().Max(c=>Convert.ToInt32(c.ColumnSeat)).ToString();
             return View(seatVM);
         }
     }

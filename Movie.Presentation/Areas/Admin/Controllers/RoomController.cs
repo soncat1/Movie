@@ -14,6 +14,7 @@ namespace Movie.Presentation.Areas.Admin.Controllers
         private RoomService roomService;
         private CinemaService cinemaService;
         private RoomTypeService roomTypeService;
+        private SeatService seatService;
         public RoomController()
         {
             roomService = new RoomService();
@@ -76,6 +77,7 @@ namespace Movie.Presentation.Areas.Admin.Controllers
                 if (ModelState.IsValid)
                 {
                     roomService.Add(room);
+
                     return RedirectToAction("Index");
                 }
             }

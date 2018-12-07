@@ -102,7 +102,9 @@ namespace Movie.DAL
 
             List<SeatType> seatTypes = new List<SeatType>()
             {
-                new SeatType() {Name="GOLD" }
+                new SeatType() {Name="Thường",Description="45000" },
+                new SeatType() {Name="VIP(Prime)",Description="60000" },
+                new SeatType() {Name="Sweet Box",Description="90000" },
             };
             context.SeatTypes.AddRange(seatTypes);
             context.SaveChanges();
@@ -123,7 +125,7 @@ namespace Movie.DAL
 
             List<Ticket> tickets = new List<Ticket>()
             {
-                new Ticket() {ShowtimeId=1,SeatId=1,Price=75000,DateCreate=DateTime.Now,CustomerId=1 }
+                new Ticket() {ShowtimeId=1,SeatId=1,Price=45000,DateCreate=DateTime.Now,CustomerId=1 }
             };
             context.Tickets.AddRange(tickets);
             context.SaveChanges();
