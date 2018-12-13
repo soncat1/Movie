@@ -1,4 +1,5 @@
-﻿using Movie.Presentation.Models;
+﻿using Movie.Models;
+using Movie.Presentation.Models;
 using Movie.Service;
 using System;
 using System.Collections.Generic;
@@ -11,20 +12,60 @@ namespace Movie.Presentation.Controllers
     public class BookingController : Controller
     {
         private SeatService seatService;
+        private ShowtimeService showtimeService;
+        private TicketService ticketService;
 
         public BookingController()
         {
             seatService = new SeatService();
+            showtimeService = new ShowtimeService();
+            ticketService = new TicketService();
         }
         // GET: Booking
-        public ActionResult Index()
+        public ActionResult Index(int showtimeId)
         {
-            var seatVM = new SeatViewModel()
+            Session["CurrentUrl"] = Request.Url;
+            if (Session["Customer"] == null)
             {
-                SeatModel = seatService.GetAll().ToList()
-            };
-            ViewBag.MaxColumn = seatService.GetAll().Max(c=>Convert.ToInt32(c.ColumnSeat)).ToString();
-            return View(seatVM);
+                return RedirectToAction("Index", "Login");
+            }
+            else
+            {
+                var seatVM = new SeatViewModel()
+                {
+                    SeatModel = seatService.GetAll().ToList()
+                };
+                ViewBag.MaxColumn = seatService.GetAll().Max(c => Convert.ToInt32(c.ColumnSeat)).ToString();
+                ViewBag.Showtime = showtimeService.GetAll().Where(n => n.ShowtimeId == showtimeId).ToList();
+                ViewBag.ShowtimeId = showtimeId;
+                return View(seatVM);
+            }
+
+
+        }
+        [HttpPost]
+        public ActionResult CreateTicket(int showtimeId, int[] lstCheckedSeat)
+        {
+            var user = Session["Customer"] as Customer;
+            if (ModelState.IsValid && user != null)
+            {
+                foreach (int item in lstCheckedSeat)
+                {
+                    ticketService.Add(new Ticket { ShowtimeId = showtimeId, SeatId = item, Price = double.Parse(seatService.GetSeat(item).SeatType.Description), CustomerId = user.CustomerId, DateCreate = DateTime.Now });
+                }
+                return Json(new { Messenger = "Bạn đã đặt vé thành công!", Status = "success" }, JsonRequestBehavior.AllowGet);
+
+            }
+            else
+            {
+                return Json(new { Messenger = "Đặt vé thất bại!", Status = "failed" }, JsonRequestBehavior.AllowGet);
+
+            }
+        }
+        public JsonResult GetBoughtSeat(int showtimeId)
+        {
+            var seats = ticketService.GetAll().Where(n => n.ShowtimeId == showtimeId).Select(n => n.SeatId).ToList();
+            return Json(seats, JsonRequestBehavior.AllowGet);
         }
     }
 }

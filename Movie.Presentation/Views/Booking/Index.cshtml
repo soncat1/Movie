@@ -1,7 +1,10 @@
 ﻿@model Movie.Presentation.Models.SeatViewModel
+@using Movie.Models;
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    List<Showtime> showtime = ViewBag.Showtime;
+    var stId = ViewBag.ShowtimeId;
 }
 
 <link href="~/Content/User/css/RoomSeat.css" rel="stylesheet" />
@@ -28,8 +31,8 @@
                     <div class="product-shop">
                         <div class="f-fix">
                             <div class="product-primary">
-                                <p>CGV Crescent Mall | Cinema 4 | Số ghế (<em>123</em>/123)</p>
-                                <p>04/12/2018 22:45 ~ 05/12/2018 00:57</p>
+                                <p>CGV Crescent Mall | Cinema 4 | Số ghế (<em>126</em>/126)</p>
+                                <p>00:57</p>
                             </div>
 
                             <div class="product-secondary">
@@ -58,7 +61,7 @@
                             {
                                 if (@item.SeatType.Name == "Thường")
                                 {
-                                    <div class="seat seat-standard active" id="@item.Label" price="@item.SeatType.Description">@item.Label</div>
+                                    <div class="seat seat-standard active" id="@item.Label" name="@item.SeatId" price="@item.SeatType.Description">@item.Label</div>
                                     if (item.ColumnSeat == ViewBag.MaxColumn)
                                     {
                                         <br />
@@ -66,7 +69,7 @@
                                 }
                                 else if (@item.SeatType.Name == "VIP(Prime)")
                                 {
-                                    <div class="seat seat-vipprime active" id="@item.Label" price="@item.SeatType.Description">@item.Label</div>
+                                    <div class="seat seat-vipprime active" id="@item.Label" name="@item.SeatId" price="@item.SeatType.Description">@item.Label</div>
                                     if (item.ColumnSeat == ViewBag.MaxColumn)
                                     {
                                         <br />
@@ -74,7 +77,7 @@
                                 }
                                 else
                                 {
-                                    <div class="seat seat-sw active" id="@item.Label" price="@item.SeatType.Description">@item.Label</div>
+                                    <div class="seat seat-sw active" id="@item.Label" name="@item.SeatId" price="@item.SeatType.Description">@item.Label</div>
                                     if (item.ColumnSeat == ViewBag.MaxColumn)
                                     {
                                         <br />
@@ -160,88 +163,113 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 nopadding" style="background-color:white;height:600px;">
-                        <div class="row">
-                            <div class="col-md-6 nopadding">
-                                <img src="https://files.betacorp.vn/files/media/images/2018/11/15/robin-162000-151118-78.jpg" width="100" />
-                            </div>
-                            <div class="col-md-6 nopadding">
-                                <h3 class="font-weight-bold" style="margin-top:20px;"><span style="color:dodgerblue;font-family:'Harlow Solid'">Robin Hood</span></h3>
-                                <h3 style="margin-top:20px"><span style="font-family:sans-serif;font-weight:bold">2D</span></h3>
-                            </div>
-
-                            <div class="col-md-12 nopadding">
-                                <ul class="list-unstyled">
-                                    <li>
-                                        <div class="row" style="padding-top:30px">
-                                            <div class="col-md-6">
-                                                <h4 class="font-italic" style="color:dodgerblue"><span class="glyphicon glyphicon-tag"></span> Thể loại</h4>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <h4 class="font-weight-bold">Hành động</h4>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="row" style="padding-top:30px">
-                                            <div class="col-md-6">
-                                                <h4 class="font-italic" style="color:dodgerblue"><span class="glyphicon glyphicon-time"></span> Thời lượng</h4>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <h4 class="font-weight-bold">120 phút</h4>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <hr style="border-bottom:1px dashed" />
-                        <div class="row" style="margin-top:20px;">
-                            <div class="col-md-6">
-                                <h4 class="font-italic" style="color:dodgerblue"><span class="glyphicon glyphicon-home"></span> Rạp chiếu</h4>
-                            </div>
-                            <div class="col-md-6">
-                                <h4 class="font-weight-bold">Beta thanh xuân</h4>
-                            </div>
-                        </div>
-                        <div class="row" style="margin-top:20px;">
-                            <div class="col-md-6">
-                                <h4 class="font-italic" style="color:dodgerblue"><span class="fa fa-calendar"></span> Ngày chiếu</h4>
-                            </div>
-                            <div class="col-md-6">
-                                <h4 class="font-weight-bold">5/12/2018</h4>
-                            </div>
-                        </div>
-                        <div class="row" style="margin-top:20px;">
-                            <div class="col-md-6">
-                                <h4 class="font-italic" style="color:dodgerblue"><span class="glyphicon glyphicon-time"></span> Giờ chiếu</h4>
-                            </div>
-                            <div class="col-md-6">
-                                <h4 class="font-weight-bold">09:00</h4>
-                            </div>
-                        </div>
-                        <div class="row" style="margin-top:20px;">
-                            <div class="col-md-6">
-                                <h4 class="font-italic" style="color:dodgerblue"><span class="fa fa-desktop"></span> Phòng chiếu</h4>
-                            </div>
-                            <div class="col-md-6">
-                                <h4 class="font-weight-bold">P6</h4>
-                            </div>
-                        </div>
-                        <div class="row" style="margin-top:20px">
-                            <div class="col-md-6">
-                                <h4 class="font-italic" style="color:dodgerblue"><span class="glyphicon glyphicon-bed"></span> Ghế ngồi</h4>
-                            </div>
-                            <div class="col-md-6" style="height:50px">
-                                <textarea style="font-size:14px;border:none;outline:none" readonly></textarea>
-                            </div>
-                        </div>
-                        <div class="row" style="text-align:center">
-                            <input class="btn btn-info" type="button" value="Tiếp tục" />
-                        </div>
+                    @foreach (var item in showtime)
+                    {
+                        <div class="col-md-3 nopadding" style="background-color:white;height:600px;">
+                            <div class="row">
+                                <div class="col-md-6 nopadding">
+                                    <img src="@item.Film.Image" width="110" height="150" />
+                                </div>
+                                <div class="col-md-6 nopadding">
+                                    <h4 class="font-weight-bold" style="margin-top:20px;display:inline-block"><span style="color:dodgerblue;font-family:'Harlow Solid'">@item.Film.Name</span></h4>
+                                    <h3 style="margin-top:20px"><span style="font-family:sans-serif;font-weight:bold"> @item.Room.RoomType.Name </span></h3>
 
 
-                    </div>
+                                </div>
+
+
+
+                                <div class="col-md-12 nopadding">
+                                    <ul class="list-unstyled">
+                                        <li>
+                                            <div class="row" style="padding-top:30px">
+                                                <div class="col-md-6">
+                                                    <h4 class="font-italic" style="color:dodgerblue"><span class="glyphicon glyphicon-tag"></span> Thể loại</h4>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <h4 class="font-weight-bold">@item.Film.Category.Name</h4>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="row" style="padding-top:30px">
+                                                <div class="col-md-6">
+                                                    <h4 class="font-italic" style="color:dodgerblue"><span class="glyphicon glyphicon-time"></span> Thời lượng</h4>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <h4 class="font-weight-bold">@item.Film.Duration phút</h4>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <hr style="border-bottom:1px dashed" />
+                            <div class="row" style="margin-top:20px;">
+                                <div class="col-md-6">
+                                    <h4 class="font-italic" style="color:dodgerblue"><span class="glyphicon glyphicon-home"></span> Rạp chiếu</h4>
+                                </div>
+                                <div class="col-md-6">
+                                    <h4 class="font-weight-bold">@item.Room.Cinema.Name @item.Room.Cinema.Address</h4>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top:20px;">
+                                <div class="col-md-6">
+                                    <h4 class="font-italic" style="color:dodgerblue"><span class="fa fa-calendar"></span> Ngày chiếu</h4>
+                                </div>
+                                <div class="col-md-6">
+                                    <h4 class="font-weight-bold">@Convert.ToDateTime(item.ShowDate).ToString("dd-MM-yyyy")</h4>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top:20px;">
+                                <div class="col-md-6">
+                                    <h4 class="font-italic" style="color:dodgerblue"><span class="glyphicon glyphicon-time"></span> Giờ chiếu</h4>
+                                </div>
+                                <div class="col-md-6">
+                                    @if (item.Queue == 1)
+                                    {
+                                        <h4 class="font-weight-bold">09:00</h4>
+                                    }
+                                    else if (item.Queue == 2)
+                                    {
+                                        <h4 class="font-weight-bold">12:30</h4>
+                                    }
+                                    else if (item.Queue == 3)
+                                    {
+                                        <h4 class="font-weight-bold">16:00</h4>
+                                    }
+                                    else
+                                    {
+                                        <h4 class="font-weight-bold">19:30</h4>
+                                    }
+
+
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top:20px;">
+                                <div class="col-md-6">
+                                    <h4 class="font-italic" style="color:dodgerblue"><span class="fa fa-desktop"></span> Phòng chiếu</h4>
+                                </div>
+                                <div class="col-md-6">
+                                    <h4 class="font-weight-bold">@item.Room.Name</h4>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top:20px">
+                                <div class="col-md-6">
+                                    <h4 class="font-italic" style="color:dodgerblue"><span class="glyphicon glyphicon-bed"></span> Ghế ngồi</h4>
+                                </div>
+                                <div class="col-md-6" style="height:50px">
+                                    <textarea style="font-size:14px;border:none;outline:none" readonly></textarea>
+                                </div>
+                            </div>
+                            <div class="row" style="text-align:center">
+                                <input class="btn btn-info" type="button" value="Tiếp tục" onclick="Submit(@item.ShowtimeId)" />
+                            </div>
+
+
+                        </div>
+                    }
+
 
                 </li>
 
@@ -251,8 +279,10 @@
     </div>
 
 </div>
+<script src="~/Scripts/plugin/moment.js"></script>
 <script>
     var seatLabel = "";
+    var price = 0;
     $('.seat').click(function () {
         if($(this).hasClass('checked')==true)
         {
@@ -261,45 +291,64 @@
                 $('#I2').removeClass('checked');
                 seatLabel = seatLabel.replace($('#I1').html() + " ", "");
                 seatLabel = seatLabel.replace($('#I2').html() + " ", "");
+                price= price - parseInt($('#I1').attr('price'),10)-parseInt($('#I2').attr('price'),10);
+                $('#priceMoney').html(price);
             }
-            if ($(this).html() == "I3" || $(this).html() == "I4") {
+            else if ($(this).html() == "I3" || $(this).html() == "I4") {
                 $('#I3').removeClass('checked');
                 $('#I4').removeClass('checked');
                 seatLabel = seatLabel.replace($('#I3').html() + " ", "");
                 seatLabel = seatLabel.replace($('#I4').html() + " ", "");
+                price = price - parseInt($('#I3').attr('price'), 10) - parseInt($('#I4').attr('price'), 10);
+                $('#priceMoney').html(price);
             }
-            if ($(this).html() == "I5" || $(this).html() == "I6") {
+            else if ($(this).html() == "I5" || $(this).html() == "I6") {
                 $('#I5').removeClass('checked');
                 $('#I6').removeClass('checked');
                 seatLabel = seatLabel.replace($('#I5').html() + " ", "");
                 seatLabel = seatLabel.replace($('#I6').html() + " ", "");
+                price = price - parseInt($('#I5').attr('price'), 10) - parseInt($('#I6').attr('price'), 10);
+                $('#priceMoney').html(price);
             }
-            if ($(this).html() == "I7" || $(this).html() == "I8") {
+            else if ($(this).html() == "I7" || $(this).html() == "I8") {
                 $('#I7').removeClass('checked');
                 $('#I8').removeClass('checked');
                 seatLabel = seatLabel.replace($('#I7').html() + " ", "");
                 seatLabel = seatLabel.replace($('#I8').html() + " ", "");
+                price = price - parseInt($('#I7').attr('price'), 10) - parseInt($('#I8').attr('price'), 10);
+                $('#priceMoney').html(price);
             }
-            if ($(this).html() == "I9" || $(this).html() == "I10") {
+            else if ($(this).html() == "I9" || $(this).html() == "I10") {
                 $('#I9').removeClass('checked');
                 $('#I10').removeClass('checked');
                 seatLabel = seatLabel.replace($('#I9').html() + " ", "");
                 seatLabel = seatLabel.replace($('#I10').html() + " ", "");
+                price = price - parseInt($('#I9').attr('price'), 10) - parseInt($('#I10').attr('price'), 10);
+                $('#priceMoney').html(price);
             }
-            if ($(this).html() == "I11" || $(this).html() == "I12") {
+            else if ($(this).html() == "I11" || $(this).html() == "I12") {
                 $('#I11').removeClass('checked');
                 $('#I12').removeClass('checked');
                 seatLabel = seatLabel.replace($('#I11').html() + " ", "");
                 seatLabel = seatLabel.replace($('#I12').html() + " ", "");
+                price = price - parseInt($('#I11').attr('price'), 10) - parseInt($('#I12').attr('price'), 10);
+                $('#priceMoney').html(price);
             }
-            if ($(this).html() == "I13" || $(this).html() == "I14") {
+            else if ($(this).html() == "I13" || $(this).html() == "I14") {
                 $('#I13').removeClass('checked');
                 $('#I14').removeClass('checked');
                 seatLabel = seatLabel.replace($('#I13').html() + " ", "");
                 seatLabel = seatLabel.replace($('#I14').html() + " ", "");
+                price = price - parseInt($('#I13').attr('price'), 10) - parseInt($('#I14').attr('price'), 10);
+                $('#priceMoney').html(price);
             }
-            $(this).removeClass('checked');
-            seatLabel=seatLabel.replace($(this).html()+" ", "");
+            else {
+                $(this).removeClass('checked');
+                seatLabel = seatLabel.replace($(this).html() + " ", "");
+                price = price - parseInt($(this).attr('price'), 10);
+                $('#priceMoney').html(price);
+            }
+
 
         }
         else {
@@ -310,50 +359,67 @@
                     $('#I2').addClass('checked');
                     seatLabel += $('#I1').html() + " ";
                     seatLabel += $('#I2').html() + " ";
+                    price = price + parseInt($('#I1').attr('price'), 10)+parseInt($('#I2').attr('price'), 10);
+                    $('#priceMoney').html(price);
                 }
                 if ($(this).html() == "I3" || $(this).html() == "I4") {
                     $('#I3').addClass('checked');
                     $('#I4').addClass('checked');
                     seatLabel += $('#I3').html() + " ";
                     seatLabel += $('#I4').html() + " ";
+                    price = price + parseInt($('#I3').attr('price'), 10)+parseInt($('#I4').attr('price'), 10);
+                    $('#priceMoney').html(price);
                 }
                 if ($(this).html() == "I5" || $(this).html() == "I6") {
                     $('#I5').addClass('checked');
                     $('#I6').addClass('checked');
                     seatLabel += $('#I5').html() + " ";
                     seatLabel += $('#I6').html() + " ";
+                    price = price + parseInt($('#I5').attr('price'), 10) + parseInt($('#I6').attr('price'), 10);
+                    $('#priceMoney').html(price);
                 }
                 if ($(this).html() == "I7" || $(this).html() == "I8") {
                     $('#I7').addClass('checked');
                     $('#I8').addClass('checked');
                     seatLabel += $('#I7').html() + " ";
                     seatLabel += $('#I8').html() + " ";
+                    price = price + parseInt($('#I7').attr('price'), 10) + parseInt($('#I8').attr('price'), 10);
+                    $('#priceMoney').html(price);
                 }
                 if ($(this).html() == "I9" || $(this).html() == "I10") {
                     $('#I9').addClass('checked');
                     $('#I10').addClass('checked');
                     seatLabel += $('#I9').html() + " ";
                     seatLabel += $('#I10').html() + " ";
+                    price = price + parseInt($('#I9').attr('price'), 10) + parseInt($('#I10').attr('price'), 10);
+                    $('#priceMoney').html(price);
                 }
                 if ($(this).html() == "I11" || $(this).html() == "I12") {
                     $('#I11').addClass('checked');
                     $('#I12').addClass('checked');
                     seatLabel += $('#I11').html() + " ";
                     seatLabel += $('#I12').html() + " ";
+                    price = price + parseInt($('#I11').attr('price'), 10) + parseInt($('#I12').attr('price'), 10);
+                    $('#priceMoney').html(price);
                 }
                 if ($(this).html() == "I13" || $(this).html() == "I14") {
                     $('#I13').addClass('checked');
                     $('#I14').addClass('checked');
                     seatLabel += $('#I13').html() + " ";
                     seatLabel += $('#I14').html() + " ";
+                    price = price + parseInt($('#I13').attr('price'), 10) + parseInt($('#I14').attr('price'), 10);
+                    $('#priceMoney').html(price);
                 }
             }
             else {
                 $(this).addClass('checked');
                 seatLabel += $(this).html() + " ";
+                price =price+ parseInt($(this).attr('price'),10);
+                $('#priceMoney').html(price);
+
             }
-            
-            
+
+
         }
         var checkedSeat = $('.ticketbox').find('.checked').length;
         if(checkedSeat > 8)
@@ -363,49 +429,105 @@
                 $('#I2').removeClass('checked');
                 seatLabel = seatLabel.replace($('#I1').html() + " ", "");
                 seatLabel = seatLabel.replace($('#I2').html() + " ", "");
+                price = price - parseInt($('#I1').attr('price'), 10) - parseInt($('#I2').attr('price'), 10);
+                $('#priceMoney').html(price);
             }
-            if ($(this).html() == "I3" || $(this).html() == "I4") {
+            else if ($(this).html() == "I3" || $(this).html() == "I4") {
                 $('#I3').removeClass('checked');
                 $('#I4').removeClass('checked');
                 seatLabel = seatLabel.replace($('#I3').html() + " ", "");
                 seatLabel = seatLabel.replace($('#I4').html() + " ", "");
+                price = price - parseInt($('#I3').attr('price'), 10) - parseInt($('#I4').attr('price'), 10);
+                $('#priceMoney').html(price);
             }
-            if ($(this).html() == "I5" || $(this).html() == "I6") {
+            else if ($(this).html() == "I5" || $(this).html() == "I6") {
                 $('#I5').removeClass('checked');
                 $('#I6').removeClass('checked');
                 seatLabel = seatLabel.replace($('#I5').html() + " ", "");
                 seatLabel = seatLabel.replace($('#I6').html() + " ", "");
+                price = price - parseInt($('#I5').attr('price'), 10) - parseInt($('#I6').attr('price'), 10);
+                $('#priceMoney').html(price);
             }
-            if ($(this).html() == "I7" || $(this).html() == "I8") {
+            else if ($(this).html() == "I7" || $(this).html() == "I8") {
                 $('#I7').removeClass('checked');
                 $('#I8').removeClass('checked');
                 seatLabel = seatLabel.replace($('#I7').html() + " ", "");
                 seatLabel = seatLabel.replace($('#I8').html() + " ", "");
+                price = price - parseInt($('#I7').attr('price'), 10) - parseInt($('#I8').attr('price'), 10);
+                $('#priceMoney').html(price);
             }
-            if ($(this).html() == "I9" || $(this).html() == "I10") {
+            else if ($(this).html() == "I9" || $(this).html() == "I10") {
                 $('#I9').removeClass('checked');
                 $('#I10').removeClass('checked');
                 seatLabel = seatLabel.replace($('#I9').html() + " ", "");
                 seatLabel = seatLabel.replace($('#I10').html() + " ", "");
+                price = price - parseInt($('#I9').attr('price'), 10) - parseInt($('#I10').attr('price'), 10);
+                $('#priceMoney').html(price);
             }
-            if ($(this).html() == "I11" || $(this).html() == "I12") {
+            else if ($(this).html() == "I11" || $(this).html() == "I12") {
                 $('#I11').removeClass('checked');
                 $('#I12').removeClass('checked');
                 seatLabel = seatLabel.replace($('#I11').html() + " ", "");
                 seatLabel = seatLabel.replace($('#I12').html() + " ", "");
+                price = price - parseInt($('#I11').attr('price'), 10) - parseInt($('#I12').attr('price'), 10);
+                $('#priceMoney').html(price);
             }
-            if ($(this).html() == "I13" || $(this).html() == "I14") {
+            else if ($(this).html() == "I13" || $(this).html() == "I14") {
                 $('#I13').removeClass('checked');
                 $('#I14').removeClass('checked');
                 seatLabel = seatLabel.replace($('#I13').html() + " ", "");
                 seatLabel = seatLabel.replace($('#I14').html() + " ", "");
+                price = price - parseInt($('#I13').attr('price'), 10) - parseInt($('#I14').attr('price'), 10);
+                $('#priceMoney').html(price);
+            }
+            else {
+                $(this).removeClass('checked');
+                seatLabel = seatLabel.replace($(this).html() + " ", "");
+                price = price - parseInt($(this).attr('price'), 10);
+                $('#priceMoney').html(price);
             }
             alert("Bạn chỉ có thể mua tối đa 8 vé!");
-            $(this).removeClass('checked');
-            seatLabel = seatLabel.replace($(this).html() + " ", "");
+
         }
         $('textarea').html(seatLabel);
 
     });
+    function Submit(showtimeId) {
+        if ($('.ticketbox .checked').length < 1) {
+            alert("Vui lòng chọn ghế!");
+            return;
+        }
+        var lstCheckedSeat = $.map($('.ticketbox .checked'), function (x) { return $(x).attr('name'); });
+        $.ajax({
+            url: '/Booking/CreateTicket',
+            method: 'POST',
+            data: { showtimeId: showtimeId, lstCheckedSeat: lstCheckedSeat },
+            dataType: 'json',
+            success: function (respond) {
+                if (respond.status = "success") {
+                    alert(respond.Messenger);
+                    window.location.href = "/Lichchieu/Index";
+                }
+                else {
+                    alert(respond.Messenger);
+                    window.location.href = "/Home/Index";
+                }
+
+            }
+        })
+
+
+    };
+        $.ajax({
+            url: '/Booking/GetBoughtSeat',
+            method: 'get',
+            dataType: 'json',
+            data:{showtimeId: @stId},
+            success: function (respond) {
+                for (x in respond) {
+                    $('.ticketbox .seat[name="'+respond[x]+'"]').addClass('seat-unavailable').css('pointer-events','none');
+                }
+            }
+        })
 </script>
 

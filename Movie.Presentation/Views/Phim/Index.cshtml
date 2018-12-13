@@ -15,12 +15,12 @@
         <div class="text-center">
             <ul class="nav nav-tabs tab-films">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#dangchieu" data-toggle="tab" ">
+                    <a class="nav-link" href="#dangchieu" data-toggle="tab">
                         <h1>PHIM ĐANG CHIẾU</h1>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#sapchieu" data-toggle="tab" ">
+                    <a class="nav-link" href="#sapchieu" data-toggle="tab">
                         <h1>PHIM SẮP CHIẾU</h1>
                     </a>
                 </li>
@@ -70,7 +70,7 @@
                                     </ul>
                                     <br />
                                     <div style="min-height: 85px;width:227px">
-                                        <button role="button" data-toggle="modal" class="btn btn-success" style="width:100%" data-target="#showtimeModal" id="@item.FilmId" onclick="Showtime('@item.Name')">
+                                        <button role="button" data-toggle="modal" class="btn btn-success" style="width:100%" data-target="#showtimeModal" id="@item.FilmId" onclick="Showtime('@item.Name','@item.FilmId')">
                                             <span><i class="fa fa-ticket mr3"></i></span>
                                             MUA VÉ
                                         </button>
@@ -122,12 +122,12 @@
                                         </li>
                                     </ul>
                                     <br />
-                                    <div style="min-height: 85px;width:227px">
+                                    @*<div style="min-height: 85px;width:227px">
                                         <button role="button" data-toggle="modal" class="btn btn-success" style="width:100%" data-target="#showtimeModal" id="@item.FilmId" onclick="Showtime('@item.Name')">
                                             <span><i class="fa fa-ticket mr3"></i></span>
                                             MUA VÉ
                                         </button>
-                                    </div>
+                                    </div>*@
                                 </div>
                             </div>
                         </div>
@@ -191,7 +191,7 @@
                         @foreach (var date in dates)
                         {
                             <li class="nav-item showdate">
-                                <a href="#" id="@date.Date.ToString("d")" class="nav-link" data-toggle="tab"><span class="font-smaller">@date.Date.ToString("d")</span>/@date.DayOfWeek</a>
+                                <a href="#" onclick="ShowDate('@date.Date.ToString("d")')" id="@date.Date.ToString("d")" class="nav-link" data-toggle="tab"><span class="font-smaller">@date.Date.ToString("dd-MM-yyyy")</span>/@date.DayOfWeek</a>
                             </li>
                         }
 
@@ -247,61 +247,74 @@
         $("#trailerModal iframe").attr('src', videoSrc);
     });
 
-    function bookSeat(filmId, filmName, queue, roomId) {
-       
+    function bookSeat(showtimeId) {
         $.ajax({
             method: 'GET',
-            url: '/Phim/FilmDetail',
+            url: '/Home/FilmDetail',
             data: {
-                filmId: filmId,
-                roomId: roomId,
-                queue: queue
+                showtimeId: showtimeId
             },
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (result) {
                 if (result.response) {
-                    $('#film-name').text(filmName);
-                    $('#cinema-des').text(result.CinemaName);
-                    $('#showtime-des').text(moment(result.ShowtimeName).format("DD-MM-YYYY"));
-                    $('#queue-des').text(queue);
+                    $('#film-name').text(result.filmName);
+                    $('#cinema-des').text(result.cinemaName + " " + result.cinemaAddress);
+                    $('#showtime-des').text(moment(result.showDate).format("DD-MM-YYYY"));
+                    if (result.queue == 1) {
+                        $('#queue-des').text("09:00");
+                    }
+                    else if (result.queue == 2) {
+                        $('#queue-des').text("12:30");
+                    }
+                    else if (result.queue == 3) {
+                        $('#queue-des').text("16:00");
+                    }
+                    else {
+                        $('#queue-des').text("19:30");
+                    }
+                    $('.modal-footer a').attr("onclick", "location.href='/Booking/Index?showtimeId=" + showtimeId + "'")
+
                 }
             }
         });
     }
 </script>
 <script>
-    function Showtime(filmName)
+    var filmId;
+    function Showtime(filmName,Id)
     {
             $('#showtimeModal p').html('Bạn đang đặt vé cho phim <span style="color:#337ab7">'+filmName+'</span>');
-            var loadShowDateId = $('.showdate a').first().attr("id");
-            var filmId = $('.film-info button').attr("id");
+            //var loadShowDateId = $('.showdate a').first().attr("id");
+            //var filmId = filmId
+            //$.ajax({
+            //    method: 'GET',
+            //    url: '/Phim/GetShowtimeByShowDate',
+            //    data: { showDate: loadShowDateId, id: filmId },
+            //    success: function (data) {
+            //        $('#giochieu').html(data);
+            //    }
+
+        //});
+            $('#showtimeModal').on('hidden.bs.modal', function () {
+                $('#modalFilm').modal('hide');
+            });
+            filmId=Id;
+           
+    }
+    function ShowDate(showDateId) {
+            
             $.ajax({
                 method: 'GET',
                 url: '/Phim/GetShowtimeByShowDate',
-                data: { showDate: loadShowDateId, id: filmId },
+                data: { showDate: showDateId, id: filmId },
                 success: function (data) {
                     $('#giochieu').html(data);
                 }
 
             });
-            $(".showdate .nav-link").click(function () {
-                var showDateId = $(this).attr("id");
-                $.ajax({
-                    method: 'GET',
-                    url: '/Phim/GetShowtimeByShowDate',
-                    data: { showDate: showDateId, id: filmId },
-                    success: function (data) {
-                        $('#giochieu').html(data);
-                    }
-
-                });
-            });
-            $('#showtimeModal').on('hidden.bs.modal', function () {
-                $('#modalFilm').modal('hide');
-            });
-    }
-    
+        };
+        
 
 </script>
 

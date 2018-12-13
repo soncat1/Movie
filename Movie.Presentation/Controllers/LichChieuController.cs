@@ -66,11 +66,10 @@ namespace Movie.Presentation.Controllers
             ViewBag.Cinema = cinemaService.GetAll();
             return PartialView("_Navigation", ViewBag.Cinema);
         }
-        public JsonResult FilmDetail(int filmId, int roomId, int queue)
+        public JsonResult FilmDetail(int showtimeId)
         {
-            var cinemaName = cinemaService.GetAll().Select(n => n.Name).FirstOrDefault();
-            var showtimeName = showtimeService.GetAll().Where(n => n.FilmId == filmId && n.RoomId == roomId && n.Queue == queue).Select(n => n.ShowDate).FirstOrDefault();
-            return Json(new { response = true, CinemaName = cinemaName, ShowtimeName = showtimeName }, JsonRequestBehavior.AllowGet);
+            var showtime = showtimeService.GetShowtime(showtimeId);
+            return Json(new { response = true, filmName = showtime.Film.Name, queue = showtime.Queue, cinemaName = showtime.Room.Cinema.Name, cinemaAddress = showtime.Room.Cinema.Address, showDate = showtime.ShowDate }, JsonRequestBehavior.AllowGet);
         }
     }
 }

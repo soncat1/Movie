@@ -19,7 +19,7 @@
         @foreach (var date in dates)
         {
             <li class="nav-item">
-                <a href="#" id="@date.Date.ToString("d")" class="nav-link" data-toggle="tab"><span style="font-size:x-large">@date.Date.ToString("d")</span>/@date.DayOfWeek</a>
+                <a href="#" id="@date.Date.ToString("d")" class="nav-link" data-toggle="tab"><span style="font-size:x-large">@date.Date.ToString("dd-MM-yyyy")</span>/@date.DayOfWeek</a>
             </li>
         }
 
@@ -108,7 +108,7 @@
         var loadShowDateId =$('.nav-item a').first().attr("id");
         $.ajax({
             method: 'GET',
-            url: '/Home/GetFilmByShowDate',
+            url: '/LichChieu/GetFilmByShowDate',
             data: { showDate: loadShowDateId },
             success: function (data) {
                 $('#lstFilm').html(data);
@@ -168,25 +168,39 @@
         $("#trailerModal iframe").attr('src', videoSrc);
         });
 
-    function bookSeat(filmId, filmName, queue, roomId) {
+    function bookSeat(showtimeId) {
         $.ajax({
             method: 'GET',
             url: '/LichChieu/FilmDetail',
             data: {
-                filmId: filmId,
-                roomId: roomId,
-                queue: queue
+                showtimeId:showtimeId
             },
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (result) {
                 if (result.response) {
-                    $('#film-name').text(filmName);
-                    $('#cinema-des').text(result.CinemaName);
-                    $('#showtime-des').text(moment(result.ShowtimeName).format("DD-MM-YYYY"));
-                    $('#queue-des').text(queue);
+                    $('#film-name').text(result.filmName);
+                    $('#cinema-des').text(result.cinemaName+" "+ result.cinemaAddress);
+                    $('#showtime-des').text(moment(result.showDate).format("DD-MM-YYYY"));
+                    if (result.queue == 1) {
+                        $('#queue-des').text("09:00");
+                    }
+                    else if(result.queue == 2)
+                    {
+                        $('#queue-des').text("12:30");
+                    }
+                    else if (result.queue == 3) {
+                        $('#queue-des').text("16:00");
+                    }
+                    else
+                    {
+                        $('#queue-des').text("19:30");
+                    }
+                    $('.modal-footer a').attr("onclick", "location.href='/Booking/Index?showtimeId=" + showtimeId + "'")
+                        
                 }
             }
         });
     }
+    
 </script>

@@ -23,10 +23,12 @@ namespace Movie.Presentation.Controllers
         {
             return View();
         }
-        public ActionResult Login(LoginModel model)
+        [HttpPost]
+        public ActionResult Index(LoginModel model)
         {
             if (ModelState.IsValid)
             {
+                string url = Session["CurrentUrl"].ToString();
                 var result = customerService.Login(model.Email, model.Password);
                 if (result == 1)
                 {
@@ -34,7 +36,15 @@ namespace Movie.Presentation.Controllers
                     var customer = customerService.GetCustomerLogin(model.Email);
                     Session["Customer"] = customer;
                     Session["UserName"] = customer.Name;
-                    return RedirectToAction("Index", "Home");
+                    if (!string.IsNullOrEmpty(url))
+                    {
+                        return Redirect(url);
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                    
 
                 }
                 else
