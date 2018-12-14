@@ -2,6 +2,7 @@
 @using Movie.Models;
 @{
     List<Film> films = ViewBag.Film;
+    Dictionary<int,int> seats = ViewBag.Seat;
 }
 <link href="~/Content/User/css/ImageTrailer.css" rel="stylesheet" />
 @foreach (var item in films)
@@ -52,18 +53,22 @@
                                     <a style="width: 100%" href="#" class="btn btn-default show-in fancybox-fast-view" data-toggle="modal" data-target="#modalFilm" onclick="bookSeat(@item1.ShowtimeId)"><span style="font-weight:bold">19:30</span></a>
                                 }
                             }
-
-                            <div class="font-smaller padding-top-5">@item1.Room.SeatCount</div>
+                            @foreach (var item2 in seats.Keys)
+                            {
+                                if (item2 == item1.ShowtimeId)
+                                {
+                                    <div class="font-smaller padding-top-5">@seats[item2] ghế trống</div>
+                                }
+                            }
+                            
                         </div>
                                     }
 
                                 }
 
-
             </div>
         </div>
     </div>
-
                                 }
     &nbsp;
 

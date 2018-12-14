@@ -210,6 +210,7 @@
     <Compile Include="Areas\Admin\Controllers\SeatController.cs" />
     <Compile Include="Areas\Admin\Controllers\SeatTypeController.cs" />
     <Compile Include="Areas\Admin\Controllers\ShowtimeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\TicketController.cs" />
     <Compile Include="Areas\Admin\Models\LoginModel.cs" />
     <Compile Include="Controllers\BookingController.cs" />
     <Compile Include="Controllers\ChiTietPhimController.cs" />
@@ -226,7 +227,6 @@
     <Compile Include="Models\SeatViewModel.cs" />
     <Compile Include="Movie\DAL\MovieContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utility\IdentityExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Admin\Content\css\bootstrap.css" />
@@ -569,6 +569,10 @@
     <Content Include="Content\Admin\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\Admin\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\Admin\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Areas\Admin\Views\Ticket\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Ticket\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Ticket\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Ticket\Delete.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\jquery-3.0.0.js" />
@@ -657,6 +661,7 @@
     <Content Include="Views\Home\CinemaDetail.cshtml" />
     <Content Include="Views\Home\PriceTicket.cshtml" />
     <Content Include="Views\Home\CinemaNews.cshtml" />
+    <Content Include="Views\KhachHang\_CinemaJourney.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

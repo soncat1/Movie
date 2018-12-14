@@ -14,12 +14,14 @@ namespace Movie.Presentation.Controllers
         private SeatService seatService;
         private ShowtimeService showtimeService;
         private TicketService ticketService;
+        private RoomService roomService;
 
         public BookingController()
         {
             seatService = new SeatService();
             showtimeService = new ShowtimeService();
             ticketService = new TicketService();
+            roomService = new RoomService();
         }
         // GET: Booking
         public ActionResult Index(int showtimeId)
@@ -31,9 +33,10 @@ namespace Movie.Presentation.Controllers
             }
             else
             {
+                var roomId = showtimeService.GetShowtime(showtimeId).RoomId;
                 var seatVM = new SeatViewModel()
                 {
-                    SeatModel = seatService.GetAll().ToList()
+                    SeatModel = seatService.GetAll().Where(n=>n.RoomId==roomId).ToList()
                 };
                 ViewBag.MaxColumn = seatService.GetAll().Max(c => Convert.ToInt32(c.ColumnSeat)).ToString();
                 ViewBag.Showtime = showtimeService.GetAll().Where(n => n.ShowtimeId == showtimeId).ToList();

@@ -5,7 +5,7 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Quản lý phòng chiếu</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-info" })
@@ -37,7 +37,7 @@
             @Html.DisplayFor(modelItem => item.Name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.TypeId)
+            @Html.DisplayFor(modelItem => item.RoomType.Name)
         </td>
         <td>
             @item.SeatCount

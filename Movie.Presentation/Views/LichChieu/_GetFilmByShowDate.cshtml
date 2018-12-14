@@ -2,6 +2,7 @@
 @using Movie.Models;
 @{
     List<Film> films = ViewBag.Film;
+    Dictionary<int, int> seats = ViewBag.Seat;
 }
 <link href="~/Content/User/css/ImageTrailer.css" rel="stylesheet" />
 @foreach (var item in films)
@@ -53,7 +54,15 @@
                                 }
                             }
 
-                            <div class="font-smaller padding-top-5">@item1.Room.SeatCount</div>
+                        @foreach (KeyValuePair<int, int> item2 in seats)
+                        {
+                            if (item2.Key == item1.ShowtimeId)
+                            {
+                                <div class="font-smaller padding-top-5">@item2.Value ghế trống</div>
+                            }
+
+                        }
+                            
                         </div>
                                     }
 

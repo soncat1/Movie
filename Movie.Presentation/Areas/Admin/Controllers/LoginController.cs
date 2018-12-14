@@ -28,14 +28,15 @@ namespace Movie.Presentation.Areas.Admin.Controllers
                 var result = employeeService.Login(model.UserName, model.Password);
                 if (result == 1)
                 {
-                   
-                        var employee = employeeService.GetEmployeeLogin(model.UserName);
-                        Session["Employee"] = employee;
-                        //currentSession = (int)Session["EmployeeId"];
-                        return RedirectToAction("Index", "Category");
-                    
+
+                    var employee = employeeService.GetEmployeeLogin(model.UserName);
+                    Session["Employee"] = employee;
+                    Session["EmployeeName"] = employee.Name;
+                    //currentSession = (int)Session["EmployeeId"];
+                    return RedirectToAction("Index", "Category");
+
                 }
-                else 
+                else
                 {
                     ModelState.AddModelError("", "Tên đăng nhập hoặc mật khẩu không đúng.");
                 }

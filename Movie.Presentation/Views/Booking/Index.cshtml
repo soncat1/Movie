@@ -25,29 +25,6 @@
             <h1>Booking Online</h1>
         </div>
 
-        <div class="top-content">
-            <ol class="products-list" id="products-list">
-                <li class="item">
-                    <div class="product-shop">
-                        <div class="f-fix">
-                            <div class="product-primary">
-                                <p>CGV Crescent Mall | Cinema 4 | Số ghế (<em>126</em>/126)</p>
-                                <p>00:57</p>
-                            </div>
-
-                            <div class="product-secondary">
-                                <div class="countexpire">
-                                    <h3>Countdown Clock</h3>
-                                    <div id="countdown"></div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </li>
-            </ol>
-        </div>
-
         <div class="main-content">
             <ul class="progress" style="position:relative;height:600px">
                 <li class="booking-step cycle-slide cycle-slide-active" style="position: absolute; top: 0px; left: 0px; z-index: 100; opacity: 1; display: block; visibility: visible;">
@@ -59,30 +36,38 @@
                             <hr />
                             @foreach (var item in Model.SeatModel)
                             {
-                                if (@item.SeatType.Name == "Thường")
+                                if(@item.Status==0)
                                 {
-                                    <div class="seat seat-standard active" id="@item.Label" name="@item.SeatId" price="@item.SeatType.Description">@item.Label</div>
-                                    if (item.ColumnSeat == ViewBag.MaxColumn)
-                                    {
-                                        <br />
-                                    }
-                                }
-                                else if (@item.SeatType.Name == "VIP(Prime)")
-                                {
-                                    <div class="seat seat-vipprime active" id="@item.Label" name="@item.SeatId" price="@item.SeatType.Description">@item.Label</div>
-                                    if (item.ColumnSeat == ViewBag.MaxColumn)
-                                    {
-                                        <br />
-                                    }
+                                    <div class="empty" id="@item.Label" name="@item.SeatId" price="@item.SeatType.Description">@item.Label</div>
                                 }
                                 else
                                 {
-                                    <div class="seat seat-sw active" id="@item.Label" name="@item.SeatId" price="@item.SeatType.Description">@item.Label</div>
-                                    if (item.ColumnSeat == ViewBag.MaxColumn)
+                                    if (@item.SeatType.Name == "Thường")
                                     {
-                                        <br />
+                                        <div class="seat seat-standard active" id="@item.Label" name="@item.SeatId" price="@item.SeatType.Description">@item.Label</div>
+                                        if (item.ColumnSeat == ViewBag.MaxColumn)
+                                        {
+                                            <br />
+                                        }
+                                    }
+                                    else if (@item.SeatType.Name == "VIP(Prime)")
+                                    {
+                                        <div class="seat seat-vipprime active" id="@item.Label" name="@item.SeatId" price="@item.SeatType.Description">@item.Label</div>
+                                        if (item.ColumnSeat == ViewBag.MaxColumn)
+                                        {
+                                            <br />
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <div class="seat seat-sw active" id="@item.Label" name="@item.SeatId" price="@item.SeatType.Description">@item.Label</div>
+                                        if (item.ColumnSeat == ViewBag.MaxColumn)
+                                        {
+                                            <br />
+                                        }
                                     }
                                 }
+
 
 
 

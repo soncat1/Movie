@@ -467,3 +467,7 @@
             background: #fff;
             color: #000;
         }
+        .empty{
+            text-indent:-9999px;
+            display:none;
+        }

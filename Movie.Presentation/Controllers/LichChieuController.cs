@@ -16,6 +16,7 @@ namespace Movie.Presentation.Controllers
         private RoomService roomService;
         private SeatService seatService;
         private CinemaService cinemaService;
+        private TicketService ticketService;
         public LichChieuController()
         {
             filmService = new FilmService();
@@ -23,6 +24,7 @@ namespace Movie.Presentation.Controllers
             roomService = new RoomService();
             seatService = new SeatService();
             cinemaService = new CinemaService();
+            ticketService = new TicketService();
         }
 
         public ActionResult Index()
@@ -47,17 +49,24 @@ namespace Movie.Presentation.Controllers
         [OutputCache(Duration = 60)]
         public ActionResult GetFilmByShowDate(string showDate)
         {
+            Dictionary<int, int> lstSeats = new Dictionary<int, int>();
             List<Film> allFilm = filmService.GetAll().ToList();
             List<Film> film = new List<Film>();
             DateTime date = DateTime.Parse(showDate);
             List<Showtime> listShowtimes = showtimeService.GetAll().Where(a => a.ShowDate == date).OrderBy(a => a.Queue).ToList();
-            foreach (var item in allFilm)
+            foreach (Film item in allFilm)
             {
                 if (listShowtimes.FirstOrDefault(a => a.FilmId == item.FilmId) != null && film.Contains(item) == false)
                 {
                     film.Add(item);
                 }
             }
+            foreach (var item in listShowtimes)
+            {
+                var seats = seatService.GetAll().Where(n => n.RoomId == item.RoomId).Count() - ticketService.GetAll().Where(n => n.ShowtimeId == item.ShowtimeId).Count();
+                lstSeats.Add(item.ShowtimeId, seats);
+            }
+            ViewBag.Seat = lstSeats;
             ViewBag.Film = film;
             return PartialView("_GetFilmByShowDate", listShowtimes);
         }
