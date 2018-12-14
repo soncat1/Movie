@@ -223,6 +223,7 @@
     </Compile>
     <Compile Include="Models\FilmViewModels.cs" />
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\NewsModel.cs" />
     <Compile Include="Models\SeatViewModel.cs" />
     <Compile Include="Movie\DAL\MovieContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -408,6 +409,18 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\beta1.png" />
+    <Content Include="Images\beta10.jpg" />
+    <Content Include="Images\beta11.jpg" />
+    <Content Include="Images\beta12.jpg" />
+    <Content Include="Images\beta2.jpg" />
+    <Content Include="Images\beta3.jpg" />
+    <Content Include="Images\beta4.jpg" />
+    <Content Include="Images\beta5.jpg" />
+    <Content Include="Images\beta6.jpg" />
+    <Content Include="Images\beta7.jpg" />
+    <Content Include="Images\beta8.jpg" />
+    <Content Include="Images\beta9.jpg" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -595,7 +608,9 @@
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
