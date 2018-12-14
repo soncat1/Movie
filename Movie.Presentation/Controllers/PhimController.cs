@@ -13,6 +13,8 @@ namespace Movie.Presentation.Controllers
         private FilmService filmService;
         private ShowtimeService showtimeService;
         private CinemaService cinemaService;
+        private SeatService seatService;
+        private TicketService ticketService;
         private static DateTime currentDate = DateTime.Now;
         private List<DateTime> listDate = new List<DateTime>()
             {
@@ -23,6 +25,8 @@ namespace Movie.Presentation.Controllers
             filmService = new FilmService();
             showtimeService = new ShowtimeService();
             cinemaService = new CinemaService();
+            seatService = new SeatService();
+            ticketService = new TicketService();
         }
         // GET: Phim
         public ActionResult Index()
@@ -80,19 +84,25 @@ namespace Movie.Presentation.Controllers
         }
         public ActionResult GetShowtimeByShowDate(string showDate, int id)
         {
+            Dictionary<int, int> lstSeats = new Dictionary<int, int>();
             DateTime currentDate = DateTime.Now;
             Film film = filmService.GetFilm(id);
 
             DateTime date = DateTime.Parse(showDate);
             List<Showtime> listShowtimes = showtimeService.GetAll().Where(a => a.ShowDate == date && a.FilmId == film.FilmId).OrderBy(a => a.Queue).ToList();
+            foreach (var item in listShowtimes)
+            {
+                var seats = seatService.GetAll().Where(n => n.RoomId == item.RoomId).Count() - ticketService.GetAll().Where(n => n.ShowtimeId == item.ShowtimeId).Count();
+                lstSeats.Add(item.ShowtimeId,seats);
+            }
+            ViewBag.Seat = lstSeats;
             return PartialView("_GetShowtimeByShowDate", listShowtimes);
 
         }
-        public JsonResult FilmDetail(int filmId, int roomId, int queue)
+        public JsonResult FilmDetail(int showtimeId)
         {
-            var cinemaName = cinemaService.GetAll().Select(n => n.Name).FirstOrDefault();
-            var showtimeName = showtimeService.GetAll().Where(n => n.FilmId == filmId && n.RoomId == roomId && n.Queue == queue).Select(n => n.ShowDate).FirstOrDefault();
-            return Json(new { response = true, CinemaName = cinemaName, ShowtimeName = showtimeName }, JsonRequestBehavior.AllowGet);
+            var showtime = showtimeService.GetShowtime(showtimeId);
+            return Json(new { response = true, filmName = showtime.Film.Name, queue = showtime.Queue, cinemaName = showtime.Room.Cinema.Name, cinemaAddress = showtime.Room.Cinema.Address, showDate = showtime.ShowDate }, JsonRequestBehavior.AllowGet);
         }
     }
 }

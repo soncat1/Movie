@@ -40,5 +40,7 @@ namespace Movie.DAL
         public System.Data.Entity.DbSet<Movie.Models.Showtime> Showtimes { get; set; }
 
         public System.Data.Entity.DbSet<Movie.Models.Customer> Customers { get; set; }
+
+        public System.Data.Entity.DbSet<Movie.Models.Ticket> Tickets { get; set; }
     }
 }

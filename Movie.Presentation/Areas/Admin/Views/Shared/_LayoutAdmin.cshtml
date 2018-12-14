@@ -34,7 +34,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">SB Admin v2.0</a>
+                <a class="navbar-brand" href="index.html">Quản lý rạp chiếu phim</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -235,15 +235,15 @@
                     </a>
                     <ul class="dropdown-menu dropdown-user">
                         <li>
-                            <a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                            <a href="#"><i class="fa fa-user fa-fw"></i>@Session["EmployeeName"].ToString()</a>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="/Admin/Login/Index"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                            <
+                            <a href="/Admin/Login/Logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                            
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -270,13 +270,7 @@
                             <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>
                         <li>
-                            <a href="~/Admin/Category/Index"><i class="fa fa-bar-chart-o fa-fw"></i> Quản lý thể loại phim</a>
-                        </li>
-                        <li>
                             <a href="~/Admin/Cinema/Index"><i class="fa fa-table fa-fw"></i> Quản lý rạp phim</a>
-                        </li>
-                        <li>
-                            <a href="~/Admin/Customer/Index"><i class="fa fa-edit fa-fw"></i> Quản lý khách hàng</a>
                         </li>
                         <li>
                             <a href="~/Admin/Department/Index"><i class="fa fa-wrench fa-fw"></i> Quản lý phòng ban</a>
@@ -286,7 +280,10 @@
 
                         </li>
                         <li>
-                            <a href="~/Admin/Film/Index"><i class="fa fa-sitemap fa-fw"></i> Quản lý phim</a>
+                            <a href="~/Admin/Customer/Index"><i class="fa fa-edit fa-fw"></i> Quản lý khách hàng</a>
+                        </li>
+                        <li>
+                            <a href="~/Admin/RoomType/Index"><i class="fa fa-sitemap fa-fw"></i> Quản lý loại phòng chiếu</a>
 
                         </li>
                         <li>
@@ -294,15 +291,19 @@
 
                         </li>
                         <li>
-                            <a href="~/Admin/RoomType/Index"><i class="fa fa-sitemap fa-fw"></i> Quản lý loại phòng chiếu</a>
+                            <a href="~/Admin/SeatType/Index"><i class="fa fa-sitemap fa-fw"></i> Quản lý loại ghế</a>
 
                         </li>
                         <li>
                             <a href="~/Admin/Seat/Index"><i class="fa fa-sitemap fa-fw"></i> Quản lý ghế</a>
 
                         </li>
+                        
                         <li>
-                            <a href="~/Admin/SeatType/Index"><i class="fa fa-sitemap fa-fw"></i> Quản lý loại ghế</a>
+                            <a href="~/Admin/Category/Index"><i class="fa fa-bar-chart-o fa-fw"></i> Quản lý thể loại phim</a>
+                        </li>
+                        <li>
+                            <a href="~/Admin/Film/Index"><i class="fa fa-sitemap fa-fw"></i> Quản lý phim</a>
 
                         </li>
                         <li>

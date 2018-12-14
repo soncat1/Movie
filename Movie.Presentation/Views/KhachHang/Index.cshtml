@@ -1,207 +1,230 @@
 ﻿@model Movie.Models.Customer
-@{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
-<hr />
-<div class="container">
-    <ul class="nav nav-tabs">
-        <li class="active text-center">
-            <a class="font-16 font-sm-15 font-xs-12" href="#thongtintaikhoan" data-toggle="tab">
-                Thông tin tài khoản
-            </a>
-        </li>
-        <li class="text-center">
-            <a class="font-16 font-sm-15 font-xs-12" href="#hanhtrinhdienanh" data-toggle="tab">
-                Hành trình điện ảnh
-            </a>
-        </li>
-    </ul>
-    <div class="tab-content font-family-san font-16">
-        <div class="tab-pane fade in active" id="thongtintaikhoan">
-            <!-- BEGIN FORM-->
-            <form action="/KhachHang/Index" method="post">
-                @Html.AntiForgeryToken()
-
-                <div class="form-group" style="margin-top:10px;">
-                    <div class="row">
-                        <div class="col-md-3" style="text-align:right;">
-                            <label class="control-label font-16"><span style="color: red;">*</span>&nbsp;Họ tên</label>
-                        </div>
-                        <div class="col-md-6">
-                            <input type="text" name="Name" value="@Model.Name" class="form-control" placeholder="Họ tên">
-                        </div>
-                    </div>
-                    <br />
-                    <div class="row">
-                        <div class="col-md-3" style="text-align:right;">
-                            <label class="control-label font-16"><span style="color: red;">*</span>&nbsp;Email</label>
-                        </div>
-                        <div class="col-md-6">
-                            <input type="text" name="Email" readonly value="@Model.Email" class="form-control" placeholder="Email">
-                        </div>
-                    </div>
-                    <br />
-                    <div class="row">
-                        <div class="col-md-3" style="text-align:right;">
-                            <label class="control-label font-16"><span style="color: red;">*</span>&nbsp;Ngày sinh</label>
-                        </div>
-                        <div class="col-md-6">
-                            <input name="DateOfBirth" value="@Model.DateOfBirth" class="datepicker form-control" placeholder="Ngày sinh">
-                        </div>
-                    </div>
-                    <br />
-                    <div class="row">
-                        <div class="col-md-3" style="text-align:right;">
-                            <label class="control-label font-16">Địa chỉ</label>
-                        </div>
-                        <div class="col-md-6">
-                            <input type="text" class="form-control" name="Address" placeholder="Địa chỉ" value="@Model.Address">
-                        </div>
-                    </div>
-                    <br />
-                    <div class="row">
-                        <div class="col-md-3" style="text-align:right;">
-                            <label class="control-label font-16">Cấp bậc</label>
-                        </div>
-                        <div class="col-md-6">
-                            <input type="text" readonly class="form-control" name="Type" value="@Model.Type">
-                        </div>
-                    </div>
-                    <br />
-                    <div class="row">
-                        <div class="col-md-3"></div>
-                        <div class="col-md-6">
-                            <input type="submit" class="btn btn-success" value="Cập nhật" />
-                            <a href="#" style="float:right" data-target="#modalPassword" data-toggle="modal">Đổi mật khẩu?</a>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-3"></div>
-                        <div class="col-md-6">
-                            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                </div>
-            </form>
-
-            <!-- END FORM-->
-        </div>
-        <div class="tab-pane fade" id="hanhtrinhdienanh">
-            <div class="col-md-16">
-                <div class="table-responsive">
-                    <table class="table table-striped table-bordered table-hover">
-                        <thead>
-                            <tr>
-                                <th class="text-uppercase" style="width: 10%">
-                                    Mã hóa đơn
-                                </th>
-                                <th class="text-uppercase" style="width: 20%">
-                                    Phim
-                                </th>
-                                <th class="text-uppercase" style="width: 10%">
-                                    Rạp chiếu
-                                </th>
-                                <th class="text-uppercase" style="width: 10%">
-                                    Suất chiếu
-                                </th>
-                                <th class="text-uppercase" style="width: 15%">
-                                    Ghế đã đặt
-                                </th>
-                                <th class="text-uppercase" style="width: 15%">
-                                    Combo/Package
-                                </th>
-                                <th class="text-uppercase" style="width: 10%">
-                                    Ngày đặt
-                                </th>
-                                <th class="text-uppercase" style="width: 10%">
-                                    Điểm
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="clearfix"></div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="modalPassword" role="dialog">
-    <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <form>
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Đổi mật khẩu</h4>
-                </div>
-                <div id="film-name"></div>
-                <div class="modal-body">
-
-                    <div class="row">
-                        <div class="col-md-4">
-                            Mật khẩu cũ <span style="color:red">*:</span>
-                        </div>
-                        <div class="col-md-5">
-                            <input class="form-control" type="password" id="oldPassword" placeholder="Nhập mật khẩu cũ" required/>
-                        </div>
-                    </div>
-                    <br />
-                    <div class="row">
-                        <div class="col-md-4">
-                            Mật khẩu mới <span style="color:red">*:</span>
-                        </div>
-                        <div class="col-md-5">
-                            <input class="form-control" type="password" id="newPassword" placeholder="Nhập mật khẩu mới" required />
-                        </div>
-                    </div>
-                    <br />
-                    <div class="row">
-                        <div class="col-md-4">
-                            Nhập lại mật khẩu mới <span style="color:red">*:</span>
-                        </div>
-                        <div class="col-md-5">
-                            <input class="form-control" type="password" id="reNewPassword" placeholder="Nhập lại mật khẩu mới" required />
-                        </div>
-                    </div>
-
-
-                </div>
-                <div class="modal-footer">
-                    <input type="submit" value="Cập nhật" onclick="ChangePass()"/>
-                </div>
-            </form>
-        </div>
-
-    </div>
-</div>
-<script>
-    function ChangePass() {
-        var oldPassword = $('#oldPassword').val();
-        var newPassword = $('#newPassword').val();
-        var reNewPassword = $('#reNewPassword').val();
-        var ktPassword = $('#newPassword').val() == $('#reNewPassword').val() ? true : false;
-        if (ktPassword == true)
-        {
-            $.ajax({
-                method: "POST",
-                url: '/KhachHang/ChangePassword',
-                data: { oldPassword: oldPassword, newPassword: newPassword },
-                success: function (data) {
-                    alert(data);
-                }
-            })
-        }
-        else
-        {
-            alert("Mật khẩu không trùng khớp, vui lòng nhập lại!");
-            $('#newPassword').val("");
-            $('#reNewPassword').val("");
-        } 
+@using Movie.Models;
+    @{
+        ViewBag.Title = "Index";
+        Layout = "~/Views/Shared/_Layout.cshtml";
     }
-</script>
+
+    <hr />
+    <div class="container">
+        <ul class="nav nav-tabs">
+            <li class="active text-center">
+                <a class="font-16 font-sm-15 font-xs-12" href="#thongtintaikhoan" data-toggle="tab">
+                    Thông tin tài khoản
+                </a>
+            </li>
+            <li class="text-center">
+                <a class="font-16 font-sm-15 font-xs-12" href="#hanhtrinhdienanh" id="hanhtrinhdienanhlink" data-toggle="tab">
+                    Hành trình điện ảnh
+                </a>
+            </li>
+        </ul>
+        <div class="tab-content font-family-san font-16">
+            <div class="tab-pane fade in active" id="thongtintaikhoan">
+                <!-- BEGIN FORM-->
+                <form action="/KhachHang/Index" method="post">
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-group" style="margin-top:10px;">
+                        <div class="row">
+                            <div class="col-md-3" style="text-align:right;">
+                                <label class="control-label font-16"><span style="color: red;">*</span>&nbsp;Họ tên</label>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" name="Name" value="@Model.Name" class="form-control" placeholder="Họ tên">
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-3" style="text-align:right;">
+                                <label class="control-label font-16"><span style="color: red;">*</span>&nbsp;Email</label>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" name="Email" readonly value="@Model.Email" class="form-control" placeholder="Email">
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-3" style="text-align:right;">
+                                <label class="control-label font-16"><span style="color: red;">*</span>&nbsp;Ngày sinh</label>
+                            </div>
+                            <div class="col-md-6">
+                                <input name="DateOfBirth" value="@Model.DateOfBirth" class="datepicker form-control" placeholder="Ngày sinh">
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-3" style="text-align:right;">
+                                <label class="control-label font-16">Địa chỉ</label>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" name="Address" placeholder="Địa chỉ" value="@Model.Address">
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-3" style="text-align:right;">
+                                <label class="control-label font-16">Cấp bậc</label>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" readonly class="form-control" name="Type" value="@Model.Type">
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-6">
+                                <input type="submit" class="btn btn-success" value="Cập nhật" />
+                                <a href="#" style="float:right" data-target="#modalPassword" data-toggle="modal">Đổi mật khẩu?</a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-6">
+                                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+
+                <!-- END FORM-->
+            </div>
+            <div class="tab-pane fade" id="hanhtrinhdienanh">
+                <div class="col-md-16">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="text-uppercase" style="width: 10%">
+                                        Mã khách hàng
+                                    </th>
+                                    <th class="text-uppercase" style="width: 20%">
+                                        Phim
+                                    </th>
+                                    <th class="text-uppercase" style="width: 10%">
+                                        Rạp chiếu
+                                    </th>
+                                    <th class="text-uppercase" style="width: 10%">
+                                        Phòng chiếu
+                                    </th>
+                                    <th class="text-uppercase" style="width: 10%">
+                                        Giờ chiếu
+                                    </th>
+                                    <th class="text-uppercase" style="width: 15%">
+                                        Ghế đã đặt
+                                    </th>
+                                    <th class="text-uppercase" style="width: 10%">
+                                        Ngày đặt
+                                    </th>
+                                    <th class="text-uppercase" style="width: 10%">
+                                        Điểm
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>abc</td>
+                                    <td>abc</td>
+                                    <td>abc</td>
+                                    <td>abc</td>
+                                    <td>abc</td>
+                                    <td>abc</td>
+                                    <td>abc</td>
+                                    <td>abc</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalPassword" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <form>
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Đổi mật khẩu</h4>
+                    </div>
+                    <div id="film-name"></div>
+                    <div class="modal-body">
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                Mật khẩu cũ <span style="color:red">*:</span>
+                            </div>
+                            <div class="col-md-5">
+                                <input class="form-control" type="password" id="oldPassword" placeholder="Nhập mật khẩu cũ" required />
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-4">
+                                Mật khẩu mới <span style="color:red">*:</span>
+                            </div>
+                            <div class="col-md-5">
+                                <input class="form-control" type="password" id="newPassword" placeholder="Nhập mật khẩu mới" required />
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-4">
+                                Nhập lại mật khẩu mới <span style="color:red">*:</span>
+                            </div>
+                            <div class="col-md-5">
+                                <input class="form-control" type="password" id="reNewPassword" placeholder="Nhập lại mật khẩu mới" required />
+                            </div>
+                        </div>
 
 
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" value="Cập nhật" onclick="ChangePass()" />
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+    <script>
+        function ChangePass() {
+            var oldPassword = $('#oldPassword').val();
+            var newPassword = $('#newPassword').val();
+            var reNewPassword = $('#reNewPassword').val();
+            var ktPassword = $('#newPassword').val() == $('#reNewPassword').val() ? true : false;
+            if (ktPassword == true)
+            {
+                $.ajax({
+                    method: "POST",
+                    url: '/KhachHang/ChangePassword',
+                    data: { oldPassword: oldPassword, newPassword: newPassword },
+                    success: function (data) {
+                        alert(data);
+                    }
+                })
+            }
+            else
+            {
+                alert("Mật khẩu không trùng khớp, vui lòng nhập lại!");
+                $('#newPassword').val("");
+                $('#reNewPassword').val("");
+            }
+        }
+
+        $("#hanhtrinhdienanhlink").click(function(){
+            var cusId= @((Session["Customer"] as Customer).CustomerId);
+            $.ajax({
+                url:'/KhachHang/CinemaJourney',
+                method:'get',
+                data:{customerId:cusId},
+                success:function(data){
+                    $('#hanhtrinhdienanh').html(data);
+                }
+            });
+            });
+    </script>

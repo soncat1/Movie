@@ -2,6 +2,7 @@
 @using Movie.Models
 @{ 
     List<Showtime> lstShowtime = ViewBag.FilmShowtime;
+    Dictionary<int, int> seats = ViewBag.Seat;
 }
     @foreach (var item1 in Model)
     {
@@ -11,23 +12,30 @@
            @{
                if (item1.Queue == 1)
                {
-                <a style="width: 100%" href="#" class="btn btn-default show-in fancybox-fast-view" data-toggle="modal" data-target="#modalFilm" onclick="bookSeat(@item1.FilmId,'@item1.Film.Name',@item1.Queue,@item1.RoomId)"><span style="font-weight:bold">09:00</span></a>
+                <a style="width: 100%" href="#" class="btn btn-default show-in fancybox-fast-view" data-toggle="modal" data-target="#modalFilm" onclick="bookSeat(@item1.ShowtimeId)"><span style="font-weight:bold">09:00</span></a>
                }
                else if (item1.Queue == 2)
                {
-                <a style="width: 100%" href="#" class="btn btn-default show-in fancybox-fast-view" data-toggle="modal" data-target="#modalFilm" onclick="bookSeat(@item1.FilmId,'@item1.Film.Name',@item1.Queue,@item1.RoomId)"><span style="font-weight:bold">12:30</span></a>
+                <a style="width: 100%" href="#" class="btn btn-default show-in fancybox-fast-view" data-toggle="modal" data-target="#modalFilm" onclick="bookSeat(@item1.ShowtimeId)"><span style="font-weight:bold">12:30</span></a>
                }
                else if (item1.Queue == 3)
                {
-                <a style="width: 100%" href="#" class="btn btn-default show-in fancybox-fast-view" data-toggle="modal" data-target="#modalFilm" onclick="bookSeat(@item1.FilmId,'@item1.Film.Name',@item1.Queue,@item1.RoomId)"><span style="font-weight:bold">16:00</span></a>
+                <a style="width: 100%" href="#" class="btn btn-default show-in fancybox-fast-view" data-toggle="modal" data-target="#modalFilm" onclick="bookSeat(@item1.ShowtimeId)"><span style="font-weight:bold">16:00</span></a>
                }
                else if (item1.Queue == 4)
                {
-                <a style="width: 100%" href="#" class="btn btn-default show-in fancybox-fast-view" data-toggle="modal" data-target="#modalFilm" onclick="bookSeat(@item1.FilmId,'@item1.Film.Name',@item1.Queue,@item1.RoomId)"><span style="font-weight:bold">19:30</span></a>
+                <a style="width: 100%" href="#" class="btn btn-default show-in fancybox-fast-view" data-toggle="modal" data-target="#modalFilm" onclick="bookSeat(@item1.ShowtimeId)"><span style="font-weight:bold">19:30</span></a>
                }
             }
+            @foreach (KeyValuePair<int, int> item2 in seats)
+            {
+                if (item2.Key == item1.ShowtimeId)
+                {
+                    <div class="font-smaller padding-top-5">@item2.Value ghế trống</div>
 
-            <div class="font-smaller padding-top-5">@item1.Room.SeatCount</div>
+                }
+            }
+            
         </div>
 
 

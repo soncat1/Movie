@@ -46,7 +46,10 @@ namespace Movie.DAL
 
             List<Employee> employees = new List<Employee>()
             {
-                new Employee() {Name="Đỗ Hồng Sơn",DateOfBirth=DateTime.Parse("11/27/1996"),DepartmentId=8,Address="Hà Nội",CMT=123321123,UserName="son1996",Password="1" }
+                new Employee() {Name="Đỗ Hồng Sơn",DateOfBirth=DateTime.Parse("11/27/1996"),DepartmentId=8,Address="Hà Nội",CMT=123321123,UserName="son1996",Password="1" },
+                new Employee() {Name="Đỗ Hồng Nhung",DateOfBirth=DateTime.Parse("11/28/1996"),DepartmentId=1,Address="Hà Nội",CMT=123321111,UserName="nhung1996",Password="1" },
+                new Employee() {Name="Nguyễn Văn Thế",DateOfBirth=DateTime.Parse("11/1/1996"),DepartmentId=2,Address="Hà Nội",CMT=123421123,UserName="the1996",Password="1" },
+                new Employee() {Name="Nguyễn Văn Quý",DateOfBirth=DateTime.Parse("11/7/1996"),DepartmentId=3,Address="Hà Nội",CMT=323321123,UserName="quy1996",Password="1" }
             };
             context.Employees.AddRange(employees);
             context.SaveChanges();
