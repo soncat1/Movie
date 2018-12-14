@@ -1,4 +1,5 @@
 ﻿using Movie.Models;
+using Movie.Presentation.Models;
 using Movie.Service;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,7 @@ namespace Movie.Presentation.Controllers
         private RoomService roomService;
         private SeatService seatService;
         private CinemaService cinemaService;
+        private readonly NewService newService;
         private TicketService ticketService;
         public HomeController()
         {
@@ -26,6 +28,7 @@ namespace Movie.Presentation.Controllers
             seatService = new SeatService();
             cinemaService = new CinemaService();
             ticketService = new TicketService();
+            newService = new NewService();
         }
 
         public ActionResult Index()
@@ -109,8 +112,9 @@ namespace Movie.Presentation.Controllers
         }
         public ActionResult CinemaNews()
         {
-            
-            return View();
+            var data = new NewsModel();
+            data.News = newService.GetAll().ToList();
+            return View(data);
         }
     }
 }

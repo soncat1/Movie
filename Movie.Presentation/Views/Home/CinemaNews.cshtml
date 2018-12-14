@@ -1,8 +1,31 @@
-﻿
+﻿@model Movie.Presentation.Models.NewsModel
 @{
     ViewBag.Title = "CinemaNews";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>CinemaNews</h2>
-
+<link href="~/Content/app/cinema-detail.css" rel="stylesheet" />
+<div class="container-fluid bg-3 text-center">
+    <h3>KHUYẾN MÃI MỚI</h3><br>
+    <div class="row">
+        @foreach (var item in Model.News.Where(n => n.TypeNew == "KM"))
+        {
+            <div class="col-sm-4 new-detail">
+                <img src="@item.Image" class="img-responsive" style="width: 400px; height: 208px;" alt="Image">
+                <p>@item.Description</p>
+            </div>
+        }
+    </div>
+</div><br>
+<hr />
+<div class="container-fluid bg-3 text-center">
+    <h3>TIN BÊN LỀ</h3><br>
+    <div class="row">
+        @foreach (var item in Model.News.Where(n => n.TypeNew == "BL"))
+        {
+            <div class="col-sm-4 new-detail">
+                <img src="@item.Image" class="img-responsive" style="width: 400px; height: 208px;" alt="Image">
+                <p>@item.Description</p>
+            </div>
+        }
+    </div>
+</div><br><br>

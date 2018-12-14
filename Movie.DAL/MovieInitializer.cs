@@ -3,9 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Movie.DAL
 {
@@ -31,7 +28,7 @@ namespace Movie.DAL
             {
                 throw ex;
             }
-            
+
 
             List<Department> departments = new List<Department>()
         {
@@ -101,7 +98,7 @@ namespace Movie.DAL
             {
                 throw ex;
             }
-            
+
 
             List<SeatType> seatTypes = new List<SeatType>()
             {
@@ -126,12 +123,31 @@ namespace Movie.DAL
             context.Customers.AddRange(customers);
             context.SaveChanges();
 
-            //List<Ticket> tickets = new List<Ticket>()
-            //{
-            //    new Ticket() {ShowtimeId=1,SeatId=1,Price=45000,DateCreate=DateTime.Now,CustomerId=1 }
-            //};
-            //context.Tickets.AddRange(tickets);
-            //context.SaveChanges();
+            List<Ticket> tickets = new List<Ticket>()
+            {
+                new Ticket() {ShowtimeId=1,SeatId=1,Price=45000,DateCreate=DateTime.Now,CustomerId=1 }
+            };
+            context.Tickets.AddRange(tickets);
+            context.SaveChanges();
+
+            List<New> news = new List<New>()
+            {
+                new New() {Image="/Images/beta1.png",Description="[123Phim] Một Vé Hai ba",TypeNew="KM",CreateDate=DateTime.Now,IsDelete = false },
+                new New() {Image="/Images/beta2.jpg",Description="THÀNH VIÊN BETA - ĐỒNG GIÁ 45K",TypeNew="KM",CreateDate=DateTime.Now,IsDelete = false },
+                new New() {Image="/Images/beta3.jpg",Description="CÀI APP BETA, NHẬN QUÀ BAO LA",TypeNew="KM",CreateDate=DateTime.Now,IsDelete = false },
+                new New() {Image="/Images/beta4.jpg",Description="THỨ BA VUI VẺ",TypeNew="KM",CreateDate=DateTime.Now,IsDelete = false },
+                new New() {Image="/Images/beta5.jpg",Description="GIẢM NGAY 5K/COMBO KHI MUA COMBO BỎNG NƯỚC",TypeNew="KM",CreateDate=DateTime.Now,IsDelete = false },
+                new New() {Image="/Images/beta6.jpg",Description="GIÁ VÉ ƯU ĐÃI CHO HỌC SINH, SINH VIÊN",TypeNew="KM",CreateDate=DateTime.Now,IsDelete = false },
+                new New() {Image="/Images/beta7.jpg",Description="Aquaman được khen là ‘phim Marvel hay nhất do DC sản xuất’ trước thềm công chiếu",TypeNew="BL",CreateDate=DateTime.Now,IsDelete = false },
+                new New() {Image="/Images/beta8.jpg",Description="Điểm mặt những kẻ thù của Bumblebee trong phần ngoại truyện",TypeNew="BL",CreateDate=DateTime.Now,IsDelete = false },
+                new New() {Image="/Images/beta9.jpg",Description="10 tình tiết quan trọng được hé lộ trong trailer mới của Captain Marvel",TypeNew="BL",CreateDate=DateTime.Now,IsDelete = false },
+                new New() {Image="/Images/beta10.jpg",Description="Trailer Avengers: Endgame có lượt xem cao nhất lịch sử",TypeNew="BL",CreateDate=DateTime.Now,IsDelete = false },
+                new New() {Image="/Images/beta11.jpg",Description="[Review] Mortal Engines – Cuộc chiến khốc liệt với cỗ máy tử thần",TypeNew="BL",CreateDate=DateTime.Now,IsDelete = false },
+                new New() {Image="/Images/beta12.jpg",Description="Người Nhện Vũ Trụ Mới được khen nức nở là phim siêu anh hùng hay nhất năm",TypeNew="BL",CreateDate=DateTime.Now,IsDelete = false }
+            };
+            context.News.AddRange(news);
+            context.SaveChanges();
+
             base.Seed(context);
         }
 
