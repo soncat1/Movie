@@ -70,89 +70,174 @@ namespace Movie.Presentation.Areas.Admin.Controllers
         {
             try
             {
+                var room = roomService.GetRoom(seat.RoomId);
                 if (ModelState.IsValid)
                 {
                     for (int i = 1; i <= 9; i++)
                     {
                         for (int j = 1; j <= 14; j++)
                         {
-                            switch (i)
+                            if(room.Name=="2D")
                             {
-                                case 1:
-                                    seat.RowSeat = "A";
-                                    seat.ColumnSeat = j.ToString();
-                                    seat.Status = 1;
-                                    seat.Label = "A" + j;
-                                    seat.TypeId = 1;
-                                    seatService.Add(seat);
-                                    break;
-                                case 2:
-                                    seat.RowSeat = "B";
-                                    seat.ColumnSeat = j.ToString();
-                                    seat.Status = 1;
-                                    seat.Label = "B" + j;
-                                    seat.TypeId = 1;
-                                    seatService.Add(seat);
-                                    break;
-                                case 3:
-                                    seat.RowSeat = "C";
-                                    seat.ColumnSeat = j.ToString();
-                                    seat.Status = 1;
-                                    seat.Label = "C" + j;
-                                    seat.TypeId = 1;
-                                    seatService.Add(seat);
-                                    break;
-                                case 4:
-                                    seat.RowSeat = "D";
-                                    seat.ColumnSeat = j.ToString();
-                                    seat.Status = 1;
-                                    seat.Label = "D" + j;
-                                    seat.TypeId = 2;
-                                    seatService.Add(seat);
-                                    break;
-                                case 5:
-                                    seat.RowSeat = "E";
-                                    seat.ColumnSeat = j.ToString();
-                                    seat.Status = 1;
-                                    seat.Label = "E" + j;
-                                    seat.TypeId = 2;
-                                    seatService.Add(seat);
-                                    break;
-                                case 6:
-                                    seat.RowSeat = "F";
-                                    seat.ColumnSeat = j.ToString();
-                                    seat.Status = 1;
-                                    seat.Label = "F" + j;
-                                    seat.TypeId = 2;
-                                    seatService.Add(seat);
-                                    break;
-                                case 7:
-                                    seat.RowSeat = "G";
-                                    seat.ColumnSeat = j.ToString();
-                                    seat.Status = 1;
-                                    seat.Label = "G" + j;
-                                    seat.TypeId = 2;
-                                    seatService.Add(seat);
-                                    break;
-                                case 8:
-                                    seat.RowSeat = "H";
-                                    seat.ColumnSeat = j.ToString();
-                                    seat.Status = 1;
-                                    seat.Label = "H" + j;
-                                    seat.TypeId = 2;
-                                    seatService.Add(seat);
-                                    break;
-                                case 9:
-                                    seat.RowSeat = "I";
-                                    seat.ColumnSeat = j.ToString();
-                                    seat.Status = 1;
-                                    seat.Label = "I" + j;
-                                    seat.TypeId = 3;
-                                    seatService.Add(seat);
-                                    break;
-                                default:
+                                switch (i)
+                                {
+                                    case 1:
+                                        seat.RowSeat = "A";
+                                        seat.ColumnSeat = j.ToString();
+                                        seat.Status = 1;
+                                        seat.Label = "A" + j;
+                                        seat.TypeId = 1;
+                                        seatService.Add(seat);
+                                        break;
+                                    case 2:
+                                        seat.RowSeat = "B";
+                                        seat.ColumnSeat = j.ToString();
+                                        seat.Status = 1;
+                                        seat.Label = "B" + j;
+                                        seat.TypeId = 1;
+                                        seatService.Add(seat);
+                                        break;
+                                    case 3:
+                                        seat.RowSeat = "C";
+                                        seat.ColumnSeat = j.ToString();
+                                        seat.Status = 1;
+                                        seat.Label = "C" + j;
+                                        seat.TypeId = 1;
+                                        seatService.Add(seat);
+                                        break;
+                                    case 4:
+                                        seat.RowSeat = "D";
+                                        seat.ColumnSeat = j.ToString();
+                                        seat.Status = 1;
+                                        seat.Label = "D" + j;
+                                        seat.TypeId = 2;
+                                        seatService.Add(seat);
+                                        break;
+                                    case 5:
+                                        seat.RowSeat = "E";
+                                        seat.ColumnSeat = j.ToString();
+                                        seat.Status = 1;
+                                        seat.Label = "E" + j;
+                                        seat.TypeId = 2;
+                                        seatService.Add(seat);
+                                        break;
+                                    case 6:
+                                        seat.RowSeat = "F";
+                                        seat.ColumnSeat = j.ToString();
+                                        seat.Status = 1;
+                                        seat.Label = "F" + j;
+                                        seat.TypeId = 2;
+                                        seatService.Add(seat);
+                                        break;
+                                    case 7:
+                                        seat.RowSeat = "G";
+                                        seat.ColumnSeat = j.ToString();
+                                        seat.Status = 1;
+                                        seat.Label = "G" + j;
+                                        seat.TypeId = 2;
+                                        seatService.Add(seat);
+                                        break;
+                                    case 8:
+                                        seat.RowSeat = "H";
+                                        seat.ColumnSeat = j.ToString();
+                                        seat.Status = 1;
+                                        seat.Label = "H" + j;
+                                        seat.TypeId = 2;
+                                        seatService.Add(seat);
+                                        break;
+                                    case 9:
+                                        seat.RowSeat = "I";
+                                        seat.ColumnSeat = j.ToString();
+                                        seat.Status = 1;
+                                        seat.Label = "I" + j;
+                                        seat.TypeId = 3;
+                                        seatService.Add(seat);
+                                        break;
+                                    default:
 
-                                    break;
+                                        break;
+                                }
+                            }
+                            else
+                            {
+                                switch (i)
+                                {
+                                    case 1:
+                                        seat.RowSeat = "A";
+                                        seat.ColumnSeat = j.ToString();
+                                        seat.Status = 1;
+                                        seat.Label = "A" + j;
+                                        seat.TypeId = 4;
+                                        seatService.Add(seat);
+                                        break;
+                                    case 2:
+                                        seat.RowSeat = "B";
+                                        seat.ColumnSeat = j.ToString();
+                                        seat.Status = 1;
+                                        seat.Label = "B" + j;
+                                        seat.TypeId = 4;
+                                        seatService.Add(seat);
+                                        break;
+                                    case 3:
+                                        seat.RowSeat = "C";
+                                        seat.ColumnSeat = j.ToString();
+                                        seat.Status = 1;
+                                        seat.Label = "C" + j;
+                                        seat.TypeId = 4;
+                                        seatService.Add(seat);
+                                        break;
+                                    case 4:
+                                        seat.RowSeat = "D";
+                                        seat.ColumnSeat = j.ToString();
+                                        seat.Status = 1;
+                                        seat.Label = "D" + j;
+                                        seat.TypeId = 5;
+                                        seatService.Add(seat);
+                                        break;
+                                    case 5:
+                                        seat.RowSeat = "E";
+                                        seat.ColumnSeat = j.ToString();
+                                        seat.Status = 1;
+                                        seat.Label = "E" + j;
+                                        seat.TypeId = 5;
+                                        seatService.Add(seat);
+                                        break;
+                                    case 6:
+                                        seat.RowSeat = "F";
+                                        seat.ColumnSeat = j.ToString();
+                                        seat.Status = 1;
+                                        seat.Label = "F" + j;
+                                        seat.TypeId = 5;
+                                        seatService.Add(seat);
+                                        break;
+                                    case 7:
+                                        seat.RowSeat = "G";
+                                        seat.ColumnSeat = j.ToString();
+                                        seat.Status = 1;
+                                        seat.Label = "G" + j;
+                                        seat.TypeId = 5;
+                                        seatService.Add(seat);
+                                        break;
+                                    case 8:
+                                        seat.RowSeat = "H";
+                                        seat.ColumnSeat = j.ToString();
+                                        seat.Status = 1;
+                                        seat.Label = "H" + j;
+                                        seat.TypeId = 5;
+                                        seatService.Add(seat);
+                                        break;
+                                    case 9:
+                                        seat.RowSeat = "I";
+                                        seat.ColumnSeat = j.ToString();
+                                        seat.Status = 1;
+                                        seat.Label = "I" + j;
+                                        seat.TypeId = 6;
+                                        seatService.Add(seat);
+                                        break;
+                                    default:
+
+                                        break;
+                                }
                             }
                         }
                     }

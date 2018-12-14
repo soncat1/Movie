@@ -50,9 +50,33 @@
                                             <br />
                                         }
                                     }
+                                    else if (@item.SeatType.Name == "Thường(3D)")
+                                    {
+                                        <div class="seat seat-standard active" id="@item.Label" name="@item.SeatId" price="@item.SeatType.Description">@item.Label</div>
+                                        if (item.ColumnSeat == ViewBag.MaxColumn)
+                                        {
+                                            <br />
+                                        }
+                                    }
                                     else if (@item.SeatType.Name == "VIP(Prime)")
                                     {
                                         <div class="seat seat-vipprime active" id="@item.Label" name="@item.SeatId" price="@item.SeatType.Description">@item.Label</div>
+                                        if (item.ColumnSeat == ViewBag.MaxColumn)
+                                        {
+                                            <br />
+                                        }
+                                    }
+                                    else if (@item.SeatType.Name == "VIP(3D)")
+                                    {
+                                        <div class="seat seat-vipprime active" id="@item.Label" name="@item.SeatId" price="@item.SeatType.Description">@item.Label</div>
+                                        if (item.ColumnSeat == ViewBag.MaxColumn)
+                                        {
+                                            <br />
+                                        }
+                                    }
+                                    else if(@item.SeatType.Name=="Sweet Box")
+                                    {
+                                        <div class="seat seat-sw active" id="@item.Label" name="@item.SeatId" price="@item.SeatType.Description">@item.Label</div>
                                         if (item.ColumnSeat == ViewBag.MaxColumn)
                                         {
                                             <br />
@@ -144,7 +168,7 @@
                         <div class="row">
                             <div class="totalMoney">
 
-                                <h4 class="font-italic" style="float:right"><span style="font-weight:bold;font-family:sans-serif;font-size:16px;color:orangered">Thành tiền:</span><span id="priceMoney">120000</span><span>&nbsp;đ</span></h4>
+                                <h4 class="font-italic" style="float:right"><span style="font-weight:bold;font-family:sans-serif;font-size:16px;color:orangered">Thành tiền:</span><span id="priceMoney">0</span><span>&nbsp;đ</span></h4>
                             </div>
                         </div>
                     </div>
