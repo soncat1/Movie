@@ -53,11 +53,11 @@
                                     <a style="width: 100%" href="#" class="btn btn-default show-in fancybox-fast-view" data-toggle="modal" data-target="#modalFilm" onclick="bookSeat(@item1.ShowtimeId)"><span style="font-weight:bold">19:30</span></a>
                                 }
                             }
-                            @foreach (var item2 in seats.Keys)
+                            @foreach (KeyValuePair<int,int> item2 in seats)
                             {
-                                if (item2 == item1.ShowtimeId)
+                                if (item2.Key == item1.ShowtimeId)
                                 {
-                                    <div class="font-smaller padding-top-5">@seats[item2] ghế trống</div>
+                                    <div class="font-smaller padding-top-5">@item2.Value ghế trống</div>
                                 }
                             }
                             

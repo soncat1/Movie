@@ -46,14 +46,14 @@ namespace Movie.Presentation.Controllers
             return View();
         }
 
-        [OutputCache(Duration = 60)]
         public ActionResult GetFilmByShowDate(string showDate)
         {
+            var cinema = ((Cinema)Session["Cinema"]).CinemaId;
             Dictionary<int, int> lstSeats = new Dictionary<int, int>();
             List<Film> allFilm = filmService.GetAll().ToList();
             List<Film> film = new List<Film>();
             DateTime date = DateTime.Parse(showDate);
-            List<Showtime> listShowtimes = showtimeService.GetAll().Where(a => a.ShowDate == date).OrderBy(a => a.Queue).ToList();
+            List<Showtime> listShowtimes = showtimeService.GetAll().Where(a => a.ShowDate == date&& a.Room.CinemaId==cinema).OrderBy(a => a.Queue).ToList();
             foreach (Film item in allFilm)
             {
                 if (listShowtimes.FirstOrDefault(a => a.FilmId == item.FilmId) != null && film.Contains(item) == false)

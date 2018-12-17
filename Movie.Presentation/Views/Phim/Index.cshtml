@@ -4,10 +4,8 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
     List<Film> lstNotShowFilm = ViewBag.NotShowFilm;
-    List<Showtime> showtimes = ViewBag.Showtime;
-    List<Room> rooms = ViewBag.Room;
-    List<Seat> seats = ViewBag.Seat;
     List<DateTime> dates = ViewBag.Date;
+    List<Cinema> cinemas = ViewBag.Cinema;
 }
 <link href="~/Content/app/film-detail.css" rel="stylesheet" />
 <div class="container" style="margin-bottom:35px;">
@@ -178,8 +176,12 @@
                 </button>
                 <div id="rapchieu">
                     <span style="font-family:sans-serif;padding-left:30px;padding-right:30px;">Chọn rạp</span>
-                    <select class="dropdown-toggle btn btn-default">
-                        <option class="dropdown-item">Beta Đan phượng</option>
+                    <select class="dropdown-toggle btn btn-default" onchange="ShowDate('1/1/1111')">
+                        @foreach (var item in cinemas)
+                        {
+                            <option class="dropdown-item" value="@item.CinemaId">@item.Name @item.Address</option>
+                        }
+                        
                     </select>
                     <br />
                     <h1 class="text-center">Rạp <span id="tenrap">Beta Đan phượng</span></h1>
@@ -303,17 +305,17 @@
            
     }
     function ShowDate(showDateId) {
-            
+            var cinemaId = $('#rapchieu select').val();
             $.ajax({
                 method: 'GET',
                 url: '/Phim/GetShowtimeByShowDate',
-                data: { showDate: showDateId, id: filmId },
+                data: { showDate: showDateId, id: filmId, cinemaId: cinemaId },
                 success: function (data) {
                     $('#giochieu').html(data);
                 }
 
-            });
-        };
+            }); 
+         }
         
 
 </script>

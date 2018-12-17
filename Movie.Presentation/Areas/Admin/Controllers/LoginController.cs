@@ -33,7 +33,7 @@ namespace Movie.Presentation.Areas.Admin.Controllers
                     Session["Employee"] = employee;
                     Session["EmployeeName"] = employee.Name;
                     //currentSession = (int)Session["EmployeeId"];
-                    return RedirectToAction("Index", "Category");
+                    return RedirectToAction("Index", "Home");
 
                 }
                 else

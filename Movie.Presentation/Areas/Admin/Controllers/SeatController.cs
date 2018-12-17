@@ -77,7 +77,7 @@ namespace Movie.Presentation.Areas.Admin.Controllers
                     {
                         for (int j = 1; j <= 14; j++)
                         {
-                            if(room.Name=="2D")
+                            if(room.RoomType.Name=="2D")
                             {
                                 switch (i)
                                 {

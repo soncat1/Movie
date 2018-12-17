@@ -204,6 +204,7 @@
     <Compile Include="Areas\Admin\Controllers\DepartmentController.cs" />
     <Compile Include="Areas\Admin\Controllers\EmployeeController.cs" />
     <Compile Include="Areas\Admin\Controllers\FilmController.cs" />
+    <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
     <Compile Include="Areas\Admin\Controllers\RoomController.cs" />
     <Compile Include="Areas\Admin\Controllers\RoomTypeController.cs" />
@@ -586,6 +587,7 @@
     <Content Include="Areas\Admin\Views\Ticket\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Ticket\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Ticket\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\jquery-3.0.0.js" />

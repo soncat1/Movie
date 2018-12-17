@@ -14,9 +14,20 @@
                 <select class="form-control">
                     @foreach (var item in cinemas)
                     {
-                        <option>@item.Name @item.Address</option>
-                    }
+                        if ((Session["Cinema"] as Cinema).CinemaId == item.CinemaId)
+                        {//nếu session=true đẩy item lên đầu list
+                            <option value="@item.CinemaId">@item.Name @item.Address</option>
+                        }
 
+                    }
+                    @foreach (var item in cinemas)
+                    {
+                        if ((Session["Cinema"] as Cinema).CinemaId != item.CinemaId)
+                        {//load tất cả các phần tử còn lại trong for
+                            <option value="@item.CinemaId">@item.Name @item.Address</option>
+                        }
+
+                    }
                 </select>
             </div>
 
@@ -40,5 +51,17 @@
 </div>
 
 <script>
-
+        $('select').change(function () {
+            var cinemaId = parseInt($('select').val());
+            $.ajax({
+                url: '/Home/GetSessionCinema',
+                method: 'GET',
+                data: { id: cinemaId },
+                success: function (data) {
+                    window.location.href=data;
+                }
+            });
+        });
+       
+        
 </script>

@@ -31,7 +31,7 @@ namespace Movie.Presentation.Controllers
         // GET: Phim
         public ActionResult Index()
         {
-
+            ViewBag.Cinema = cinemaService.GetAll().ToList();
             ViewBag.Date = listDate.ToList();
             List<Showtime> lstShowtime = showtimeService.GetAll().ToList();
             List<Showtime> lstAvailableShowTime = new List<Showtime>();
@@ -82,14 +82,14 @@ namespace Movie.Presentation.Controllers
             ViewBag.NotShowFilm = lstNotShowFilm;
             return View(lstShowingFilm.ToList());
         }
-        public ActionResult GetShowtimeByShowDate(string showDate, int id)
+        public ActionResult GetShowtimeByShowDate(string showDate, int id,int cinemaId)
         {
             Dictionary<int, int> lstSeats = new Dictionary<int, int>();
             DateTime currentDate = DateTime.Now;
             Film film = filmService.GetFilm(id);
 
             DateTime date = DateTime.Parse(showDate);
-            List<Showtime> listShowtimes = showtimeService.GetAll().Where(a => a.ShowDate == date && a.FilmId == film.FilmId).OrderBy(a => a.Queue).ToList();
+            List<Showtime> listShowtimes = showtimeService.GetAll().Where(a => a.ShowDate == date && a.FilmId == film.FilmId && a.Room.CinemaId==cinemaId).OrderBy(a => a.Queue).ToList();
             foreach (var item in listShowtimes)
             {
                 var seats = seatService.GetAll().Where(n => n.RoomId == item.RoomId).Count() - ticketService.GetAll().Where(n => n.ShowtimeId == item.ShowtimeId).Count();

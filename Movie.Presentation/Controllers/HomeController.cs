@@ -13,6 +13,8 @@ namespace Movie.Presentation.Controllers
     public class HomeController : Controller
     {
         // GET: Home
+
+        
         private FilmService filmService;
         private ShowtimeService showtimeService;
         private RoomService roomService;
@@ -50,14 +52,14 @@ namespace Movie.Presentation.Controllers
             return View();
         }
 
-        [OutputCache(Duration = 60)]
         public ActionResult GetFilmByShowDate(string showDate)
         {
+            var cinema = ((Cinema)(Session["Cinema"])).CinemaId;
             Dictionary<int,int> lstSeats = new Dictionary<int,int>();
             List<Film> allFilm = filmService.GetAll().ToList();
             List<Film> film = new List<Film>();
             DateTime date = DateTime.Parse(showDate);
-            List<Showtime> listShowtimes = showtimeService.GetAll().Where(a => a.ShowDate == date).OrderBy(a => a.Queue).ToList();
+            List<Showtime> listShowtimes = showtimeService.GetAll().Where(a => a.ShowDate == date && a.Room.CinemaId==cinema).OrderBy(a => a.Queue).ToList();
             foreach (Film item in allFilm)
             {
                 if (listShowtimes.FirstOrDefault(a => a.FilmId == item.FilmId) != null && film.Contains(item) == false)
@@ -76,6 +78,10 @@ namespace Movie.Presentation.Controllers
         }
         public ActionResult GetCinemaDropdown()
         {
+            if(Session["Cinema"] == null)
+            {
+                Session["Cinema"] = cinemaService.GetCinema(1);
+            }
             ViewBag.Cinema = cinemaService.GetAll();
             return PartialView("_Navigation", ViewBag.Cinema);
         }
@@ -115,6 +121,12 @@ namespace Movie.Presentation.Controllers
             var data = new NewsModel();
             data.News = newService.GetAll().ToList();
             return View(data);
+        }
+        public ActionResult GetSessionCinema(int id)
+        {
+            Session["Cinema"] = cinemaService.GetCinema(id);
+            var returnUrl = Request.UrlReferrer.ToString();
+            return Json(returnUrl, JsonRequestBehavior.AllowGet);
         }
     }
 }
