@@ -92,28 +92,14 @@ namespace Movie.Presentation.Controllers
         }
         public ActionResult CinemaDetail()
         {
-            string cinemaName = string.Empty;
-            string cinemaAddress = string.Empty;
-            ICollection<Cinema> data = cinemaService.GetAll().ToList();
-            foreach (Cinema item in data)
-            {
-                cinemaAddress = item.Address;
-                cinemaName = item.Name;
-            }
-            ViewBag.CinemaInfo = $"{cinemaName}--{cinemaAddress}";
+            var cinema = Session["Cinema"] as Cinema;           
+            ViewBag.CinemaInfo = $"{cinema.Name}--{cinema.Address}";
             return View();
         }
         public ActionResult PriceTicket()
         {
-            string cinemaName = string.Empty;
-            string cinemaAddress = string.Empty;
-            ICollection<Cinema> data = cinemaService.GetAll().ToList();
-            foreach (Cinema item in data)
-            {
-                cinemaAddress = item.Address;
-                cinemaName = item.Name;
-            }
-            ViewBag.PriceTicketInfo = $"Giá vé xem phim rạp: {cinemaName}--{cinemaAddress}";
+            var cinema = Session["Cinema"] as Cinema;
+            ViewBag.PriceTicketInfo = $"Giá vé xem phim rạp: {cinema.Name}--{cinema.Address}";
             return View();
         }
         public ActionResult CinemaNews()

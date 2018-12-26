@@ -47,25 +47,29 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="film-info">
-                                    <h3><a href="/ChiTietPhim/Index/@item.FilmId">@item.Name</a></h3>
-                                    <ul class="list-unstyled font-lg font-family-san font-sm-15 font-xs-14">
-                                        <li>
-                                            <span class="bold">
-                                                Đạo diễn:
-                                            </span> @item.Director
-                                        </li>
-                                        <li style="max-height: 50px;">
-                                            <span class="bold">
-                                                Thể loại:
-                                            </span> @item.Category.Name
-                                        </li>
-                                        <li>
-                                            <span class="bold">
-                                                Thời lượng:
-                                            </span> @item.Duration
-                                            phút
-                                        </li>
-                                    </ul>
+                                    <div class="film-name"style="height:70px">
+                                        <h3><a href="/ChiTietPhim/Index/@item.FilmId">@item.Name</a></h3>
+                                    </div>
+                                        <ul class="list-unstyled font-lg font-family-san font-sm-15 font-xs-14">
+                                            <li>
+                                                <span class="bold">
+                                                    Đạo diễn:
+                                                </span> @item.Director
+                                            </li>
+                                            <li style="max-height: 50px;">
+                                                <span class="bold">
+                                                    Thể loại:
+                                                </span> @item.Category.Name
+                                            </li>
+                                            <li>
+                                                <span class="bold">
+                                                    Thời lượng:
+                                                </span> @item.Duration
+                                                phút
+                                            </li>
+                                        </ul>
+                                    
+                                    
                                     <br />
                                     <div style="min-height: 85px;width:227px">
                                         <button role="button" data-toggle="modal" class="btn btn-success" style="width:100%" data-target="#showtimeModal" id="@item.FilmId" onclick="Showtime('@item.Name','@item.FilmId')">
@@ -305,7 +309,8 @@
            
     }
     function ShowDate(showDateId) {
-            var cinemaId = $('#rapchieu select').val();
+        var cinemaId = $('#rapchieu select').val();
+        $('#tenrap').html($('#rapchieu select option:selected').text());
             $.ajax({
                 method: 'GET',
                 url: '/Phim/GetShowtimeByShowDate',

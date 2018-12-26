@@ -144,6 +144,7 @@ namespace Movie.Presentation.Areas.Admin.Controllers
                     }
                 }
             }
+           
             try
             {
                 if (ModelState.IsValid)

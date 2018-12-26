@@ -23,6 +23,7 @@
                         <form action="/Login/Index" method="post">
                             <input type="text" name="Email" placeholder="Địa chỉ Email" required>
                             <input type="password" name="Password" placeholder="Mật khẩu" required>
+                            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
                             <input type="submit" value="Đăng nhập" >
                         </form>
                     </div>

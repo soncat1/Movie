@@ -20,7 +20,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ShowtimeId, "ShowtimeId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("ShowtimeId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.ShowtimeId, new SelectList(ViewBag.Showtime, "ShowtimeId","ShowtimeId"), new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.ShowtimeId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -28,7 +28,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.SeatId, "SeatId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("SeatId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.SeatId, new SelectList(ViewBag.Seat, "SeatId","Label"), new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.SeatId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -44,7 +44,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.DateCreate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.DateCreate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.DateCreate, new { htmlAttributes = new { @class = "form-control datepicker" } })
                 @Html.ValidationMessageFor(model => model.DateCreate, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -52,7 +52,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.CustomerId, "CustomerId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("CustomerId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.CustomerId, new SelectList(ViewBag.Customer, "CustomerId","Name"), new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.CustomerId, "", new { @class = "text-danger" })
             </div>
         </div>

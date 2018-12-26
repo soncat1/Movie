@@ -93,8 +93,10 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <input type="file" name="file" value="Browser" />
+                <input type="file" name="file" value="Browser" id="File"/>
                 <br />
+                <img src="@Model.Image" alt="_blank" height="400" width="300" id="CurrentImage"/>
+                <input name="Image" value="@Model.Image" hidden/>
                 @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -118,3 +120,22 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+<script>
+    $('#File').change(function () {
+        var input = this;
+        var url = $(this).val();
+        var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
+        if (input.files && input.files[0] && (ext == "gif" || ext == "png" || ext == "jpeg" || ext == "jpg")) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#CurrentImage').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+        else {
+            $('#CurrentImage').attr('src', '/Content/Images/no_preview.png');
+        }
+    });
+    
+</script>

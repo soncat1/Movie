@@ -12,9 +12,15 @@ namespace Movie.Presentation.Areas.Admin.Controllers
     public class TicketController : BaseController
     {
         private TicketService ticketService;
+        private ShowtimeService showtimeService;
+        private SeatService seatService;
+        private CustomerService customerService;
         public TicketController()
         {
             ticketService = new TicketService();
+            showtimeService = new ShowtimeService();
+            seatService = new SeatService();
+            customerService = new CustomerService();
         }
         // GET: Admin/Ticket
         public ActionResult Index()
@@ -43,6 +49,9 @@ namespace Movie.Presentation.Areas.Admin.Controllers
         }
         public ActionResult Edit(int id)
         {
+            ViewBag.Showtime = showtimeService.GetAll().ToList();
+            ViewBag.Seat = seatService.GetAll().ToList();
+            ViewBag.Customer = customerService.GetAll().ToList();
             var result = Authenticate();
             if (result == 1)
             {
