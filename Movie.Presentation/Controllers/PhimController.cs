@@ -31,9 +31,10 @@ namespace Movie.Presentation.Controllers
         // GET: Phim
         public ActionResult Index()
         {
+            var cinemaId = (Session["Cinema"] as Cinema).CinemaId;
             ViewBag.Cinema = cinemaService.GetAll().ToList();
             ViewBag.Date = listDate.ToList();
-            List<Showtime> lstShowtime = showtimeService.GetAll().ToList();
+            List<Showtime> lstShowtime = showtimeService.GetAll().Where(n=>n.Room.Cinema.CinemaId==cinemaId).ToList();
             List<Showtime> lstAvailableShowTime = new List<Showtime>();
             List<Showtime> lstNotAvailableShowTime = new List<Showtime>();
             List<Film> lstShowingFilm = new List<Film>();

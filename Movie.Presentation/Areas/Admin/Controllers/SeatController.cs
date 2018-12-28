@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
 
 namespace Movie.Presentation.Areas.Admin.Controllers
 {
@@ -21,12 +22,14 @@ namespace Movie.Presentation.Areas.Admin.Controllers
             seatTypeService = new SeatTypeService();
         }
         // GET: Admin/Seat
-        public ActionResult Index()
-        {
+        public ActionResult Index(int? page)
+        {            
             var result = Authenticate();
             if (result == 1)
             {
-                return View(seatService.GetAll());
+                int pageSize = 126;
+                int pageNumber = (page ?? 1);
+                return View(seatService.GetAll().ToPagedList(pageNumber,pageSize));
             }
             else
             {

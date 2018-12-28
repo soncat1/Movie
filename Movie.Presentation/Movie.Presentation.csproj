@@ -81,6 +81,14 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -223,6 +231,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812141818181_InitialCreate.cs" />
+    <Compile Include="Migrations\201812141818181_InitialCreate.Designer.cs">
+      <DependentUpon>201812141818181_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\FilmViewModels.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\NewsModel.cs" />
@@ -296,6 +309,21 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\13f9954b93e1c597.jpg" />
+    <Content Include="Content\Images\2d-aquamn-201340-161118-49.jpg" />
+    <Content Include="Content\Images\2d-sub-200855-071218-30.jpg" />
+    <Content Include="Content\Images\2d-sub-bumblebee-125253-211118-44.jpg" />
+    <Content Include="Content\Images\45008418_2100723996644398_8105610654951407616_n.jpg" />
+    <Content Include="Content\Images\46757633_1201592809980056_7610191932613984256_n.jpg" />
+    <Content Include="Content\Images\47689642_2277361312521991_2021125074496520192_n.jpg" />
+    <Content Include="Content\Images\48249906_2277359372522185_8029759148797198336_n.png" />
+    <Content Include="Content\Images\48385663_2277361549188634_7725244073430220800_n.png" />
+    <Content Include="Content\Images\Capture.JPG" />
+    <Content Include="Content\Images\gai-gia-lam-chieu-2-123316-211118-53 %281%29.jpg" />
+    <Content Include="Content\Images\maxresdefault.jpg" />
+    <Content Include="Content\Images\trollsoccer.jpg" />
+    <Content Include="Content\Images\xac-chet-quy-am-the-possession-of-hannah-grace-2018-poster-132241-211118-61.jpg" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="Content\User\css\bootstrap.css" />
     <Content Include="Content\User\css\contactstyle.css" />
     <Content Include="Content\User\css\faqstyle.css" />
@@ -588,6 +616,7 @@
     <Content Include="Areas\Admin\Views\Ticket\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Ticket\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
+    <None Include="Properties\PublishProfiles\dohongson - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\jquery-3.0.0.js" />
@@ -666,12 +695,6 @@
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\SendCode.cshtml" />
     <Content Include="Views\Account\VerifyCode.cshtml" />
-    <Content Include="Views\Base\Manage\AddPhoneNumber.cshtml" />
-    <Content Include="Views\Base\Manage\ChangePassword.cshtml" />
-    <Content Include="Views\Base\Manage\Index.cshtml" />
-    <Content Include="Views\Base\Manage\ManageLogins.cshtml" />
-    <Content Include="Views\Base\Manage\SetPassword.cshtml" />
-    <Content Include="Views\Base\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\_GetFilmByShowDate.cshtml" />
@@ -707,7 +730,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Views\Base\" />
-    <Folder Include="Content\Images\" />
+    <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -732,6 +755,11 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201812141818181_InitialCreate.resx">
+      <DependentUpon>201812141818181_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

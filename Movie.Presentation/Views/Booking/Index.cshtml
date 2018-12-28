@@ -39,6 +39,10 @@
                                 if(@item.Status==0)
                                 {
                                     <div class="empty" id="@item.Label" name="@item.SeatId" price="@item.SeatType.Description">@item.Label</div>
+                                    if (item.ColumnSeat == ViewBag.MaxColumn)
+                                    {
+                                        <br />
+                                    }
                                 }
                                 else
                                 {
